@@ -1,17 +1,25 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <live-bar></live-bar>
+    <nav-bar></nav-bar>
+    <latest-news></latest-news>
+    <latest-games></latest-games>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import LiveBar from "@/components/LiveBar";
+import NavBar from "@/components/NavBar";
+import LatestNews from "@/components/LatestNews";
+import LatestGames from "@/components/LatestGames";
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+      LatestGames,
+      LatestNews,
+      NavBar,
+      LiveBar,
   }
 }
 </script>
@@ -21,8 +29,5 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
