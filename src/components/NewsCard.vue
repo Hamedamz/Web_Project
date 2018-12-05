@@ -20,6 +20,9 @@
     .news-card {
         position: relative;
         overflow: hidden;
+        display: flex !important;
+        flex-direction: column;
+        align-items: stretch;
     }
     .news-card > img {
         width: 100%;
@@ -38,6 +41,11 @@
         padding: 1rem;
         width: 100%;
         border-radius: 0 0 15px 15px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: self-end;
     }
     .news-card.big .post {
         background: linear-gradient(rgba(0, 0, 0, 0), #000);
