@@ -23,7 +23,7 @@ export default {
       return {
           mainNews: {
               title: 'Belgium retain pole as Sweden, Serbia soar',
-              image: 'static/i1.jpg',
+              image: 'static/i2.jpg',
               category: 'premiere league'
           },
           liveMatch: {
@@ -41,6 +41,7 @@ export default {
 
 <style>
 #app {
+    background: black;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
