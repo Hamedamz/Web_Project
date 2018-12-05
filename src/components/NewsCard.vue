@@ -25,10 +25,6 @@
         width: 100%;
     }
 
-    .news-card.big > img {
-        position: absolute;
-    }
-
     .news-card.big .post {
         position: absolute;
         bottom: 0;
