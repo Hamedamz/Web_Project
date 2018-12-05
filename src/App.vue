@@ -1,25 +1,31 @@
 <template>
   <div id="app">
-    <live-bar></live-bar>
-    <nav-bar></nav-bar>
+    <full-header :post="mainNews"></full-header>
     <latest-news></latest-news>
     <latest-games></latest-games>
   </div>
 </template>
 
 <script>
-import LiveBar from "@/components/LiveBar";
-import NavBar from "@/components/NavBar";
+
 import LatestNews from "@/components/LatestNews";
 import LatestGames from "@/components/LatestGames";
+import FullHeader from "@/components/FullHeader";
 
 export default {
   name: 'app',
   components: {
+      FullHeader,
       LatestGames,
       LatestNews,
-      NavBar,
-      LiveBar,
+  },
+  data() {
+      return {
+          mainNews: {
+              title: 'Belgium retain pole as Sweden, Serbia soar',
+              image: 'static/i1.jpg',
+          }
+      }
   }
 }
 </script>
