@@ -26,6 +26,7 @@
 
 <style scoped>
     .match-card {
+        padding: 0.5rem 1.5rem;
         color: white;
         max-width: 400px;
         display: flex;
