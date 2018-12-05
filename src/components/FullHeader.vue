@@ -1,5 +1,5 @@
 <template>
-    <div class="full-header" v-bind:style="{ 'background-image': 'url(' + post.image + ')' }">
+    <div class="full-header" :style="background">
         <nav-bar></nav-bar>
         <sui-container>
             <match-card :match="match"></match-card>
@@ -22,6 +22,11 @@
         name: "FullHeader",
         components: {MatchCard, NavBar},
         props: ['post', 'match'],
+        computed: {
+            background: function() {
+                return "background: linear-gradient(to left, #fff, #555), url(" + this.post.image + ")"
+            }
+        }
     }
 </script>
 
@@ -32,8 +37,9 @@
         flex-direction: column;
         width: 100vw;
         height: 100vh;
-        background-size: cover;
-        background-position: center center;
+        background-size: cover !important;
+        background-position: center center !important;
+        background-blend-mode: multiply;
     }
 
     .main-news {
