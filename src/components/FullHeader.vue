@@ -1,10 +1,14 @@
 <template>
     <div class="full-header" v-bind:style="{ 'background-image': 'url(' + post.image + ')' }">
         <nav-bar></nav-bar>
-        <match-card></match-card>
+        <sui-container>
+            <match-card :match="match"></match-card>
+        </sui-container>
         <sui-container>
             <div class="main-news">
+                <div class="main-news-cat">{{post.category.toUpperCase()}}</div>
                 <h1 is="sui-header" class="main-news-title" inverted>{{post.title}}</h1>
+                <sui-button inverted>Full Story</sui-button>
             </div>
         </sui-container>
     </div>
@@ -13,10 +17,11 @@
 <script>
     import NavBar from "@/components/NavBar";
     import MatchCard from "@/components/MatchCard";
+
     export default {
         name: "FullHeader",
         components: {MatchCard, NavBar},
-        props: ['post'],
+        props: ['post', 'match'],
     }
 </script>
 
@@ -38,5 +43,10 @@
     .main-news-title {
         font-size: 3.5rem !important;
         max-width: 400px;
+    }
+
+    .main-news-cat {
+        font-weight: bold;
+        color: rgba(255, 255, 255, 0.5);
     }
 </style>

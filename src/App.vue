@@ -24,6 +24,7 @@ export default {
           mainNews: {
               title: 'Belgium retain pole as Sweden, Serbia soar',
               image: 'static/i1.jpg',
+              category: 'premiere league'
           }
       }
   }
