@@ -45,7 +45,7 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        align-items: self-end;
+        align-items: baseline;
     }
     .news-card.big .post {
         background: linear-gradient(rgba(0, 0, 0, 0), #000);

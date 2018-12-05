@@ -24,7 +24,7 @@
         props: ['post', 'match'],
         computed: {
             background: function() {
-                return "background: linear-gradient(to left, #fff, #555), url(" + this.post.image + ")"
+                return "background: linear-gradient(to left, #fff, #444), url(" + this.post.image + ")"
             }
         }
     }
