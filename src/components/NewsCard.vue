@@ -59,15 +59,3 @@
         font-size: x-large;
     }
 </style>
-
-<style>
-    /*.news-card {*/
-        /*padding: 0 !important;*/
-    /*}*/
-    /*.ui.grid {*/
-        /*margin: 0 !important;*/
-    /*}*/
-    /*.ui.grid>.column:not(.row) {*/
-        /*padding: 0 !important;*/
-    /*}*/
-</style>

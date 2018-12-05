@@ -1,11 +1,36 @@
 <template>
-    <sui-grid class="latest-news container-fluid stackable padded">
-        <news-card
-                v-for="post in posts"
-                :key="post.id"
-                :post="post"
-        ></news-card>
-    </sui-grid>
+    <div class="latest-news">
+        <sui-grid class="container-fluid horizontally padded">
+            <sui-grid-column>
+                <sui-dropdown
+                        text="Filter Posts"
+                        icon="filter"
+                        floating
+                        labeled
+                        button
+                        class="icon inverted small"
+                        v-model="filter"
+                        :options="options"
+                ></sui-dropdown>
+                <sui-button
+                        @click="subscriptions = ! subscriptions"
+                        :basic="!subscriptions"
+                        size="small"
+                        color="red"
+                        content="Subscriptions"
+                        icon="heart"
+                        floated="right">
+                </sui-button>
+            </sui-grid-column>
+        </sui-grid>
+        <sui-grid class="container-fluid stackable padded">
+            <news-card
+                    v-for="post in posts"
+                    :key="post.id"
+                    :post="post"
+            ></news-card>
+        </sui-grid>
+    </div>
 </template>
 
 
@@ -67,6 +92,23 @@
                         type: 'small',
                         category: 'World Cup',
                     },
+                ],
+
+                filter: null,
+                subscriptions: false,
+                options: [
+                    {
+                        key: 'Football',
+                        text: 'Football',
+                        value: 'Football',
+                        label: {color: 'green', empty: true, circular: true},
+                    },
+                    {
+                        key: 'Basketball',
+                        text: 'Basketball',
+                        value: 'Basketball',
+                        label: {color: 'orange', empty: true, circular: true},
+                    },
                 ]
             }
         },
@@ -74,5 +116,7 @@
 </script>
 
 <style scoped>
-
+    .latest-news {
+        padding-top: 1rem;
+    }
 </style>
