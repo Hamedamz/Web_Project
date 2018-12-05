@@ -23,17 +23,21 @@
     }
     .news-card > img {
         width: 100%;
+        border-radius: 15px 15px 0 0;
     }
-
+    .news-card.big > img {
+        border-radius: 15px;
+        height: 100%;
+    }
     .news-card.big .post {
         position: absolute;
-        bottom: 0;
+        bottom: 1rem;
     }
     .post {
         background: linear-gradient(to left, #000, rgba(255, 255, 255, .125));
         padding: 1rem;
         width: 100%;
-        height: 200px;
+        border-radius: 0 0 15px 15px;
     }
     .news-card.big .post {
         background: linear-gradient(rgba(0, 0, 0, 0), #000);
@@ -49,13 +53,13 @@
 </style>
 
 <style>
-    .news-card {
-        padding: 0 !important;
-    }
-    .ui.grid {
-        margin: 0 !important;
-    }
-    .ui.grid>.column:not(.row) {
-        padding: 0 !important;
-    }
+    /*.news-card {*/
+        /*padding: 0 !important;*/
+    /*}*/
+    /*.ui.grid {*/
+        /*margin: 0 !important;*/
+    /*}*/
+    /*.ui.grid>.column:not(.row) {*/
+        /*padding: 0 !important;*/
+    /*}*/
 </style>

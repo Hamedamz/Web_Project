@@ -1,5 +1,5 @@
 <template>
-    <sui-grid class="latest-news container-fluid stackable">
+    <sui-grid class="latest-news container-fluid stackable padded">
         <news-card
                 v-for="post in posts"
                 :key="post.id"
