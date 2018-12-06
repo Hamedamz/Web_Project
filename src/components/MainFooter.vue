@@ -22,7 +22,7 @@
                 <sui-button circular social="twitter" icon="twitter"></sui-button>
                 <sui-button circular social="instagram" icon="instagram"></sui-button>
                 <span class="white">WEEKLY NEWSLETTER</span>
-                <sui-input placeholder="JOHNDOE@EMAIL.CO" ></sui-input>
+                <sui-input placeholder="JOHNDOE@EMAIL.CO"></sui-input>
                 <sui-button basic color="black" inverted class="inp">SUBSCRIBE</sui-button>
             </div>
             <div class="third">
@@ -39,6 +39,9 @@
                 </ul>
             </div>
         </div>
+        <p class="cp-text">
+            © Copyright 2015 ElCampous All rights reserved.
+        </p>
     </div>
 </template>
 
@@ -52,17 +55,19 @@
     .footer {
         /*background: linear-gradient(to top, rgba(0, 0, 0, 0.51), rgba(0, 0, 0, 0)),url("https://images.newrepublic.com/b57acf7c771395caaffcc403eacb199b2b822e07.jpeg?w=1200&q=65&dpi=2&fm=pjpg&h=800");*/
         width: 100vw;
-        height: 45vh;
+        height: 50vh;
         background-size: cover !important;
         background-position: center center !important;
         background-blend-mode: multiply;
 
     }
-    .third{
-        margin-right: 10%!important;
+
+    .third {
+        margin-right: 10% !important;
         text-align: center;
     }
-    .float{
+
+    .float {
         display: flex;
         justify-content: space-between;
         margin-top: 50px;
@@ -74,7 +79,7 @@
         font-size: 20px;
         color: #ffffff;
         line-height: 0.5;
-        text-align:center;
+        text-align: center;
         display: inline-block;
         position: relative;
         padding: 0 10%;
@@ -105,15 +110,17 @@
     }
 
     .first {
-        margin-left: 10%!important;
+        margin-left: 10% !important;
         text-align: center;
 
     }
-    .second{
+
+    .second {
         position: relative;
-        left:-1.7%;
+        left: -1.7%;
         text-align: center;
     }
+
     a {
         text-decoration: none !important;
         color: #ffffff !important;
@@ -145,15 +152,17 @@
         transition: width 100ms ease-in-out 0s;
         width: 9rem;
     }
+
     span {
         padding: 10px;
-        display:block;
+        display: block;
         position: relative;
         margin-top: 100px;
         color: #ffffff;
         font-size: 20px;
         margin-bottom: 20px;
     }
+
     span:before {
         content: '';
         width: 1px;
@@ -165,10 +174,18 @@
         margin-left: -1px;
         margin-bottom: 20px;
     }
-    .inp{
-        display: block!important;
+
+    .inp {
+        display: block !important;
         /*margin-left: 25%!important;*/
-        margin: auto!important;
-        margin-top: 20px!important;
+        margin: auto !important;
+        margin-top: 20px !important;
+    }
+
+    .cp-text {
+        color: rgba(249, 249, 249, 0.7);
+        text-shadow: 0 1px rgba(255, 255, 255, 0.1);
+        text-align: center;
+        margin-top: 25px;
     }
 </style>
