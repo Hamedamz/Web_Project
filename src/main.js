@@ -3,8 +3,6 @@ import App from './App.vue'
 import SuiVue from 'semantic-ui-vue'
 import 'semantic-ui-css/semantic.min.css'
 
-Vue.use(BootstrapVue);
-
 Vue.config.productionTip = false
 Vue.use(SuiVue);
 Vue.directive('scroll', {
