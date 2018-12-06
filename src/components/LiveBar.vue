@@ -1,17 +1,16 @@
 <template lang="html">
     <div class="ahmad">
-        <live-card></live-card>
-        <live-card></live-card>
+
     </div>
 </template>
 
 <script>
-    import LiveCard from "./LiveMatchCard";
+    // import LiveCard from "./LiveMatchCard";
 
     export default {
         name: 'CardGroup1Example',
         components: {
-            LiveCard,
+            // LiveCard,
         }
     };
 </script>

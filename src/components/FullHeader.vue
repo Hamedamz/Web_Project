@@ -1,7 +1,5 @@
 <template>
     <div class="full-header" :style="background" >
-        <!--<live-bar></live-bar>-->
-
         <nav-bar :home=true :soccer=false :basket=false></nav-bar>
         <a></a>
         <sui-container>
@@ -20,10 +18,9 @@
 <script>
     import NavBar from "@/components/NavBar";
     import MatchCard from "@/components/MatchCard";
-    import LiveBar from "@/components/LiveBar"
     export default {
         name: "FullHeader",
-        components: {MatchCard, NavBar,LiveBar},
+        components: {MatchCard, NavBar},
         props: ['post', 'match'],
         computed: {
             background: function() {
