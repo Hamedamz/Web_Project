@@ -1,14 +1,15 @@
 <template>
     <div class="latest-news">
-        <sui-grid class="container-fluid horizontally padded">
-            <sui-grid-column>
+        <sui-grid class="container-fluid padded head">
+            <h2 is="sui-header" inverted>Latest News</h2>
+            <div>
                 <sui-dropdown
                         text="Filter Posts"
                         icon="filter"
                         floating
                         labeled
                         button
-                        class="icon inverted small"
+                        class="icon grey basic small"
                         v-model="filter"
                         :options="options"
                 ></sui-dropdown>
@@ -17,11 +18,10 @@
                         :basic="!subscriptions"
                         size="small"
                         color="red"
-                        content="Subscriptions"
                         icon="heart"
-                        floated="right">
+                >
                 </sui-button>
-            </sui-grid-column>
+            </div>
         </sui-grid>
         <sui-grid class="container-fluid stackable padded">
             <news-card
@@ -141,5 +141,9 @@
 <style scoped>
     .latest-news {
         padding-top: 1rem;
+    }
+    .head {
+        justify-content: space-between;
+        flex-wrap: wrap;
     }
 </style>
