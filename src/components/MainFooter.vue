@@ -111,7 +111,7 @@
     }
     .second{
         position: relative;
-        left:-2.3%;
+        left:-1.7%;
         text-align: center;
     }
     a {
