@@ -49,7 +49,7 @@
         bottom: 1rem;
     }
     .post {
-        background: linear-gradient(to left, #000, rgba(255, 255, 255, .125));
+        background: linear-gradient(to left, #000, rgba(255, 255, 255, .1));
         padding: 1rem;
         width: 100%;
         border-radius: 0 0 15px 15px;

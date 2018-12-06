@@ -3,7 +3,7 @@
         <nav-bar :home=true :soccer=false :basket=false></nav-bar>
         <a></a>
         <sui-container>
-            <match-card :match="match"></match-card>
+            <match-card class="max" :match="match"></match-card>
         </sui-container>
         <sui-container>
             <div class="main-news">
@@ -41,7 +41,9 @@
         background-position: center center !important;
         background-blend-mode: multiply;
     }
-
+    .max {
+        max-width: 400px
+    }
     .main-news {
         margin-bottom: 10vh;
     }
