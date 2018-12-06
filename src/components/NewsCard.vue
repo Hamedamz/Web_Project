@@ -2,7 +2,14 @@
     <sui-grid-column :width="post.type === 'small' ? 4 : 8" class="news-card" :class="{big: post.type === 'big'}">
         <img :src="post.image" :alt="post.title">
         <div class="post">
-            <div class="post-cat">{{post.category.toUpperCase()}}</div>
+            <div class="post-cat">
+                <sui-label
+                        circular
+                        :color="color"
+                        empty
+                ></sui-label>
+                {{post.category.toUpperCase()}}
+            </div>
             <h3 class="post-title">{{post.title}}</h3>
             <sui-button size="mini" color="grey" basic>Full Story</sui-button>
         </div>
@@ -13,6 +20,11 @@
     export default {
         name: "NewsCard",
         props: ['post'],
+        computed: {
+            color: function () {
+                return this.post.sport ===  'football' ? 'green' : 'orange';
+            }
+        }
     }
 </script>
 
