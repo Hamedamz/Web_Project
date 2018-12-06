@@ -1,6 +1,9 @@
 <template>
-    <div class="full-header" :style="background">
-        <nav-bar></nav-bar>
+    <div class="full-header" :style="background" >
+        <!--<live-bar></live-bar>-->
+
+        <nav-bar :home=true :soccer=false :basket=false></nav-bar>
+        <a></a>
         <sui-container>
             <match-card :match="match"></match-card>
         </sui-container>
@@ -17,16 +20,16 @@
 <script>
     import NavBar from "@/components/NavBar";
     import MatchCard from "@/components/MatchCard";
-
+    import LiveBar from "@/components/LiveBar"
     export default {
         name: "FullHeader",
-        components: {MatchCard, NavBar},
+        components: {MatchCard, NavBar,LiveBar},
         props: ['post', 'match'],
         computed: {
             background: function() {
                 return "background: linear-gradient(to left, #fff, #444), url(" + this.post.image + ")"
             }
-        }
+        },
     }
 </script>
 
