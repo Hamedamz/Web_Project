@@ -16,7 +16,7 @@
 <style scoped>
     .navv{
         background: #a3d0d1;
-        padding: 5px;
+        padding: 13px;
     }
     a{
         margin-left: 60px;

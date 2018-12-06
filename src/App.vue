@@ -3,6 +3,7 @@
     <full-header :post="mainNews" :match="liveMatch"></full-header>
     <latest-news></latest-news>
     <latest-games></latest-games>
+    <main-footer></main-footer>
   </div>
 </template>
 
@@ -11,6 +12,7 @@
 import LatestNews from "@/components/LatestNews";
 import LatestGames from "@/components/LatestGames";
 import FullHeader from "@/components/FullHeader";
+import MainFooter from "@/components/MainFooter";
 
 export default {
   name: 'app',
@@ -18,6 +20,7 @@ export default {
       FullHeader,
       LatestGames,
       LatestNews,
+      MainFooter,
   },
   data() {
       return {
