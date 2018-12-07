@@ -30,5 +30,6 @@
         background-size: cover !important;
         background-position: center center !important;
         background-blend-mode: multiply;
+        height: 100%;
     }
 </style>

@@ -10,7 +10,8 @@
   "dependencies": {
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-vue": "^0.7.0",
-    "vue": "^2.5.17"
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.2.0",

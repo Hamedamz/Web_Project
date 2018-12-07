@@ -49,7 +49,7 @@
     }
 
     .result {
-        font-size: xx-large;
+        font-size: x-large;
     }
 
     .match-time {
