@@ -1,7 +1,7 @@
 <template>
     <div id="Home">
     <full-header :post="mainNews" :match="liveMatch"></full-header>
-    <latest-news></latest-news>
+    <latest-news :with-header="true"></latest-news>
     <latest-games></latest-games>
     <main-footer></main-footer>
     </div>

@@ -10,6 +10,7 @@
                         color="red"
                         icon="heart"
                         floated="right"
+                        circular
                 >
                 </sui-button>
             </sui-grid-column>

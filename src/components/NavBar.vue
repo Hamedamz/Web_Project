@@ -12,8 +12,8 @@
                    @mouseleave="leave">BasketBall</a>
             </div>
             <div class="float righted">
-                <sui-button icon="user" color="white" inverted/>
-                <sui-button icon="search" color="white" inverted/>
+                <sui-button circular icon="user" color="white" inverted/>
+                <sui-button circular icon="search" color="white" inverted/>
             </div>
         </div>
         <div @mouseover="showSub" @mouseleave="leave">

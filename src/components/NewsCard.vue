@@ -11,7 +11,7 @@
                 {{post.category.toUpperCase()}}
             </div>
             <h3 class="post-title">{{post.title}}</h3>
-            <sui-button size="mini" color="grey" basic>Full Story</sui-button>
+            <sui-button circular size="mini" color="grey" basic>Full Story</sui-button>
         </div>
     </sui-grid-column>
 </template>
@@ -50,7 +50,7 @@
     }
     .post {
         background: linear-gradient(to left, #000, rgba(255, 255, 255, .1));
-        padding: 1rem;
+        padding: 0.75rem;
         width: 100%;
         border-radius: 0 0 15px 15px;
         flex-grow: 1;

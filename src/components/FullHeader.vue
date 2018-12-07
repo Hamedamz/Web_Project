@@ -9,7 +9,7 @@
             <div class="main-news">
                 <div class="main-news-cat">{{post.category.toUpperCase()}}</div>
                 <h1 is="sui-header" class="main-news-title" inverted>{{post.title}}</h1>
-                <sui-button inverted>Full Story</sui-button>
+                <sui-button circular inverted>Full Story</sui-button>
             </div>
         </sui-container>
     </div>

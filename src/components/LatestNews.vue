@@ -1,6 +1,6 @@
 <template>
     <div class="latest-news">
-        <sui-grid class="container-fluid padded head">
+        <sui-grid v-if="withHeader" class="container-fluid padded head">
             <h2 is="sui-header" inverted>Latest News</h2>
             <div>
                 <sui-dropdown
@@ -9,7 +9,7 @@
                         floating
                         labeled
                         button
-                        class="icon grey basic small"
+                        class="icon grey basic small circular"
                         v-model="filter"
                         :options="options"
                 ></sui-dropdown>
@@ -19,6 +19,7 @@
                         size="small"
                         color="red"
                         icon="heart"
+                        circular
                 >
                 </sui-button>
             </div>
@@ -29,6 +30,9 @@
                     :key="post.id"
                     :post="post"
             ></news-card>
+            <sui-grid-row>
+                <sui-button basic inverted color="red" circular class="m-auto" icon="ellipsis horizontal"></sui-button>
+            </sui-grid-row>
         </sui-grid>
     </div>
 </template>
@@ -41,6 +45,7 @@
     export default {
         name: "latest-news",
         components: {SuiDropdown, NewsCard},
+        props: ['withHeader'],
         data() {
             return {
                 posts: [
@@ -145,5 +150,8 @@
     .head {
         justify-content: space-between;
         flex-wrap: wrap;
+    }
+    .m-auto {
+        margin: 0 auto;
     }
 </style>
