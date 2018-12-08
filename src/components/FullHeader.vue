@@ -1,7 +1,6 @@
 <template>
     <div class="full-header" :style="background" >
-        <nav-bar :home=true :soccer=false :basket=false></nav-bar>
-        <a></a>
+        <span></span>
         <sui-container>
             <match-card class="max" :match="match"></match-card>
         </sui-container>
@@ -16,11 +15,10 @@
 </template>
 
 <script>
-    import NavBar from "@/components/NavBar";
     import MatchCard from "@/components/MatchCard";
     export default {
         name: "FullHeader",
-        components: {MatchCard, NavBar},
+        components: {MatchCard},
         props: ['post', 'match'],
         computed: {
             background: function() {

@@ -1,12 +1,15 @@
 <template>
     <div id="app">
+        <slider-nav></slider-nav>
         <router-view></router-view>
     </div>
 </template>
 
 <script>
+    import SliderNav from "@/components/SliderNav";
     export default {
         name: 'app',
+        components: {SliderNav},
     }
 </script>
 

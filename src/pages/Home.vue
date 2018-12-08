@@ -1,9 +1,11 @@
 <template>
     <div id="Home">
-    <full-header :post="mainNews" :match="liveMatch"></full-header>
-    <latest-news :with-header="true"></latest-news>
-    <latest-games></latest-games>
-    <main-footer></main-footer>
+        <!--<slider-nav></slider-nav>-->
+        <!--<nav-bar :home=true :soccer=false :basket=false></nav-bar>-->
+        <full-header :post="mainNews" :match="liveMatch"></full-header>
+        <latest-news :with-header="true"></latest-news>
+        <latest-games></latest-games>
+        <main-footer></main-footer>
     </div>
 </template>
 
@@ -12,9 +14,12 @@
     import LatestNews from "@/components/LatestNews";
     import LatestGames from "@/components/LatestGames";
     import MainFooter from "@/components/MainFooter";
+    import SliderNav from "@/components/SliderNav";
+    import NavBar from "@/components/NavBar";
+
     export default {
         name: "Home",
-        components: {MainFooter, LatestGames, LatestNews, FullHeader},
+        components: {NavBar, SliderNav, MainFooter, LatestGames, LatestNews, FullHeader},
         data() {
             return {
                 mainNews: {

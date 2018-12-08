@@ -1,8 +1,6 @@
 <template>
     <div id="match">
-        <div class="match-image" :style="background">
-            <nav-bar></nav-bar>
-        </div>
+        <div class="match-image" :style="background"></div>
         <sui-container class="match-container">
             <match-time-line :time-line="timeLine" :match="match"></match-time-line>
             <div class="match-tabbed-view">
