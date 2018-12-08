@@ -1,7 +1,7 @@
 <template>
     <div class="footer">
         <div class="logo-div">
-            <sui-header href="#" class="logo large">LOGO</sui-header>
+            <sui-header href="#" class="logo large inverted">LOGO</sui-header>
         </div>
         <div class="float">
             <div class="first">
@@ -93,7 +93,7 @@
     .logo:after {
         content: "";
         position: absolute;
-        height: 5px;
+        height: 15px;
         border-bottom: 1px solid rgba(255, 255, 255, 0.25);
         top: 0;
         width: 2000px;
