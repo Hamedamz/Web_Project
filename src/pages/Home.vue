@@ -1,11 +1,8 @@
 <template>
     <div id="Home">
-        <!--<slider-nav></slider-nav>-->
-        <!--<nav-bar :home=true :soccer=false :basket=false></nav-bar>-->
         <full-header :post="mainNews" :match="liveMatch"></full-header>
         <latest-news :with-header="true"></latest-news>
         <latest-games></latest-games>
-        <main-footer></main-footer>
     </div>
 </template>
 

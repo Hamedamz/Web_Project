@@ -1,7 +1,7 @@
 <template>
     <div class="footer">
         <div class="logo-div">
-            <p href="#" class="logo">ElCampous</p>
+            <sui-header href="#" class="logo large">LOGO</sui-header>
         </div>
         <div class="float">
             <div class="first">
@@ -21,9 +21,11 @@
                 <sui-button circular social="facebook" icon="facebook"></sui-button>
                 <sui-button circular social="twitter" icon="twitter"></sui-button>
                 <sui-button circular social="instagram" icon="instagram"></sui-button>
-                <span class="white">WEEKLY NEWSLETTER</span>
-                <sui-input placeholder="JOHNDOE@EMAIL.CO"></sui-input>
-                <sui-button basic color="black" inverted class="inp">SUBSCRIBE</sui-button>
+                <span class="white">Weekly Newsletter</span>
+                <div class="ui action input inverted">
+                    <input type="text" placeholder="email...">
+                    <button class="ui button red">Subscribe</button>
+                </div>
             </div>
             <div class="third">
                 <ul>
@@ -40,7 +42,7 @@
             </div>
         </div>
         <p class="cp-text">
-            © Copyright 2015 ElCampous All rights reserved.
+            © Copyright 2015 ElCampos All rights reserved.
         </p>
     </div>
 </template>
@@ -59,7 +61,7 @@
         background-size: cover !important;
         background-position: center center !important;
         background-blend-mode: multiply;
-
+        margin-top: 2rem;
     }
 
     .third {
@@ -74,15 +76,13 @@
     }
 
     .logo {
-        font-family: "Bodoni 72 Oldstyle", sans-serif;
-        letter-spacing: 1.2px;
         font-size: 20px;
         color: #ffffff;
         line-height: 0.5;
         text-align: center;
         display: inline-block;
         position: relative;
-        padding: 0 10%;
+        padding: 0 1rem;
     }
 
     .logo-div {
@@ -94,7 +94,7 @@
         content: "";
         position: absolute;
         height: 5px;
-        border-bottom: 1px solid white;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.25);
         top: 0;
         width: 2000px;
     }
@@ -112,7 +112,6 @@
     .first {
         margin-left: 10% !important;
         text-align: center;
-
     }
 
     .second {
@@ -125,9 +124,6 @@
         text-decoration: none !important;
         color: #ffffff !important;
         font-weight: 500;
-        letter-spacing: 1.2px;
-        font-family: "Avenir Next Condensed";
-
     }
 
     li {
@@ -135,7 +131,7 @@
     }
 
     ul {
-        padding: 0px;
+        padding: 0;
         list-style-type: none;
     }
 
@@ -150,7 +146,7 @@
 
     a:hover:after {
         transition: width 100ms ease-in-out 0s;
-        width: 9rem;
+        width: 4rem;
     }
 
     span {
@@ -167,7 +163,7 @@
         content: '';
         width: 1px;
         height: 50px;
-        background: #f9f9f9;
+        background: rgba(255, 255, 255, 0.25);
         position: absolute;
         bottom: 100%;
         left: 50%;
