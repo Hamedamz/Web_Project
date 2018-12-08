@@ -7,7 +7,7 @@
                 <sui-button @click="isOpen = !isOpen" icon="bars" floated="left" color="red" basic inverted
                             circular></sui-button>
                 <sui-button icon="user" floated="right" basic inverted circular></sui-button>
-                <sui-button icon="search" floated="right" basic inverted circular></sui-button>
+                <sui-button icon="search" floated="right" basic inverted circular><sui-input class="transparent search-input"></sui-input></sui-button>
             </sui-container>
         </div>
         <div class="ui wide sidebar inverted vertical menu" :class="{visible: isOpen}">
@@ -68,7 +68,9 @@
     #slider-nav .wrapper {
         width: 100vw;
     }
-
+    .search-input {
+        margin: -0.5rem 0;
+    }
     .logo {
         display: inline-block;
         text-align: center;
