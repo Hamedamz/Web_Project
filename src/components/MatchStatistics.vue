@@ -1,5 +1,5 @@
 <template>
-    <div class="padded">
+    <div c>
     </div>
 </template>
 

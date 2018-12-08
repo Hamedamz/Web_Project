@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <sui-table single-line stackable inverted striped selectable color="black">
+    <div class="main">
+        <sui-table single-line stackable inverted striped selectable color="black" >
             <sui-table-body>
                 <match-event v-for="ne in news" :news="ne" :key="ne.id"></match-event>
             </sui-table-body>
@@ -36,4 +36,7 @@
 </script>
 
 <style scoped>
+    .main{
+        padding: 1rem 0;
+    }
 </style>
