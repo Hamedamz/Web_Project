@@ -4,7 +4,7 @@
             <nav-bar></nav-bar>
         </div>
         <sui-container class="match-container">
-            <match-time-line></match-time-line>
+            <match-time-line :time-line="timeLine" :match="match"></match-time-line>
             <div class="match-tabbed-view">
                 <match-card :match="match"></match-card>
                 <div class="match-menu">
@@ -18,7 +18,6 @@
                                 :content="tab"
                         ></sui-button>
                     </sui-button-group>
-
                     <component
                             v-bind:is="currentTabComponent"
                             class="tab"
@@ -56,19 +55,24 @@
                 currentTab: 'Report',
                 tabs: ['Report', 'Statistics', 'LinesUp', 'News', 'Media'],
                 match: {
+                    sport: 'football',
                     image: 'static/i5.jpg',
                     homeName: 'LIV',
                     homeBadge: 'static/liv.png',
                     awayName: 'MAN',
                     awayBadge: 'static/man.png',
                     result: '4 : 1',
-                    time: "68'",
-                }
+                    time: "FT",
+                },
+                timeLine: [
+                    {id: 1, side: 'home', time: 22, event: "goal", description: "Andreas Pereira Goal - Free-kick"},
+                    {id: 2, side: 'away', time: 47, event: "goal", description: "Andreas Pereira Goal - Free-kick"},
+                ]
             }
         },
         computed: {
             background: function () {
-                return "background: linear-gradient(#fff, #fff, #000), url(" + this.match.image + ")"
+                return "background: linear-gradient(#fff, #fff, #000), url(" + this.match.image + ") fixed"
             },
             currentTabComponent: function () {
                 return 'match-' + this.currentTab.toLowerCase()
@@ -85,11 +89,9 @@
         background-position: center center !important;
         background-blend-mode: multiply;
     }
-
     .match-container {
         margin-top: -30vh;
     }
-
     .match-tabbed-view {
         border-radius: 15px;
         background: black;
