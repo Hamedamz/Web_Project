@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "run": "^1.4.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-vue": "^0.7.0",
     "vue": "^2.5.17",
