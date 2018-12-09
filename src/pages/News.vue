@@ -34,6 +34,8 @@
             </div>
             <sui-divider inverted></sui-divider>
             <div v-html="post.content" class="post-content" :style="fontSize"></div>
+            <sui-divider></sui-divider>
+            <latest-news :posts="relatedPosts" with-header="Related"></latest-news>
             <post-comments></post-comments>
         </template>
     </full-page-image-container>
@@ -42,6 +44,7 @@
 <script>
     import FullPageImageContainer from "@/layouts/FullPageImageContainer";
     import PostComments from "@/components/PostComments";
+    import LatestNews from "@/components/LatestNews";
 
     export default {
         name: "News",
@@ -65,9 +68,43 @@
                         "<p>Etiam eget dui. Aliquam erat volutpat. Sed at lorem in nunc porta tristique. Proin nec augue. Quisque aliquam tempor magna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc ac magna. </p>\n" +
                         "<p>Maecenas odio dolor, vulputate vel, auctor ac, accumsan id, felis. Pellentesque cursus sagittis felis. Pellentesque porttitor, velit lacinia egestas auctor, diam eros tempus arcu, nec vulputate augue magna vel risus. Cras non magna vel ante adipiscing rhoncus. Vivamus a mi. Morbi neque. Aliquam erat volutpat. </p>\n",
                 },
+                relatedPosts: [
+                    {
+                        id: 1,
+                        title: 'A home for the pride key to roaring Lions',
+                        image: 'http://a2.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F1128%2Fr470200_1296x729_16%2D9.png&w=544&h=306&scale=crop&cquality=80&location=origin',
+                        type: 'small',
+                        category: 'premiere league',
+                        sport: 'football',
+                    },
+                    {
+                        id: 2,
+                        title: 'Wright Thompson: Italian football gets in your blood',
+                        image: 'http://a2.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F0929%2Fr438829_1296x729_16%2D9.jpg&w=544&h=306&scale=crop&cquality=80&location=origin',
+                        type: 'small',
+                        category: 'premiere league',
+                        sport: 'football',
+                    },
+                    {
+                        id: 3,
+                        title: 'By the numbers: Ronaldo equals 51-year-old record',
+                        image: 'http://a3.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F0816%2Fr415461_2_608x342_16%2D9.jpg&w=544&h=306&scale=crop&cquality=80&location=origin',
+                        type: 'small',
+                        category: 'serie A',
+                        sport: 'football',
+                    },
+                    {
+                        id: 4,
+                        title: 'Why Liverpool should sell Salah',
+                        image: 'http://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F0816%2Fr415458_608x342_16%2D9.jpg&w=544&h=306&scale=crop&cquality=80&location=origin',
+                        type: 'small',
+                        category: 'premiere league',
+                        sport: 'football',
+                    },
+                ],
             }
         },
-        components: {PostComments, FullPageImageContainer},
+        components: {LatestNews, PostComments, FullPageImageContainer},
         methods: {
             incrementSize: function () {
                 if (this.size < 20)
