@@ -10,13 +10,10 @@
     import FullHeader from "@/components/FullHeader";
     import LatestNews from "@/components/LatestNews";
     import LatestGames from "@/components/LatestGames";
-    import MainFooter from "@/components/MainFooter";
-    import SliderNav from "@/components/SliderNav";
-    import NavBar from "@/components/NavBar";
 
     export default {
         name: "Home",
-        components: {NavBar, SliderNav, MainFooter, LatestGames, LatestNews, FullHeader},
+        components: {LatestGames, LatestNews, FullHeader},
         data() {
             return {
                 mainNews: {

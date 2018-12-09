@@ -7,12 +7,14 @@
                 <sui-button @click="isOpen = !isOpen" icon="bars" floated="left" color="red" basic inverted
                             circular></sui-button>
                 <sui-button icon="user" floated="right" basic inverted circular></sui-button>
-                <sui-button icon="search" floated="right" basic inverted circular><sui-input class="transparent search-input"></sui-input></sui-button>
+                <sui-button icon="search" floated="right" basic inverted circular @click="toggleSearch">
+                    <sui-input v-if="isSearch" v-model="search" class="transparent inverted search-input" @click.stop="" @></sui-input>
+                </sui-button>
             </sui-container>
         </div>
         <div class="ui wide sidebar inverted vertical menu" :class="{visible: isOpen}">
-            <div is="sui-segment" inverted>
-                <sui-accordion exclusive inverted>
+            <div is="sui-segment" inverted class="nav-menu">
+                <sui-accordion exclusive inverted transparent>
                     <div v-for="menu in menus" :key="menu.id">
                     <sui-accordion-title>
                         <sui-icon name="dropdown" />
@@ -38,6 +40,8 @@
             return {
                 alpha: 0,
                 isOpen: false,
+                isSearch: false,
+                search: '',
                 menus: [
                     {id: 1, name: 'Football', items: [{id: 11, name: 'A'}, {id: 12, name: 'B'}, {id: 13, name: 'C'},]},
                     {id: 2, name: 'BasketBall', items: [{id: 21, name: 'A'}, {id: 22, name: 'B'}, {id: 23, name: 'C'},]},
@@ -48,6 +52,10 @@
             scrolling: function () {
                 this.alpha = window.scrollY / 500;
                 if (this.alpha > 1) this.alpha = 1;
+            },
+            toggleSearch: function () {
+                this.isSearch = !this.isSearch;
+                this.search.el.focus();
             }
         },
         computed: {
@@ -88,9 +96,13 @@
     }
     .ui.wide.sidebar {
         width: 250px;
+        background: linear-gradient(to right, rgb(0,0,0), rgba(0,0,0,0.8), rgba(0,0,0,0));
+    }
+    .nav-menu {
+        background: none!important;
     }
     .dimmer {
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(0, 0, 0, 0.1);
         z-index: auto;
         width: 100vw;
         height: 100%;
