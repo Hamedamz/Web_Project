@@ -1,5 +1,5 @@
 <template>
-    <a>LinesUp</a>
+
 </template>
 
 <script>

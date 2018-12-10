@@ -1,12 +1,15 @@
 <template>
-    <sui-table-body>
-        <sui-table-row text-align="center">
-            <sui-table-cell colspan="3">
-                {{stat.name}}
-            </sui-table-cell>
-        </sui-table-row>
-        <progress-bar :stat="stat"></progress-bar>
-    </sui-table-body>
+
+    <sui-table single-line unstackable inverted striped selectable color="black">
+        <sui-table-body>
+            <sui-table-row text-align="center">
+                <sui-table-cell colspan="3">
+                    {{stat.name}}
+                </sui-table-cell>
+            </sui-table-row>
+            <progress-bar :stat="stat"></progress-bar>
+        </sui-table-body>
+    </sui-table>
 </template>
 
 <script>

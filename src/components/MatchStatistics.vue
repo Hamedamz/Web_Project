@@ -1,10 +1,10 @@
 <template>
     <div class="padded">
-        <sui-table single-line stackable inverted striped selectable color="black">
+        <!--<sui-table single-line stackable inverted striped selectable color="black">-->
             <!--<sui-table-body>-->
             <single-stat v-for="st in stats" :key="1" :stat="st"></single-stat>
             <!--</sui-table-body>-->
-        </sui-table>
+        <!--</sui-table>-->
 
     </div>
 </template>
