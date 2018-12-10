@@ -16,11 +16,13 @@
                             :content="tab"
                     ></sui-button>
                 </sui-button-group>
-                <component
-                        v-bind:is="currentTabComponent"
-                        v-bind="currentTabProperties"
-                        class="tab"
-                ></component>
+                <keep-alive>
+                    <component
+                            v-bind:is="currentTabComponent"
+                            v-bind="currentTabProperties"
+                            class="tab"
+                    ></component>
+                </keep-alive>
             </div>
         </template>
     </full-page-image-container>
@@ -30,22 +32,22 @@
     import NavBar from "@/components/NavBar";
     import MatchCard from "@/components/MatchCard";
     import MatchReport from "@/components/MatchReport";
-    import MatchNews from "@/components/MatchNews";
     import MatchStatistics from "@/components/MatchStatistics";
     import MatchLinesup from "@/components/MatchLinesup";
     import MatchMedia from "@/components/MatchMedia";
     import MatchTimeLine from "@/components/MatchTimeLine";
     import FullPageImageContainer from "@/layouts/FullPageImageContainer";
+    import LatestNews from "@/components/LatestNews";
 
     export default {
         name: "Match",
         components: {
+            LatestNews,
             FullPageImageContainer,
             MatchTimeLine,
             MatchMedia,
             MatchLinesup,
             MatchStatistics,
-            MatchNews,
             MatchReport,
             MatchCard,
             NavBar
@@ -62,14 +64,6 @@
                         type: 'small',
                         category: 'premiere league',
                         sport: 'football',
-                    },
-                    {
-                        id: 2,
-                        title: 'Predicting Kevin Durant\'s next team and NBA legacy',
-                        image: 'http://a1.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F1129%2Fr470235_2_608x342_16%2D9.jpg&w=544&h=306&scale=crop&cquality=80&location=origin',
-                        type: 'small',
-                        category: 'NBA',
-                        sport: 'basketball',
                     },
                     {
                         id: 3,
@@ -130,10 +124,12 @@
         },
         computed: {
             currentTabComponent: function () {
+                if (this.currentTab.toLowerCase() === 'news')
+                    return 'latest-news';
                 return 'match-' + this.currentTab.toLowerCase()
             },
             currentTabProperties: function () {
-                if (this.currentTabComponent === 'match-news')
+                if (this.currentTabComponent === 'latest-news')
                     return {posts: this.posts};
                 return {};
             }
