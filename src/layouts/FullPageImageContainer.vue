@@ -18,7 +18,7 @@
             background: function () {
                 let image = this.image ? ", url(" + this.image + ") fixed;" : ";";
                 let colorbg = this.color ? this.color: "#fff";
-                let back = "background: linear-gradient(" + colorbg + ", #000)" + image;
+                let back = "background: linear-gradient(0deg, #000 0%, " + colorbg + " 40%)" + image;
                 let height = "height: " + (this.small? "50": "100") + "vh;";
                 return height + back;
             },
