@@ -13,10 +13,14 @@
 <script>
     export default {
         name: "FullPageImageContainer",
-        props: ['image'],
+        props: ['image', 'small', 'color'],
         computed: {
             background: function () {
-                return "background: linear-gradient(#fff, #fff, #000), url(" + this.image + ") fixed"
+                let image = this.image ? ", url(" + this.image + ") fixed;" : ";";
+                let colorbg = this.color ? this.color: "#fff";
+                let back = "background: linear-gradient(" + colorbg + ", #000)" + image;
+                let height = "height: " + (this.small? "50": "100") + "vh;";
+                return height + back;
             },
         }
     }
@@ -25,7 +29,6 @@
 <style scoped>
     .full-image {
         width: 100vw;
-        height: 100vh;
         background-size: cover !important;
         background-position: center center !important;
         background-blend-mode: multiply;
