@@ -1,5 +1,6 @@
 <template>
-    <a is="sui-grid-column" class="match-cell" :width="8" href="#">
+    <a is="sui-grid-column" :width="8" href="#">
+        <sui-segment class="match-cell" inverted>
         <div class="teams"><div>
             <sui-image :src="match.homeBadge" avatar></sui-image>
             <span>{{match.homeName}}</span>
@@ -11,6 +12,7 @@
             <span class="res">{{awayPt}}</span>
         </div></div>
         <div class="time">{{match.time}}</div>
+        </sui-segment>
     </a>
 </template>
 
@@ -46,6 +48,6 @@
         text-align: center;
         border-left: solid 2px rgba(255, 255, 255, 0.1);
         flex-grow: 1;
-        padding-top: 1rem;
+        padding: 1rem 0;
     }
 </style>
