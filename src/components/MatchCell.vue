@@ -1,10 +1,12 @@
 <template>
-    <p>Matches</p>
+    <div id="match-cell">
+
+    </div>
 </template>
 
 <script>
     export default {
-        name: "MatchGrid"
+        name: "MatchCell"
     }
 </script>
 

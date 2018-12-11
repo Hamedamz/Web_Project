@@ -1,6 +1,6 @@
 <template>
     <div id="standings">
-        <sui-table inverted striped selectable color="black">
+        <sui-table inverted striped selectable unstackable color="black">
         <sui-table-header>
             <sui-table-row>
                 <sui-table-header-cell></sui-table-header-cell>

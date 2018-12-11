@@ -12,7 +12,7 @@
         </template>
         <template slot="main">
             <div class="league-menu">
-                <sui-button-group :widths="3" class="padded">
+                <sui-button-group :widths="4" class="padded">
                     <sui-button
                             v-for="tab in tabs"
                             :key="tab.name"
@@ -38,17 +38,19 @@
     import FullPageImageContainer from "@/layouts/FullPageImageContainer";
     import StandingsTable from "@/components/StandingsTable";
     import LatestNews from "@/components/LatestNews";
+    import KnockOutTable from "@/components/KnockOutTable";
+    import MatchTable from "@/components/MatchTable";
 
     export default {
         name: "League",
-        components: {StandingsTable, FullPageImageContainer, LatestNews},
+        components: {StandingsTable, FullPageImageContainer, LatestNews, KnockOutTable, MatchTable},
         data() {
             return {
                 name: 'English Premier League',
                 badge: 'static/eng1.png',
-                tabs: [{name: 'Standings', comp: 'standings-table'}, {
+                tabs: [{name: 'Standings', comp: 'standings-table'}, {name: 'Knockout Phase', comp: 'knock-out-table'}, {
                     name: 'Matches',
-                    comp: 'match-grid'
+                    comp: 'match-table'
                 }, {name: 'News', comp: 'latest-news'}],
                 currentTab: {name: 'Standings', comp: 'standings-table'},
                 posts: [

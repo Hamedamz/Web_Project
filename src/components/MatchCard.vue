@@ -1,13 +1,13 @@
 <template>
-    <a class="match-card  ui inverted">
+    <a class="match-card  ui inverted" id="matchCard" :class="{small: isSmall}">
         <div class="team-badge">
             <img :src="match.homeBadge" :alt="match.homeName">
         </div>
         <div class="match-info">
             <div class="match-result">
-                <span>{{match.homeName}}</span>
+                <span class="name">{{match.homeName}}</span>
                 <span class="result">{{match.result}}</span>
-                <span>{{match.awayName}}</span>
+                <span class="name">{{match.awayName}}</span>
             </div>
             <div class="match-time">{{match.time}}</div>
         </div>
@@ -20,18 +20,64 @@
 <script>
     export default {
         name: "MatchCard",
-        props: ['match'],
+        props: ['match', 'isSmall'],
     }
 </script>
 
 <style scoped>
     .match-card {
-        padding: 0.5rem 1.5rem;
+        /*padding: 0.5rem 1.5rem;*/
         color: white !important;
         width: 100%;
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-between;
     }
+
+    @media (max-width: 450px) {
+        .match-info {
+            order: 3;
+            flex-basis: 100% !important;
+        }
+
+        .result {
+            order: 3;
+            flex-basis: 100%;
+        }
+
+        .match-result {
+            flex-wrap: wrap;
+        }
+
+        .team-badge {
+            flex-basis: 50%;
+        }
+    }
+
+    .small .match-info {
+        order: 3;
+        flex-basis: 100%;
+    }
+
+    .small .result {
+        order: 3;
+        flex-basis: 100%;
+    }
+
+    .small .match-result {
+        flex-wrap: wrap;
+    }
+
+    .small .team-badge {
+        flex-basis: 50%;
+    }
+
+    /*.team-badge:nth-child(1) {*/
+    /*padding-right: 20%;*/
+    /*}*/
+    /*.team-badge:nth-child(3) {*/
+    /*padding-left: 20%;*/
+    /*}*/
 
     .match-info {
         flex: auto;
@@ -39,17 +85,17 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-
+        font-size: 80% !important;
     }
 
     .match-result {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         font-weight: bold;
     }
 
     .result {
-        font-size: x-large;
+        font-size: 170%;
     }
 
     .match-time {
@@ -58,6 +104,21 @@
     }
 
     .match-card img {
-        max-height: 70px;
+        width: 100%;
+    }
+
+    .team-badge {
+        text-align: center;
+        width: 15%;
+        min-width: 25px;
+        max-width: 70px;
+        /*max-height: 70px;*/
+    }
+
+    .name:nth-child(1) {
+        padding-left: 9%;
+    }
+    .name:nth-child(3) {
+        padding-right: 9% !important;
     }
 </style>

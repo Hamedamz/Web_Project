@@ -31,5 +31,6 @@
         background-position: center center !important;
         background-blend-mode: multiply;
         height: 100%;
+        padding: 1rem 1.5rem;
     }
 </style>
