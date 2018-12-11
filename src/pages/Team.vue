@@ -4,7 +4,7 @@
             <div class="flex">
                 <sui-item-group>
                     <sui-item>
-                        <sui-item-image size="medium" class="circular" :src="team.icon"/>
+                        <sui-item-image size="tiny" class="circular" :src="team.icon"/>
                         <sui-item-content vertical-align="middle">
                             <sui-item-header class="team-name">{{team.name}}</sui-item-header>
                         </sui-item-content>

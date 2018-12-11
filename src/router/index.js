@@ -6,6 +6,7 @@ import News from '@/pages/News'
 import Player from '@/pages/Player'
 import Team from '@/pages/Team'
 import League from "@/pages/League";
+import Leagues from "@/pages/Leagues";
 
 Vue.use(Router)
 
@@ -30,6 +31,11 @@ export default new Router({
             path: '/league',
             name: 'League',
             component: League
+        },
+        {
+            path: '/leagues',
+            name: 'Leagues',
+            component: Leagues
         },
         {
             path: '/player',
