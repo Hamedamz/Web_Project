@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/pages/Home'
 import Match from '@/pages/Match'
 import News from '@/pages/News'
+import League from "@/pages/League";
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
             path: '/news',
             name: 'News',
             component: News
+        },
+        {
+            path: '/league',
+            name: 'League',
+            component: League
         },
     ]
 })

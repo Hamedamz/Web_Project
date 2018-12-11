@@ -1,19 +1,25 @@
 <template>
-    <full-page-image-container :image="match.image">
+    <full-page-image-container small="true" color="#3f1052">
         <template slot="header">
-            <match-time-line :time-line="timeLine" :match="match"></match-time-line>
+            <sui-item-group>
+                <sui-item>
+                    <sui-item-image size="tiny" class="circular" :src="badge"/>
+                    <sui-item-content vertical-align="middle">
+                        <sui-item-header class="league-name">{{name}}</sui-item-header>
+                    </sui-item-content>
+                </sui-item>
+            </sui-item-group>
         </template>
         <template slot="main">
-            <match-card :match="match"></match-card>
-            <div class="match-menu">
-                <sui-button-group :widths="5">
+            <div class="league-menu">
+                <sui-button-group :widths="3" class="padded">
                     <sui-button
                             v-for="tab in tabs"
-                            :key="tab"
+                            :key="tab.name"
                             @click="currentTab = tab"
                             color="red"
-                            :basic="currentTab !== tab"
-                            :content="tab"
+                            :basic="currentTab.name !== tab.name"
+                            :content="tab.name"
                     ></sui-button>
                 </sui-button-group>
                 <keep-alive>
@@ -29,31 +35,22 @@
 </template>
 
 <script>
-    import MatchCard from "@/components/MatchCard";
-    import MatchReport from "@/components/MatchReport";
-    import MatchStatistics from "@/components/MatchStatistics";
-    import MatchLinesup from "@/components/MatchLinesup";
-    import MatchMedia from "@/components/MatchMedia";
-    import MatchTimeLine from "@/components/MatchTimeLine";
     import FullPageImageContainer from "@/layouts/FullPageImageContainer";
+    import StandingsTable from "@/components/StandingsTable";
     import LatestNews from "@/components/LatestNews";
 
     export default {
-        name: "Match",
-        components: {
-            FullPageImageContainer,
-            MatchTimeLine,
-            MatchCard,
-            MatchReport,
-            MatchStatistics,
-            MatchLinesup,
-            MatchMedia,
-            LatestNews
-        },
+        name: "League",
+        components: {StandingsTable, FullPageImageContainer, LatestNews},
         data() {
             return {
-                currentTab: 'Report',
-                tabs: ['Report', 'Statistics', 'LinesUp', 'News', 'Media'],
+                name: 'English Premier League',
+                badge: 'static/eng1.png',
+                tabs: [{name: 'Standings', comp: 'standings-table'}, {
+                    name: 'Matches',
+                    comp: 'match-grid'
+                }, {name: 'News', comp: 'latest-news'}],
+                currentTab: {name: 'Standings', comp: 'standings-table'},
                 posts: [
                     {
                         id: 1,
@@ -104,31 +101,66 @@
                         sport: 'football',
                     },
                 ],
-                match: {
-                    sport: 'football',
-                    image: 'static/i5.jpg',
-                    homeName: 'LIV',
-                    homeBadge: 'static/liv.png',
-                    awayName: 'MAN',
-                    awayBadge: 'static/man.png',
-                    result: '4 : 1',
-                    time: "FT",
-                },
-                timeLine: [
-                    {id: 1, side: 'home', time: 22, event: "goal", description: "Andreas Pereira Goal - Free-kick"},
-                    {id: 2, side: 'away', time: 47, event: "goal", description: "Andreas Pereira Goal - Free-kick"},
-                ]
+                table: {
+                    columns: ['Club', 'MP', 'W', 'D', 'L', 'GF', 'GA', 'GD', 'Pts'],
+                    rows: [
+                        {
+                            Club: {name: 'Liverpool', badge: 'static/liv.png'},
+                            MP: 16,
+                            W: 13,
+                            D: 3,
+                            L: 0,
+                            GF: 34,
+                            GA: 6,
+                            GD: 28,
+                            Pts: 42
+                        },
+                        {
+                            Club: {name: 'Tottenham', badge: 'static/tot.png'},
+                            MP: 16,
+                            W: 13,
+                            D: 2,
+                            L: 1,
+                            GF: 45,
+                            GA: 9,
+                            GD: 36,
+                            Pts: 41
+                        },
+                        {
+                            Club: {name: 'Arsenal', badge: 'static/ars.png'},
+                            MP: 16,
+                            W: 10,
+                            D: 4,
+                            L: 2,
+                            GF: 35,
+                            GA: 20,
+                            GD: 15,
+                            Pts: 34
+                        },
+                        {
+                            Club: {name: 'Man United', badge: 'static/man.png'},
+                            MP: 16,
+                            W: 7,
+                            D: 5,
+                            L: 4,
+                            GF: 28,
+                            GA: 26,
+                            GD: 2,
+                            Pts: 26
+                        },
+                    ],
+                }
             }
         },
         computed: {
             currentTabComponent: function () {
-                if (this.currentTab.toLowerCase() === 'news')
-                    return 'latest-news';
-                return 'match-' + this.currentTab.toLowerCase()
+                return this.currentTab.comp
             },
             currentTabProperties: function () {
                 if (this.currentTabComponent === 'latest-news')
                     return {posts: this.posts};
+                if (this.currentTabComponent === 'standings-table')
+                    return {table: this.table};
                 return {};
             }
         },
@@ -136,5 +168,12 @@
 </script>
 
 <style scoped>
+    .league-name {
+        font-size: xx-large !important;
+        color: white !important;
+    }
 
+    .padded {
+        padding-bottom: 1rem;
+    }
 </style>
