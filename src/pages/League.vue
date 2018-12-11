@@ -12,7 +12,7 @@
         </template>
         <template slot="main">
             <div class="league-menu">
-                <sui-button-group :widths="4" class="padded">
+                <sui-button-group :widths="3" class="padded">
                     <sui-button
                             v-for="tab in tabs"
                             :key="tab.name"
