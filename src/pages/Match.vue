@@ -33,7 +33,6 @@
     import MatchReport from "@/components/MatchReport";
     import MatchStatistics from "@/components/MatchStatistics";
     import MatchLinesup from "@/components/MatchLinesup";
-    import MatchMedia from "@/components/MatchMedia";
     import MatchTimeLine from "@/components/MatchTimeLine";
     import FullPageImageContainer from "@/layouts/FullPageImageContainer";
     import LatestNews from "@/components/LatestNews";
@@ -47,7 +46,6 @@
             MatchReport,
             MatchStatistics,
             MatchLinesup,
-            MatchMedia,
             LatestNews
         },
         data() {
@@ -104,6 +102,44 @@
                         sport: 'football',
                     },
                 ],
+                media: [
+                    {
+                        id: 4,
+                        title: 'By the numbers: Ronaldo equals 51-year-old record',
+                        image: 'http://a3.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F0816%2Fr415461_2_608x342_16%2D9.jpg&w=544&h=306&scale=crop&cquality=80&location=origin',
+                        type: 'big',
+                        category: 'serie A',
+                        sport: 'football',
+                        media: 'photo'
+                    },
+                    {
+                        id: 5,
+                        title: 'Why Liverpool should sell Salah',
+                        image: 'http://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F0816%2Fr415458_608x342_16%2D9.jpg&w=544&h=306&scale=crop&cquality=80&location=origin',
+                        type: 'big',
+                        category: 'premiere league',
+                        sport: 'football',
+                        media: 'photo'
+                    },
+                    {
+                        id: 6,
+                        title: 'Who\'s more important to Man United: Pogba or Mourinho?',
+                        image: 'http://a3.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F0816%2Fr415457_608x342_16%2D9.jpg&w=544&h=306&scale=crop&cquality=80&location=origin',
+                        type: 'big',
+                        category: 'premiere league',
+                        sport: 'football',
+                        media: 'video'
+                    },
+                    {
+                        id: 7,
+                        title: 'Kylian Mbappe and the curse of winning a World Cup',
+                        image: 'http://a2.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F0925%2Fr436811_1296x729_16%2D9.jpg&w=544&h=306&scale=crop&cquality=80&location=origin',
+                        type: 'big',
+                        category: 'World Cup',
+                        sport: 'football',
+                        media: 'photo'
+                    },
+                ],
                 match: {
                     sport: 'football',
                     image: 'static/i5.jpg',
@@ -122,11 +158,13 @@
         },
         computed: {
             currentTabComponent: function () {
-                if (this.currentTab.toLowerCase() === 'news')
+                if (this.currentTab.toLowerCase() === 'news' || this.currentTab.toLowerCase() === 'media')
                     return 'latest-news';
                 return 'match-' + this.currentTab.toLowerCase()
             },
             currentTabProperties: function () {
+                if (this.currentTab.toLowerCase() === 'media')
+                    return {posts: this.media};
                 if (this.currentTabComponent === 'latest-news')
                     return {posts: this.posts};
                 return {};

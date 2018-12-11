@@ -2,7 +2,7 @@
     <sui-grid-column :width="post.type === 'small' ? 4 : 8" class="news-card" :class="{big: post.type === 'big'}">
         <img :src="post.image" :alt="post.title">
         <div class="post">
-            <div class="post-cat">
+            <div class="post-cat" v-if="!isMedia">
                 <sui-label
                         circular
                         :color="color"
@@ -10,8 +10,8 @@
                 ></sui-label>
                 {{post.category.toUpperCase()}}
             </div>
-            <h3 class="post-title">{{post.title}}</h3>
-            <sui-button circular size="mini" color="grey" basic>Full Story</sui-button>
+            <h3 class="post-title" v-if="post.media !== 'photo'"><sui-icon name="play" v-if="post.media === 'video'"></sui-icon>{{post.title}}</h3>
+            <sui-button circular size="mini" color="grey" basic v-if="!isMedia">Full Story</sui-button>
         </div>
     </sui-grid-column>
 </template>
@@ -23,6 +23,9 @@
         computed: {
             color: function () {
                 return this.post.sport ===  'football' ? 'green' : 'orange';
+            },
+            isMedia: function () {
+                return this.post.media === 'photo' || this.post.media === 'video'
             }
         }
     }
