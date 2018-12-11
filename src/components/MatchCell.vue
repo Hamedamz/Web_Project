@@ -4,12 +4,12 @@
         <div class="teams"><div>
             <sui-image :src="match.homeBadge" avatar></sui-image>
             <span>{{match.homeName}}</span>
-            <span class="res">{{homePt}}</span>
+            <span class="res"><sui-icon size="small" name="play" v-if="winHome"></sui-icon>{{homePt}}</span>
         </div>
         <div>
             <sui-image :src="match.awayBadge" avatar></sui-image>
             <span>{{match.awayName}}</span>
-            <span class="res">{{awayPt}}</span>
+            <span class="res"><sui-icon size="small" name="play" v-if="winAway"></sui-icon>{{awayPt}}</span>
         </div></div>
         <div class="time">{{match.time}}</div>
         </sui-segment>
@@ -22,10 +22,16 @@
         props: ['match'],
         computed: {
             homePt: function () {
-                return this.match.result.split(":")[0];
+                return this.match.result.split(":")[0].trim();
             },
             awayPt: function () {
-                return this.match.result.split(":")[1];
+                return this.match.result.split(":")[1].trim();
+            },
+            winHome: function () {
+                return this.homePt > this.awayPt;
+            },
+            winAway: function () {
+                return this.awayPt > this.homePt;
             },
         }
     }
