@@ -21,7 +21,7 @@
                 flex: {
                     display: 'flex',
                     flexDirection: 'column',
-                    width: '5vw',
+                    width: '12%',
                     position: 'absolute',
                     top: this.player.top + '%',
                     left: this.player.left + '%',
@@ -37,7 +37,7 @@
         border-top-right-radius: 50% 50%;
         border-bottom-right-radius: 50% 50%;
         border-bottom-left-radius: 50% 50%;
-        width: 4vw;
+        width: 80%;
         margin: auto;
         /*height: 10vh;*/
 
@@ -48,8 +48,8 @@
         text-align: center;
         background: rgba(0, 0, 0, 0.5);
         border-radius: 20%;
-        font-size: 1vw;
-        /*width: 90%;*/
+        font-size: 90%;
+        width: auto;
         background-size: cover;
         padding:1%;
     }

@@ -1,7 +1,7 @@
 <template>
     <div class="field">
         <soccer-player v-for=" player in players" :key="player.id" :player="player"></soccer-player>
-        <img src="https://a.espncdn.com/redesign/assets/img/formations/ukcom-soccer-field-001.svg"
+        <img src="static/SocField.svg"
              style="visibility: hidden;"/>
     </div>
 </template>
@@ -20,10 +20,9 @@
         background: url("https://a.espncdn.com/redesign/assets/img/formations/ukcom-soccer-field-001.svg");
         background-repeat: no-repeat;
         background-size: contain;
-        width: 40vw;
+        width: 100%;
         position: relative;
     }
-
     .ba {
         display: flex;
     }
