@@ -24,12 +24,16 @@
                 </sui-button>
             </div>
         </sui-grid>
-        <sui-grid class="container-fluid stackable padded">
+        <transition-group name="cell" class="ui grid container-fluid stackable padded">
             <news-card
                     v-for="post in filteredPosts"
                     :key="post.id"
                     :post="post"
+                    class="cell"
             ></news-card>
+        </transition-group>
+        <sui-grid class="container-fluid stackable padded">
+
             <sui-grid-row>
                 <sui-button basic inverted color="red" circular class="m-auto" icon="ellipsis horizontal"></sui-button>
             </sui-grid-row>
@@ -45,7 +49,7 @@
     export default {
         name: "latest-news",
         components: {SuiDropdown, NewsCard},
-        props: ['posts','withHeader', 'withButtons'],
+        props: ['posts', 'withHeader', 'withButtons'],
         data() {
             return {
                 filter: 'All',
@@ -74,7 +78,7 @@
         methods: {
             filterBySport(post) {
                 return this.filter === 'All' || post.sport === this.filter.toLowerCase();
-            }
+            },
         },
         computed: {
             filteredPosts: function () {
@@ -88,11 +92,17 @@
     .latest-news {
         padding-top: 1rem;
     }
+
     .head {
         justify-content: space-between;
         flex-wrap: wrap;
     }
+
     .m-auto {
         margin: 0 auto;
+    }
+
+    .cell-move {
+        transition: transform 1s;
     }
 </style>
