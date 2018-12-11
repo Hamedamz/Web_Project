@@ -5,7 +5,7 @@
                 <sui-header class="header very large page-title" inverted>Leagues</sui-header>
             </template>
             <template slot="main">
-                <sui-grid class="container-fluid stackable ">
+                <sui-grid class="container-fluid stackable padded">
                     <sui-grid-row>
                         <sui-grid-column :width="8">
                             <sui-header inverted>Football</sui-header>
