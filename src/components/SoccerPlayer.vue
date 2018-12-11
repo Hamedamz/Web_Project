@@ -47,8 +47,8 @@
         color: #fbfbfb;
         text-align: center;
         background: rgba(0, 0, 0, 0.5);
-        border-radius: 20%;
-        font-size: 90%;
+        border-radius: 20px;
+        font-size: 80%;
         width: auto;
         background-size: cover;
         padding:1%;
