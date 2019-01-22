@@ -10,12 +10,14 @@
     import FullHeader from "@/components/FullHeader";
     import LatestNews from "@/components/LatestNews";
     import LatestGames from "@/components/LatestGames";
+    import axios from 'axios';
 
     export default {
         name: "Home",
         components: {LatestGames, LatestNews, FullHeader},
         data() {
             return {
+                test: null,
                 mainNews: {
                     title: 'Belgium retain pole as Sweden, Serbia soar',
                     image: 'static/i2.jpg',
@@ -88,7 +90,12 @@
                     time: "68'",
                 },
             }
-        }
+        },
+        mounted() {
+            axios.get("http://127.0.0.1:8000/api_example/").then(response => {
+                this.test = response.data;
+            });
+        },
     }
 </script>
 
