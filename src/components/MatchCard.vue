@@ -1,5 +1,5 @@
 <template>
-    <a class="match-card  ui inverted" id="matchCard" :class="{small: isSmall}">
+    <router-link to="match/id" class="match-card  ui inverted" id="matchCard" :class="{small: isSmall}">
         <div class="team-badge">
             <img :src="match.homeBadge" :alt="match.homeName">
         </div>
@@ -14,7 +14,7 @@
         <div class="team-badge">
             <img :src="match.awayBadge" :alt="match.awayName">
         </div>
-    </a>
+    </router-link>
 </template>
 
 <script>

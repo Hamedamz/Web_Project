@@ -1,6 +1,8 @@
 <template>
-    <sui-grid-column :width="post.type === 'small' ? 4 : 8" class="news-card" :class="{big: post.type === 'big'}">
-        <img :src="post.image" :alt="post.title">
+    <!--<sui-grid-column :width="post.type === 'small' ? 4 : 8" class="news-card" :class="{big: post.type === 'big'}">-->
+    <sui-grid-column :width="1 ? 4 : 8" class="news-card" :class="{big: 0}">
+    <!--<sui-grid-column width='4' class="news-card">-->
+        <router-link :to='"/news/" + post.id' ><img :src="post.news_pic" :alt="post.title"></router-link>
         <div class="post">
             <div class="post-cat" v-if="!isMedia">
                 <sui-label
@@ -8,10 +10,11 @@
                         :color="color"
                         empty
                 ></sui-label>
-                {{post.category.toUpperCase()}}
+                {{post.source.toUpperCase()}}
             </div>
-            <h3 class="post-title" v-if="post.media !== 'photo'"><sui-icon name="play" v-if="post.media === 'video'"></sui-icon>{{post.title}}</h3>
-            <sui-button circular size="mini" color="grey" basic v-if="!isMedia">Full Story</sui-button>
+            <!--<router-link to="/news/id"><h3 class="post-title" v-if="post.media !== 'photo'"><sui-icon name="play" v-if="post.media === 'video'"></sui-icon>{{post.title}}</h3></router-link>-->
+            <router-link :to='"/news/" + post.id'><h3 class="post-title" ><sui-icon name="play" v-if="post.media === 'video'"></sui-icon>{{post.title}}</h3></router-link>
+            <router-link :to='"/news/" + post.id'><sui-button circular size="mini" color="grey" basic v-if="!isMedia">Full Story</sui-button></router-link>
         </div>
     </sui-grid-column>
 </template>
@@ -39,11 +42,11 @@
         flex-direction: column;
         align-items: stretch;
     }
-    .news-card > img {
+    .news-card img {
         width: 100%;
         border-radius: 15px 15px 0 0;
     }
-    .news-card.big > img {
+    .news-card.big img {
         border-radius: 15px;
         height: 100%;
     }

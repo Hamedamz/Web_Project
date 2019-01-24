@@ -13,6 +13,16 @@
                         v-model="filter"
                         :options="options"
                 ></sui-dropdown>
+                <sui-dropdown
+                        placeholder="count"
+                        :options="post_count_options"
+                        v-if="!subscriptions"
+                        button
+                        labeled
+                        floating
+                        class="icon grey basic small circular"
+                        v-model="post_counts"
+                />
                 <sui-button
                         @click="subscriptions = ! subscriptions"
                         :basic="!subscriptions"
@@ -53,7 +63,18 @@
         data() {
             return {
                 filter: 'All',
+                post_counts: 10,
                 subscriptions: false,
+                post_count_options: [{
+                    text: '5',
+                    value: 5,
+                }, {
+                    text: '10',
+                    value: 10,
+                }, {
+                    text: '15',
+                    value: 15,
+                }],
                 options: [
                     {
                         key: 'All',
@@ -82,7 +103,11 @@
         },
         computed: {
             filteredPosts: function () {
-                return this.posts.filter(this.filterBySport)
+                return this.posts
+                // let posts = this.posts.filter(this.filterBySport);
+                // if (!this.subscriptions)
+                //     return posts.slice(0, this.post_counts);
+                // else return posts
             }
         }
     }

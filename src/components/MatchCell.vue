@@ -1,5 +1,5 @@
 <template>
-    <a is="sui-grid-column" :width="8" href="#">
+    <router-link to="/match/id" is="sui-grid-column" :width="8" href="#">
         <sui-segment class="match-cell" inverted>
         <div class="teams"><div>
             <sui-image :src="match.homeBadge" avatar></sui-image>
@@ -13,7 +13,7 @@
         </div></div>
         <div class="time">{{match.time}}</div>
         </sui-segment>
-    </a>
+    </router-link>
 </template>
 
 <script>

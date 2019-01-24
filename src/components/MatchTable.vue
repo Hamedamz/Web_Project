@@ -1,5 +1,20 @@
 <template>
     <div id="match-table">
+        <sui-grid>
+            <div class="controls">
+                <sui-input placeholder="Rival..."  icon="search" basic inverted circular/>
+                <sui-dropdown
+                        text="Filter Posts"
+                        icon="filter"
+                        floating
+                        labeled
+                        button
+                        class="icon grey basic small circular"
+                        v-model="filter"
+                        :options="options"
+                ></sui-dropdown>
+            </div>
+        </sui-grid>
         <sui-grid class="container-fluid stackable">
             <match-cell
                 v-for="match in matches"
@@ -17,6 +32,32 @@
         components: {MatchCell},
         data () {
             return {
+                filter: 'All',
+                options: [
+                    {
+                        key: 'All',
+                        text: 'All',
+                        value: 'All',
+                    },
+                    {
+                        key: 'Win',
+                        text: 'Win',
+                        value: 'Win',
+                        label: {color: 'green', empty: true, circular: true},
+                    },
+                    {
+                        key: 'Draw',
+                        text: 'Draw',
+                        value: 'Draw',
+                        label: {color: 'yellow', empty: true, circular: true},
+                    },
+                    {
+                        key: 'Lost',
+                        text: 'Lost',
+                        value: 'Lost',
+                        label: {color: 'red', empty: true, circular: true},
+                    },
+                ],
                 matches: [
                     {
                         homeName: 'LIV',
@@ -65,5 +106,7 @@
 </script>
 
 <style scoped>
-
+.controls {
+    padding: 1rem 1rem;
+}
 </style>

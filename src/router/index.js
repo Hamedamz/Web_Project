@@ -14,22 +14,17 @@ export default new Router({
     mode: 'history',
     routes: [
         {
-            path: '/',
-            name: 'Home',
-            component: Home
-        },
-        {
-            path: '/match',
+            path: '/match/:id',
             name: 'Match',
             component: Match
         },
         {
-            path: '/news',
+            path: '/news/:id',
             name: 'News',
             component: News
         },
         {
-            path: '/league',
+            path: '/league/:id',
             name: 'League',
             component: League
         },
@@ -39,14 +34,19 @@ export default new Router({
             component: Leagues
         },
         {
-            path: '/player',
+            path: '/player/:id',
             name: 'Player',
             component: Player
         },
         {
-            path: '/team',
+            path: '/team/:id',
             name: 'Team',
             component: Team
+        },
+        {
+            path: '/',
+            name: 'Home',
+            component: Home
         },
     ]
 })

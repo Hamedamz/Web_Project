@@ -15,6 +15,7 @@
         <div class="ui wide sidebar inverted vertical menu" :class="{visible: isOpen}">
             <div is="sui-segment" inverted class="nav-menu">
                 <sui-accordion exclusive inverted transparent>
+                    <router-link v-for="item in links" :key="item.id" :to="item.link" ><sui-list-item>{{item.name}}</sui-list-item></router-link>
                     <div v-for="menu in menus" :key="menu.id">
                     <sui-accordion-title>
                         <sui-icon name="dropdown" />
@@ -22,7 +23,7 @@
                     </sui-accordion-title>
                     <sui-accordion-content>
                         <sui-list link>
-                            <sui-list-item v-for="item in menu.items" :key="item.id">{{item.name}}</sui-list-item>
+                            <router-link v-for="item in menu.items" :key="item.id" :to="item.link" ><sui-list-item>{{item.name}}</sui-list-item></router-link>
                         </sui-list>
                     </sui-accordion-content>
                     </div>
@@ -43,8 +44,12 @@
                 isSearch: false,
                 search: '',
                 menus: [
-                    {id: 1, name: 'Football', items: [{id: 11, name: 'A'}, {id: 12, name: 'B'}, {id: 13, name: 'C'},]},
-                    {id: 2, name: 'BasketBall', items: [{id: 21, name: 'A'}, {id: 22, name: 'B'}, {id: 23, name: 'C'},]},
+                    {id: 1, name: 'Players', items: [{id: 11, name: 'Michael Jordan', link: '/player/87346498'}, {id: 12, name: 'Cristiano Ronaldo', link: '/player/23485985'},]},
+                    {id: 2, name: 'Teams', items: [{id: 21, name: 'Barcelona', link: '/team/76503945'}, {id: 22, name: 'Golden State', link: '/team/10934370'},]},
+                ],
+                links: [
+                    {id: 3, name: 'Home', link: '/'},
+                    {id: 4, name: 'Leagues', link: '/leagues'}
                 ]
             }
         },

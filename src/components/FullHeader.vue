@@ -7,8 +7,8 @@
         <sui-container>
             <div class="main-news">
                 <div class="main-news-cat">{{post.category.toUpperCase()}}</div>
-                <h1 is="sui-header" class="main-news-title" inverted>{{post.title}}</h1>
-                <sui-button circular inverted>Full Story</sui-button>
+                <router-link to="/news/id"> <h1 is="sui-header" class="main-news-title" inverted>{{post.title}}</h1></router-link>
+                <router-link to="/news/id"><sui-button circular inverted>Full Story</sui-button></router-link>
             </div>
         </sui-container>
     </div>
@@ -49,6 +49,7 @@
     .main-news-title {
         font-size: 3.5rem !important;
         max-width: 400px;
+        padding: 1rem 0;
     }
 
     .main-news-cat {
