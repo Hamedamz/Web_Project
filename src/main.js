@@ -16,6 +16,13 @@ Vue.directive('scroll', {
         window.addEventListener('scroll', f)
     }
 })
+
+Vue.filter('formatDate', function (value) {
+    if (!value) return ' ';
+    let date = value.split("T");
+    return date[0] + " " + date[1].substring(0, 5);
+})
+
 new Vue({
     router: router,
     render: h => h(App),

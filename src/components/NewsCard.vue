@@ -11,6 +11,7 @@
                         empty
                 ></sui-label>
                 {{post.source.toUpperCase()}}
+                <sui-icon name="calendar" class="inverted"></sui-icon>{{post.pub_date | formatDate}}
             </div>
             <!--<router-link to="/news/id"><h3 class="post-title" v-if="post.media !== 'photo'"><sui-icon name="play" v-if="post.media === 'video'"></sui-icon>{{post.title}}</h3></router-link>-->
             <router-link :to='"/news/" + post.id'><h3 class="post-title" ><sui-icon name="play" v-if="post.media === 'video'"></sui-icon>{{post.title}}</h3></router-link>

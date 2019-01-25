@@ -6,7 +6,7 @@
                 <sui-header class="logo large" inverted>LOGO</sui-header>
                 <sui-button @click="isOpen = !isOpen" icon="bars" floated="left" color="red" basic inverted
                             circular></sui-button>
-                <sui-button icon="user" floated="right" basic inverted circular></sui-button>
+                <sui-button @click.native="toggle" icon="user" floated="right" basic inverted circular></sui-button>
                 <sui-button icon="search" floated="right" basic inverted circular @click="toggleSearch">
                     <sui-input v-if="isSearch" v-model="search" class="transparent inverted search-input" @click.stop="" @></sui-input>
                 </sui-button>
@@ -31,14 +31,30 @@
             </div>
         </div>
 
+        <div>
+            <sui-modal v-model="open">
+                <sui-modal-header><sui-button-group size="large" :widths="2">
+                    <sui-button @click.native="changeFormType('login')" content="Login" :active="form_type === 'login'"/>
+                    <sui-button-or />
+                    <sui-button @click.native="changeFormType('signup')" content="Signup" :active="form_type === 'signup'"/>
+                </sui-button-group></sui-modal-header>
+                <login v-if="form_type === 'login'"></login>
+                <signup v-if="form_type === 'signup'"></signup>
+            </sui-modal>
+        </div>
     </div>
 </template>
 
 <script>
+    import Login from "@/pages/Login";
+    import Signup from "@/pages/Signup";
     export default {
         name: "SliderNav",
+        components: {Signup, Login},
         data() {
             return {
+                open: false,
+                form_type: 'login',
                 alpha: 0,
                 isOpen: false,
                 isSearch: false,
@@ -61,6 +77,12 @@
             toggleSearch: function () {
                 this.isSearch = !this.isSearch;
                 this.search.el.focus();
+            },
+            toggle() {
+                this.open = !this.open;
+            },
+            changeFormType(value) {
+                this.form_type = value;
             }
         },
         computed: {

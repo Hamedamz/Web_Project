@@ -69,10 +69,11 @@
 
             <form class="ui reply form">
                 <div class="field">
-                    <textarea></textarea>
+                    <textarea v-model="reply_body.text"></textarea>
                 </div>
                 <div class="field"></div>
                 <sui-button
+                        @click="sendReply"
                         content="Add Reply"
                         label-position="left"
                         icon="edit"
@@ -84,8 +85,33 @@
 </template>
 
 <script>
+    import {APIService} from "@/APIService";
+
     export default {
-        name: "PostComments"
+        name: "PostComments",
+        data () {
+            return {
+                reply_body: {
+                    text: '',
+                    news: this.$route.params.id,
+                },
+                reply_loading: false,
+            }
+        },
+        methods: {
+            sendReply: function() {
+                this.reply_loading = true;
+                this.$http.post('http://127.0.0.1:8000/news/comment/send/', this.reply_body)
+            .then((response) => {
+                    this.reply_loading = false;
+                    // this.getArticles();
+                })
+                    .catch((err) => {
+                        this.reply_loading = false;
+                        console.log(err);
+                    })
+            },
+        }
     }
 </script>
 
