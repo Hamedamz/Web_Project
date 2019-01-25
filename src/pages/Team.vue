@@ -28,6 +28,19 @@
                             :content="tab.name"
                     ></sui-button>
                 </sui-button-group>
+                    <div v-if="this.currentTab.name === 'News'">
+                        <p class="ui inverted header">Show related news based on: </p>
+                        <sui-dropdown
+                                text="Filter Posts"
+                                icon="filter"
+                                floating
+                                labeled
+                                button
+                                class="icon grey basic small circular"
+                                v-model="filter"
+                                :options="options"
+                        ></sui-dropdown>
+                    </div>
                 <keep-alive>
                     <component
                             v-bind:is="currentTabComponent"
@@ -51,6 +64,25 @@
         components: {FullPageImageContainer, TeamPlayers, LatestNews, MatchTable},
         data() {
             return {
+                filter: 'Title',
+                options: [
+                    {
+                        key: 'Title',
+                        text: 'Title',
+                        value: 'Title',
+                    },
+                    {
+                        key: 'Tags',
+                        text: 'Tags',
+                        value: 'Tags',
+                    },
+                    {
+                        key: 'Content',
+                        text: 'Content',
+                        value: 'Content',
+                    },
+
+                ],
                 team: {
                     name: 'PARIS SAINT-GERMAIN',
                     camp: 'static/psg-stadium.jpg',

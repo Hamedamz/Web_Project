@@ -53,7 +53,20 @@
                 </sui-grid>
 
             </div>
-            <latest-news :posts="posts" with-header="Related News" ></latest-news>
+            <div class="padded">
+                <p class="ui inverted header">Show related news based on: </p>
+                <sui-dropdown
+                        text="Filter Posts"
+                        icon="filter"
+                        floating
+                        labeled
+                        button
+                        class="icon grey basic small circular"
+                        v-model="filter"
+                        :options="options"
+                ></sui-dropdown>
+            </div>
+            <latest-news :posts="posts" ></latest-news>
 
         </template>
     </full-page-image-container>
@@ -70,6 +83,25 @@
         components: {LatestNews,PLayerLeagueRow, PlayerSpec, FullPageImageContainer},
         data() {
             return {
+                filter: 'Title',
+                options: [
+                    {
+                        key: 'Title',
+                        text: 'Title',
+                        value: 'Title',
+                    },
+                    {
+                        key: 'Tags',
+                        text: 'Tags',
+                        value: 'Tags',
+                    },
+                    {
+                        key: 'Content',
+                        text: 'Content',
+                        value: 'Content',
+                    },
+
+                ],
                 player: {
                     image: 'static/mj1.jpg',
                     avatar: 'static/michael-avatar.png',
@@ -169,6 +201,10 @@
 
     .summary {
         color: #ffffff;
+    }
+
+    .padded {
+        padding: 1.5rem 0 0 0;
     }
 
 </style>
