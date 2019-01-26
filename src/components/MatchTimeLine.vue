@@ -1,8 +1,8 @@
 <template>
     <div id="time-line">
         <span class="teams ui">
-            <img :src="match.homeBadge" :alt="match.homeName">
-            <img :src="match.awayBadge" :alt="match.awayName">
+            <img :src="match.host_team.logo" :alt="match.host_team.abbreviation">
+            <img :src="match.guest_team.logo" :alt="match.guest_team.abbreviation">
         </span>
         <div>
             <div id="events">

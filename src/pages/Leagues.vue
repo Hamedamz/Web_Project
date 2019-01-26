@@ -29,8 +29,10 @@
                                      v-bind:key="item.name"
                                      v-bind:data-index="index"
                                      class="league-avatar">
+                                    <router-link to="/league/id">
                                     <sui-image :src="item.badge" avatar></sui-image>
                                     <span>{{item.name}}</span>
+                                    </router-link>
                                 </div>
                             </transition-group>
                         </sui-grid-column>
