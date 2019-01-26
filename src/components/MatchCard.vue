@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="link" class="match-card  ui inverted" id="matchCard" :class="{small: isSmall}">
+    <router-link :to="link()" class="match-card  ui inverted" id="matchCard" :class="{small: isSmall}">
         <div class="team-badge">
             <img :src="match.host_team.logo" :alt="match.guest_team.full_name">
         </div>
@@ -28,9 +28,11 @@
                 }
                 return this.match.date.slice('T')[0]
             },
-            link: function () {
-                return 'match/' + this.match.id
-            }
+        },
+        methods: {
+        link : function() {
+            return 'match/' + this.match.id
+        }
         }
     }
 </script>
