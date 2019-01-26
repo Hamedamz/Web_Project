@@ -2,6 +2,12 @@
     <div id="Home">
         <full-header :post="mainNews" :match="liveMatch"></full-header>
         <latest-news :posts="posts" with-header="Latest News" with-buttons="true"></latest-news>
+        <sui-grid class="container-fluid stackable padded">
+
+            <sui-grid-row>
+                <sui-button basic inverted color="red" circular class="m-auto" icon="ellipsis horizontal"></sui-button>
+            </sui-grid-row>
+        </sui-grid>
         <latest-games></latest-games>
     </div>
 </template>
@@ -63,5 +69,7 @@
 </script>
 
 <style scoped>
-
+.m-auto {
+    margin: 0 auto;
+}
 </style>

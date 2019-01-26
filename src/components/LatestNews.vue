@@ -42,12 +42,7 @@
                     class="cell"
             ></news-card>
         </transition-group>
-        <sui-grid class="container-fluid stackable padded">
 
-            <sui-grid-row>
-                <sui-button basic inverted color="red" circular class="m-auto" icon="ellipsis horizontal"></sui-button>
-            </sui-grid-row>
-        </sui-grid>
     </div>
 </template>
 
@@ -121,13 +116,5 @@
     .head {
         justify-content: space-between;
         flex-wrap: wrap;
-    }
-
-    .m-auto {
-        margin: 0 auto;
-    }
-
-    .cell-move {
-        transition: transform 1s;
     }
 </style>
