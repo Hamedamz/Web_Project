@@ -1,11 +1,11 @@
 <template>
-    <full-page-image-container :image="player.image" small="true" color="red">
+    <full-page-image-container :image="player.back_pic" small="true" color="red">
         <template slot="header">
             <sui-item-group>
                 <sui-item>
                     <sui-item-image size="medium" class="circular" :src="player.avatar"/>
                     <sui-item-content vertical-align="middle">
-                        <sui-item-header class="player-name">{{player.name}}</sui-item-header>
+                        <sui-item-header class="player-name">{{player.first_name + " " + player.last_name}}</sui-item-header>
                     </sui-item-content>
                 </sui-item>
             </sui-item-group>
@@ -15,8 +15,50 @@
                 <sui-grid :columns="2" stackable>
                     <sui-grid-row>
                         <sui-grid-column :width="6">
-                            <player-spec></player-spec>
-                        </sui-grid-column>
+                            <sui-table single-line unstackable inverted selectable color="black">
+                                <sui-table-body>
+                                    <sui-table-row>
+                                        <sui-table-cell :width="5">
+                                            Nick Name:
+                                        </sui-table-cell>
+                                        <sui-table-cell :width="11">
+                                            {{player.nick_name}}
+                                        </sui-table-cell>
+                                    </sui-table-row>
+                                    <sui-table-row>
+                                        <sui-table-cell :width="5">
+                                            Birth Place:
+                                        </sui-table-cell>
+                                        <sui-table-cell :width="11">
+                                            {{player.birth_place}}
+                                        </sui-table-cell>
+                                    </sui-table-row>
+                                    <sui-table-row>
+                                        <sui-table-cell :width="5">
+                                            Birth Date:
+                                        </sui-table-cell>
+                                        <sui-table-cell :width="11">
+                                            {{player.birth_date}}
+                                        </sui-table-cell>
+                                    </sui-table-row>
+                                    <sui-table-row>
+                                        <sui-table-cell :width="5">
+                                            Experience:
+                                        </sui-table-cell>
+                                        <sui-table-cell :width="11">
+                                           {{player.experience}}
+                                        </sui-table-cell>
+                                    </sui-table-row>
+                                    <sui-table-row>
+                                        <sui-table-cell :width="5">
+                                            College:
+                                        </sui-table-cell>
+                                        <sui-table-cell :width="11">
+                                            {{player.college}}
+                                        </sui-table-cell>
+                                    </sui-table-row>
+                                </sui-table-body>
+                            </sui-table>                        </sui-grid-column>
                         <sui-grid-column :width="10">
                             <sui-table single-line unstackable inverted striped selectable color="black">
                                 <sui-table-header>
@@ -77,6 +119,7 @@
     import PlayerSpec from "../components/PlayerSpec";
     import PLayerLeagueRow from "../../public/static/PLayerLeagueRow";
     import LatestNews from "@/components/LatestNews";
+    import {APIService} from "@/APIService";
 
     export default {
         name: "Player",
@@ -102,42 +145,8 @@
                     },
 
                 ],
-                player: {
-                    image: 'static/mj1.jpg',
-                    avatar: 'static/michael-avatar.png',
-                    name: 'Michael Jordan',
-                    leagues:[{
-                        year:2018,
-                        team:'PSG',
-                        icon:'static/psg.png',
-                        time:'37hr',
-                        twoS:174,
-                        threeS:84,
-                        fouls:12,
-                        rebounds:9
-
-                    },{
-                        year:2017,
-                        team:'PSG',
-                        icon:'static/psg.png',
-                        time:'45hr',
-                        twoS:240,
-                        threeS:60,
-                        fouls:18,
-                        rebounds:15
-
-                    },{
-                        year:2016,
-                        team:'PSG',
-                        icon:'static/psg.png',
-                        time:'64hr',
-                        twoS:140,
-                        threeS:100,
-                        fouls:22,
-                        rebounds:4
-
-                    }]
-                },posts: [
+                player: null,
+                posts: [
                     {
                         id: 1,
                         title: 'A home for the pride key to roaring Lions',
@@ -188,6 +197,32 @@
                     },
                 ]
             }
+        },
+        mounted() {
+            this.getPlayer();
+        },
+        watch: {
+            '$route' (to, from) {
+                this.getPlayer();
+            }
+        },
+        methods: {
+            getPlayer: function () {
+                const apiURL = APIService.PLAYER + this.$route.params.id;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.player = data
+                    })
+                    .catch(error => console.log(error))
+            },
+
         }
     }
 </script>

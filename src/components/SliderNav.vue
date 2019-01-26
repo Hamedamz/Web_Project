@@ -60,7 +60,7 @@
                 isSearch: false,
                 search: '',
                 menus: [
-                    {id: 1, name: 'Players', items: [{id: 11, name: 'Michael Jordan', link: '/player/87346498'}, {id: 12, name: 'Cristiano Ronaldo', link: '/player/23485985'},]},
+                    {id: 1, name: 'Players', items: [{id: 11, name: 'Michael Jordan', link: '/player/2'}, {id: 12, name: 'Cristiano Ronaldo', link: '/player/1'},]},
                     {id: 2, name: 'Teams', items: [{id: 21, name: 'Barcelona', link: '/team/76503945'}, {id: 22, name: 'Golden State', link: '/team/10934370'},]},
                 ],
                 links: [

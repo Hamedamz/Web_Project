@@ -83,6 +83,11 @@
                     this.size = this.size - 1;
             },
         },
+        watch: {
+            '$route' (to, from) {
+                this.getNews();
+            }
+        },
         computed: {
             color: function () {
                 return this.post.sport === 'football'? 'green': 'orange';
