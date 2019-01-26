@@ -1,7 +1,7 @@
 <template>
     <sui-table-row>
         <sui-table-cell collapsing class="left-pad">
-            {{stat.left}}
+            {{stat.host_team}}
         </sui-table-cell>
         <sui-table-cell>
             <div class="main">
@@ -11,7 +11,7 @@
             </div>
         </sui-table-cell>
         <sui-table-cell text-align="right" collapsing class="right-pad">
-            {{stat.right}}
+            {{stat.guest_team}}
         </sui-table-cell>
 
     </sui-table-row>
@@ -24,12 +24,19 @@
         data() {
             return {
                 bar: {
-                    width: this.stat.leftPercent+'%',
+                    width: this.leftPercent()+'%',
                     background: '#47a7ff',
                     height: '30px',
                     borderBottomLeftRadius: '20px',
                     borderTopLeftRadius: '20px',
                 },
+            }
+        },
+        methods: {
+            leftPercent: function () {
+                if (this.stat.host_team === 0)
+                    return 0;
+                return (this.stat.host_team+0) / ((this.stat.guest_team+0) + this.stat.host_team) * 100
             }
         }
     }

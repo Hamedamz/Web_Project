@@ -4,7 +4,7 @@
         <sui-table-body>
             <sui-table-row text-align="center">
                 <sui-table-cell colspan="3">
-                    {{stat.name}}
+                    {{stat.stat_kind}}
                 </sui-table-cell>
             </sui-table-row>
             <progress-bar :stat="stat"></progress-bar>
