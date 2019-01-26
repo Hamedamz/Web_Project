@@ -31,7 +31,7 @@
         },
         methods: {
         link : function() {
-            return 'match/' + this.match.id
+            return '/match/' + this.match.id
         }
         }
     }
