@@ -11,16 +11,16 @@
         <sui-table-cell>
             {{league.time}}
         </sui-table-cell>
-        <sui-table-cell>
-            {{league.twoS}}
+        <sui-table-cell v-if="league.two_s">
+            {{league.two_s}}
         </sui-table-cell>
-        <sui-table-cell>
-            {{league.threeS}}
+        <sui-table-cell v-if="league.three_s">
+            {{league.three_s}}
         </sui-table-cell>
         <sui-table-cell>
             {{league.fouls}}
         </sui-table-cell>
-        <sui-table-cell>
+        <sui-table-cell v-if="league.rebounds">
             {{league.rebounds}}
         </sui-table-cell>
     </sui-table-row>

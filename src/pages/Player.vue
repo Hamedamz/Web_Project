@@ -200,10 +200,12 @@
         },
         mounted() {
             this.getPlayer();
+            this.getPlayerStat();
         },
         watch: {
             '$route' (to, from) {
                 this.getPlayer();
+                this.getPlayerStat();
             }
         },
         methods: {
@@ -222,7 +224,21 @@
                     })
                     .catch(error => console.log(error))
             },
+            getPlayerStat: function () {
+                const apiURL = APIService.PLAYER + 'stat/' + this.$route.params.id;
+                const myInit = {
+                    mode: 'cors',
+                };
 
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.player.leagues = data
+                    })
+                    .catch(error => console.log(error))
+            },
         }
     }
 </script>

@@ -29,7 +29,7 @@
                    inverted
                    color="red"
                 >
-                    {{tag}}
+                    {{tag.name}}
                 </a>
             </div>
             <sui-divider inverted></sui-divider>

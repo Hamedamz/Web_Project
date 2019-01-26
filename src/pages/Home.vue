@@ -24,18 +24,12 @@
                     category: 'premiere league'
                 },
                 posts: null,
-                liveMatch: {
-                    homeName: 'LIV',
-                    homeBadge: 'static/liv.png',
-                    awayName: 'MAN',
-                    awayBadge: 'static/man.png',
-                    result: '3 : 1',
-                    time: "68'",
-                },
+                liveMatch: null,
             }
         },
         mounted() {
             this.getLatestNews();
+            this.getHeaderMatch();
         },
         methods: {
             getLatestNews: function () {
@@ -50,7 +44,20 @@
                     .then(response => response.json())
                     .then((data) => {this.posts = data})
                     .catch(error => console.log(error))
-            }
+            },
+            getHeaderMatch: function () {
+                const apiURL = APIService.MATCH + "1";
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {this.liveMatch = data})
+                    .catch(error => console.log(error))
+            },
         }
     }
 </script>

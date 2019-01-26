@@ -1,18 +1,18 @@
 <template>
-    <router-link to="match/id" class="match-card  ui inverted" id="matchCard" :class="{small: isSmall}">
+    <router-link :to="link" class="match-card  ui inverted" id="matchCard" :class="{small: isSmall}">
         <div class="team-badge">
-            <img :src="match.homeBadge" :alt="match.homeName">
+            <img :src="match.host_team.logo" :alt="match.guest_team.full_name">
         </div>
         <div class="match-info">
             <div class="match-result">
-                <span class="name">{{match.homeName}}</span>
-                <span class="result">{{match.result}}</span>
-                <span class="name">{{match.awayName}}</span>
+                <span class="name">{{match.host_team.abbreviation}}</span>
+                <span class="result">{{result}}</span>
+                <span class="name">{{match.guest_team.abbreviation}}</span>
             </div>
             <div class="match-time">{{match.time}}</div>
         </div>
         <div class="team-badge">
-            <img :src="match.awayBadge" :alt="match.awayName">
+            <img :src="match.guest_team.logo" :alt="match.guest_team.full_name">
         </div>
     </router-link>
 </template>
@@ -21,6 +21,17 @@
     export default {
         name: "MatchCard",
         props: ['match', 'isSmall'],
+        computed: {
+            result: function() {
+                if (this.match.host_score !== null) {
+                    return this.match.host_score + " - " + this.match.guest_score;
+                }
+                return this.match.date.slice('T')[0]
+            },
+            link: function () {
+                return 'match/' + this.match.id
+            }
+        }
     }
 </script>
 
