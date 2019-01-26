@@ -36,6 +36,7 @@
     import MatchTimeLine from "@/components/MatchTimeLine";
     import FullPageImageContainer from "@/layouts/FullPageImageContainer";
     import LatestNews from "@/components/LatestNews";
+    import {APIService} from "@/APIService";
 
     export default {
         name: "Match",
@@ -140,20 +141,8 @@
                         media: 'photo'
                     },
                 ],
-                match: {
-                    sport: 'football',
-                    image: 'static/i5.jpg',
-                    homeName: 'LIV',
-                    homeBadge: 'static/liv.png',
-                    awayName: 'MAN',
-                    awayBadge: 'static/man.png',
-                    result: '4 : 1',
-                    time: "FT",
-                },
-                timeLine: [
-                    {id: 1, side: 'home', time: 22, event: "goal", description: "Andreas Pereira Goal - Free-kick"},
-                    {id: 2, side: 'away', time: 47, event: "goal", description: "Andreas Pereira Goal - Free-kick"},
-                ]
+                match: null,
+                timeLine: null,
             }
         },
         computed: {
@@ -170,6 +159,49 @@
                 return {};
             }
         },
+        mounted() {
+            this.getMatch();
+            this.getTimeLine();
+            // this.getLinesUp();
+        },
+        methods: {
+            getMatch: function () {
+                const apiURL = APIService.MATCH + this.$route.params.id;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.match = data
+                    })
+                    .catch(error => console.log(error))
+
+            },
+
+            getTimeLine: function () {
+                const apiURL = APIService.MATCH + 'timeline/' + this.$route.params.id;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.timeLine = data
+                    })
+                    .catch(error => console.log(error))
+
+            },
+
+
+        }
+
     }
 </script>
 

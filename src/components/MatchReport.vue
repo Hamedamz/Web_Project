@@ -10,6 +10,7 @@
 
 <script>
     import MatchEvent from "@/components/MatchEvent"
+    import {APIService} from "@/APIService";
 
     export default {
         name: "MatchReport",
@@ -18,20 +19,30 @@
         },
         data(){
             return {
-                news:[{
-                    time:69,
-                    main:'ahmad agha khata kard.',
-                    icon:'&#x003C;',
-                    id:0
-                },{
-
-                    time:9,
-                    main:'mamad agha corner gereft.',
-                    icon:'&#x0036;',
-                    id:1
-                }]
+                news: null,
             }
         },
+        mounted() {
+            this.getReports()
+        },
+        methods: {
+            getReports: function () {
+                const apiURL = APIService.MATCH + 'report/' + this.$route.params.id;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.news = data
+                    })
+                    .catch(error => console.log(error))
+
+            }
+        }
     }
 </script>
 
