@@ -53,7 +53,7 @@
             return {
                 size: 12,
                 post: null,
-                relatedPosts: [],
+                relatedPosts: null,
             }
         },
         components: {LatestNews, PostComments, FullPageImageContainer},
@@ -71,7 +71,8 @@
 
                 fetch(myRequest)
                     .then(response => response.json())
-                    .then((data) => {this.post = data})
+                    .then((data) => {this.post = data;
+                    this.relatedPosts = data.related_news})
                     .catch(error => console.log(error))
             },
             incrementSize: function () {
