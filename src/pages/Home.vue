@@ -8,7 +8,7 @@
                 <sui-button basic inverted color="red" circular class="m-auto" icon="ellipsis horizontal"></sui-button>
             </sui-grid-row>
         </sui-grid>
-        <!--<latest-games></latest-games>-->
+        <latest-games></latest-games>
     </div>
 </template>
 
