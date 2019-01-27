@@ -5,7 +5,8 @@
                 <sui-item>
                     <sui-item-image size="medium" class="circular" :src="player.avatar"/>
                     <sui-item-content vertical-align="middle">
-                        <sui-item-header class="player-name">{{player.first_name + " " + player.last_name}}</sui-item-header>
+                        <sui-item-header class="player-name">{{player.first_name + " " + player.last_name}}
+                        </sui-item-header>
                     </sui-item-content>
                 </sui-item>
             </sui-item-group>
@@ -46,7 +47,7 @@
                                             Experience:
                                         </sui-table-cell>
                                         <sui-table-cell :width="11">
-                                           {{player.experience}}
+                                            {{player.experience}}
                                         </sui-table-cell>
                                     </sui-table-row>
                                     <sui-table-row>
@@ -58,12 +59,13 @@
                                         </sui-table-cell>
                                     </sui-table-row>
                                 </sui-table-body>
-                            </sui-table>                        </sui-grid-column>
+                            </sui-table>
+                        </sui-grid-column>
                         <sui-grid-column :width="10">
                             <sui-table single-line unstackable inverted striped selectable color="black">
                                 <sui-table-header>
                                     <sui-table-row>
-                                        <sui-table-header-cell >
+                                        <sui-table-header-cell>
                                             SEASON
                                         </sui-table-header-cell>
                                         <sui-table-header-cell>
@@ -87,7 +89,8 @@
                                     </sui-table-row>
                                 </sui-table-header>
                                 <sui-table-body>
-                                    <p-layer-league-row v-for="league in player.leagues" :league="league" :key="league.year"></p-layer-league-row>
+                                    <p-layer-league-row v-for="league in player.leagues" :league="league"
+                                                        :key="league.year"></p-layer-league-row>
                                 </sui-table-body>
                             </sui-table>
                         </sui-grid-column>
@@ -108,7 +111,7 @@
                         :options="options"
                 ></sui-dropdown>
             </div>
-            <latest-news :posts="posts" ></latest-news>
+            <latest-news :posts="posts"></latest-news>
 
         </template>
     </full-page-image-container>
@@ -123,7 +126,7 @@
 
     export default {
         name: "Player",
-        components: {LatestNews,PLayerLeagueRow, PlayerSpec, FullPageImageContainer},
+        components: {LatestNews, PLayerLeagueRow, PlayerSpec, FullPageImageContainer},
         data() {
             return {
                 filter: 'Title',
@@ -146,69 +149,32 @@
 
                 ],
                 player: null,
-                posts: [
-                    {
-                        id: 1,
-                        title: 'A home for the pride key to roaring Lions',
-                        image: 'http://a2.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F1128%2Fr470200_1296x729_16%2D9.png&w=544&h=306&scale=crop&cquality=80&location=origin',
-                        type: 'small',
-                        category: 'premiere league',
-                        sport: 'football',
-                    },
-                    {
-                        id: 3,
-                        title: 'Wright Thompson: Italian football gets in your blood',
-                        image: 'http://a2.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F0929%2Fr438829_1296x729_16%2D9.jpg&w=544&h=306&scale=crop&cquality=80&location=origin',
-                        type: 'small',
-                        category: 'premiere league',
-                        sport: 'football',
-                    },
-                    {
-                        id: 4,
-                        title: 'By the numbers: Ronaldo equals 51-year-old record',
-                        image: 'http://a3.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F0816%2Fr415461_2_608x342_16%2D9.jpg&w=544&h=306&scale=crop&cquality=80&location=origin',
-                        type: 'small',
-                        category: 'serie A',
-                        sport: 'football',
-                    },
-                    {
-                        id: 5,
-                        title: 'Why Liverpool should sell Salah',
-                        image: 'http://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F0816%2Fr415458_608x342_16%2D9.jpg&w=544&h=306&scale=crop&cquality=80&location=origin',
-                        type: 'small',
-                        category: 'premiere league',
-                        sport: 'football',
-                    },
-                    {
-                        id: 6,
-                        title: 'Who\'s more important to Man United: Pogba or Mourinho?',
-                        image: 'http://a3.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F0816%2Fr415457_608x342_16%2D9.jpg&w=544&h=306&scale=crop&cquality=80&location=origin',
-                        type: 'big',
-                        category: 'premiere league',
-                        sport: 'football',
-                    },
-                    {
-                        id: 7,
-                        title: 'Kylian Mbappe and the curse of winning a World Cup',
-                        image: 'http://a2.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F0925%2Fr436811_1296x729_16%2D9.jpg&w=544&h=306&scale=crop&cquality=80&location=origin',
-                        type: 'small',
-                        category: 'World Cup',
-                        sport: 'football',
-                    },
-                ]
+                posts: null,
             }
         },
+
         mounted() {
             this.getPlayer();
             this.getPlayerStat();
         },
         watch: {
-            '$route' (to, from) {
+            '$route'(to, from) {
                 this.getPlayer();
                 this.getPlayerStat();
+                this.getRelatedNews();
+            },
+            filter: function() {
+                this.getRelatedNews();
             }
         },
         methods: {
+
+            filterAPI: function () {
+                if (this.filter === 'Title') return 1;
+                if (this.filter === 'Tags') return 0;
+                return 2;
+
+            },
             getPlayer: function () {
                 const apiURL = APIService.PLAYER + this.$route.params.id;
                 const myInit = {
@@ -221,6 +187,7 @@
                     .then(response => response.json())
                     .then((data) => {
                         this.player = data
+                        this.getRelatedNews();
                     })
                     .catch(error => console.log(error))
             },
@@ -236,6 +203,22 @@
                     .then(response => response.json())
                     .then((data) => {
                         this.player.leagues = data
+                    })
+                    .catch(error => console.log(error))
+            },
+            getRelatedNews: function () {
+                const apiURL = APIService.LATEST_NEWS + 'filter/'+this.filterAPI()+'/'+this.player.first_name;
+                // const apiURL = APIService.LATEST_NEWS + 'filter/' + this.filterAPI() + '/' + this.player.first_name + "%20" + this.player.last_name;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.posts = data
                     })
                     .catch(error => console.log(error))
             },
