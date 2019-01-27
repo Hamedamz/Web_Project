@@ -15,8 +15,8 @@
                     <a class="hand" v-if="mode === 'login'" @click="mode = 'forgot'"> Forgot password...? </a>
                     <a class="hand" v-if="mode === 'forgot'" @click="mode = 'login'"> Login... </a>
                 </sui-form-field>
-                <sui-button type="button" v-on:click="login()" v-if="mode === 'login'">Login</sui-button>
-                <sui-button type="button" v-on:click="forgot()" v-if="mode === 'forgot'">Send</sui-button>
+                <sui-button type="button" v-on:click.prevent="login()" v-if="mode === 'login'">Login</sui-button>
+                <sui-button type="button" v-on:click.prevent="forgot()" v-if="mode === 'forgot'">Send</sui-button>
             </sui-form>
 
         </div>
@@ -41,6 +41,9 @@
         methods: {
             login:function () {
                 this.$http.post(APIService.USER, this.input)
+                    .then(function(data) {
+                        console.log(data)
+                    })
             },
             forgot() {
 

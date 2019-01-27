@@ -72,24 +72,8 @@
                 isSearch: false,
                 search: '',
                 menus: [
-                    {
-                        id: 1,
-                        name: 'Players',
-                        items: [{id: 11, name: 'Michael Jordan', link: '/player/2'}, {
-                            id: 12,
-                            name: 'Cristiano Ronaldo',
-                            link: '/player/1'
-                        },]
-                    },
-                    {
-                        id: 2,
-                        name: 'Teams',
-                        items: [{id: 21, name: 'Barcelona', link: '/team/76503945'}, {
-                            id: 22,
-                            name: 'Golden State',
-                            link: '/team/10934370'
-                        },]
-                    },
+                    {id: 1, name: 'Players', items: [{id: 11, name: 'Michael Jordan', link: '/player/2'}, {id: 12, name: 'Cristiano Ronaldo', link: '/player/1'},]},
+                    {id: 2, name: 'Teams', items: [{id: 21, name: 'Paris Saint-Germain', link: '/team/1'}, {id: 22, name: 'Manchester United', link: '/team/2'},]},
                 ],
                 links: [
                     {id: 3, name: 'Home', link: '/'},
@@ -159,11 +143,9 @@
     #slider-nav .wrapper {
         width: 100vw;
     }
-
     .search-input {
         margin: -0.5rem 0;
     }
-
     .logo {
         display: inline-block;
         text-align: center;
@@ -179,16 +161,13 @@
     .wrapper {
         text-align: center;
     }
-
     .ui.wide.sidebar {
         width: 250px;
         background: linear-gradient(to right, rgb(0, 0, 0), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
     }
-
     .nav-menu {
-        background: none !important;
+        background: none!important;
     }
-
     .dimmer {
         background: rgba(0, 0, 0, 0.1);
         z-index: auto;
