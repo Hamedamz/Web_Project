@@ -25,6 +25,8 @@
 </template>
 
 <script>
+    import {APIService} from "@/APIService";
+
     export default {
         name: "Login",
         data() {
@@ -41,6 +43,7 @@
         methods: {
             login() {
 
+                APIService.loggedIn = true;
             },
             forgot() {
 

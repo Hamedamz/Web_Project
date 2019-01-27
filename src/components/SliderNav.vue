@@ -6,7 +6,7 @@
                 <sui-header class="logo large" inverted>LOGO</sui-header>
                 <sui-button @click="isOpen = !isOpen" icon="bars" floated="left" color="red" basic inverted
                             circular></sui-button>
-                <sui-button @click.native="toggle" icon="user" floated="right" basic inverted circular></sui-button>
+                <sui-button @click="toggle" icon="user" floated="right" basic inverted circular><span v-if="isLoggedIn()">sing out</span></sui-button>
                 <sui-button icon="search" floated="right" basic inverted circular @click="toggleSearch">
                     <sui-input v-if="isSearch" v-model="search" class="transparent inverted search-input" @click.stop="" @></sui-input>
                 </sui-button>
@@ -48,6 +48,7 @@
 <script>
     import Login from "@/pages/Login";
     import Signup from "@/pages/Signup";
+    import {APIService} from "@/APIService";
     export default {
         name: "SliderNav",
         components: {Signup, Login},
@@ -79,16 +80,28 @@
                 this.search.el.focus();
             },
             toggle() {
-                this.open = !this.open;
+                if (!this.isLoggedIn())
+                    this.open = !this.open;
+                else {
+                    this.signOut();
+                }
             },
             changeFormType(value) {
                 this.form_type = value;
+            },
+            signOut() {
+                //todo
+                APIService.loggedIn = false;
+            },
+            isLoggedIn: function () {
+                return APIService.loggedIn;
             }
         },
         computed: {
             opacity: function () {
                 return "background: rgba(0,0,0," + this.alpha + ");"
-            }
+            },
+
         }
     }
 </script>

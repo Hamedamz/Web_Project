@@ -4,4 +4,5 @@ export const APIService = {
     COMMENTS : 'http://127.0.0.1:8000/news/comment/send/',
     PLAYER : 'http://127.0.0.1:8000/player/',
     MATCH : 'http://127.0.0.1:8000/match/',
+    loggedIn: false,
 };
