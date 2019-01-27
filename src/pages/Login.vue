@@ -38,17 +38,26 @@
                 }
             }
         },
-        mounted() {
-        },
         methods: {
-            login() {
-
-                APIService.loggedIn = true;
+            login:function () {
+                this.$http.post(APIService.USER, this.input)
             },
             forgot() {
 
+            },
+            logged() {
+                const apiURL = APIService.USER;
+                const myInit = {
+                    mode: 'cors',
+                };
+                const myRequest = new Request(apiURL, myInit);
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => APIService.loggedIn = data)
+                    .catch(error => console.log(error))
+
             }
-        }
+        },
     }
 </script>
 
@@ -58,6 +67,7 @@
         justify-content: center;
         align-items: center;
     }
+
     .hand {
         cursor: pointer;
     }

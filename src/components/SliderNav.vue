@@ -6,26 +6,32 @@
                 <sui-header class="logo large" inverted>LOGO</sui-header>
                 <sui-button @click="isOpen = !isOpen" icon="bars" floated="left" color="red" basic inverted
                             circular></sui-button>
-                <sui-button @click="toggle" icon="user" floated="right" basic inverted circular><span v-if="isLoggedIn()">sing out</span></sui-button>
+                <sui-button @click="toggle" icon="user" floated="right" basic inverted circular><span
+                        v-if="isLoggedIn()">sing out</span></sui-button>
                 <sui-button icon="search" floated="right" basic inverted circular @click="toggleSearch">
-                    <sui-input v-if="isSearch" v-model="search" class="transparent inverted search-input" @click.stop="" @></sui-input>
+                    <sui-input v-if="isSearch" v-model="search" class="transparent inverted search-input" @click.stop=""
+                               @></sui-input>
                 </sui-button>
             </sui-container>
         </div>
         <div class="ui wide sidebar inverted vertical menu" :class="{visible: isOpen}">
             <div is="sui-segment" inverted class="nav-menu">
                 <sui-accordion exclusive inverted transparent>
-                    <router-link v-for="item in links" :key="item.id" :to="item.link" ><sui-list-item>{{item.name}}</sui-list-item></router-link>
+                    <router-link v-for="item in links" :key="item.id" :to="item.link">
+                        <sui-list-item>{{item.name}}</sui-list-item>
+                    </router-link>
                     <div v-for="menu in menus" :key="menu.id">
-                    <sui-accordion-title>
-                        <sui-icon name="dropdown" />
-                        {{menu.name}}
-                    </sui-accordion-title>
-                    <sui-accordion-content>
-                        <sui-list link>
-                            <router-link v-for="item in menu.items" :key="item.id" :to="item.link" ><sui-list-item>{{item.name}}</sui-list-item></router-link>
-                        </sui-list>
-                    </sui-accordion-content>
+                        <sui-accordion-title>
+                            <sui-icon name="dropdown"/>
+                            {{menu.name}}
+                        </sui-accordion-title>
+                        <sui-accordion-content>
+                            <sui-list link>
+                                <router-link v-for="item in menu.items" :key="item.id" :to="item.link">
+                                    <sui-list-item>{{item.name}}</sui-list-item>
+                                </router-link>
+                            </sui-list>
+                        </sui-accordion-content>
                     </div>
                 </sui-accordion>
             </div>
@@ -33,11 +39,15 @@
 
         <div>
             <sui-modal v-model="open">
-                <sui-modal-header><sui-button-group size="large" :widths="2">
-                    <sui-button @click.native="changeFormType('login')" content="Login" :active="form_type === 'login'"/>
-                    <sui-button-or />
-                    <sui-button @click.native="changeFormType('signup')" content="Signup" :active="form_type === 'signup'"/>
-                </sui-button-group></sui-modal-header>
+                <sui-modal-header>
+                    <sui-button-group size="large" :widths="2">
+                        <sui-button @click.native="changeFormType('login')" content="Login"
+                                    :active="form_type === 'login'"/>
+                        <sui-button-or/>
+                        <sui-button @click.native="changeFormType('signup')" content="Signup"
+                                    :active="form_type === 'signup'"/>
+                    </sui-button-group>
+                </sui-modal-header>
                 <login v-if="form_type === 'login'"></login>
                 <signup v-if="form_type === 'signup'"></signup>
             </sui-modal>
@@ -49,6 +59,7 @@
     import Login from "@/pages/Login";
     import Signup from "@/pages/Signup";
     import {APIService} from "@/APIService";
+
     export default {
         name: "SliderNav",
         components: {Signup, Login},
@@ -61,8 +72,24 @@
                 isSearch: false,
                 search: '',
                 menus: [
-                    {id: 1, name: 'Players', items: [{id: 11, name: 'Michael Jordan', link: '/player/2'}, {id: 12, name: 'Cristiano Ronaldo', link: '/player/1'},]},
-                    {id: 2, name: 'Teams', items: [{id: 21, name: 'Barcelona', link: '/team/76503945'}, {id: 22, name: 'Golden State', link: '/team/10934370'},]},
+                    {
+                        id: 1,
+                        name: 'Players',
+                        items: [{id: 11, name: 'Michael Jordan', link: '/player/2'}, {
+                            id: 12,
+                            name: 'Cristiano Ronaldo',
+                            link: '/player/1'
+                        },]
+                    },
+                    {
+                        id: 2,
+                        name: 'Teams',
+                        items: [{id: 21, name: 'Barcelona', link: '/team/76503945'}, {
+                            id: 22,
+                            name: 'Golden State',
+                            link: '/team/10934370'
+                        },]
+                    },
                 ],
                 links: [
                     {id: 3, name: 'Home', link: '/'},
@@ -91,10 +118,23 @@
             },
             signOut() {
                 //todo
-                APIService.loggedIn = false;
+                APIService.loggedIn.logged = false;
             },
             isLoggedIn: function () {
-                return APIService.loggedIn;
+                return APIService.loggedIn.logged;
+            },
+
+            logged() {
+                const apiURL = APIService.USER+'logged/';
+                const myInit = {
+                    mode: 'cors',
+                };
+                const myRequest = new Request(apiURL, myInit);
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => APIService.loggedIn = data)
+                    .catch(error => console.log(error))
+
             }
         },
         computed: {
@@ -102,7 +142,10 @@
                 return "background: rgba(0,0,0," + this.alpha + ");"
             },
 
-        }
+        },
+        beforeMount() {
+            this.logged()
+        },
     }
 </script>
 
@@ -116,9 +159,11 @@
     #slider-nav .wrapper {
         width: 100vw;
     }
+
     .search-input {
         margin: -0.5rem 0;
     }
+
     .logo {
         display: inline-block;
         text-align: center;
@@ -134,13 +179,16 @@
     .wrapper {
         text-align: center;
     }
+
     .ui.wide.sidebar {
         width: 250px;
-        background: linear-gradient(to right, rgb(0,0,0), rgba(0,0,0,0.8), rgba(0,0,0,0));
+        background: linear-gradient(to right, rgb(0, 0, 0), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
     }
+
     .nav-menu {
-        background: none!important;
+        background: none !important;
     }
+
     .dimmer {
         background: rgba(0, 0, 0, 0.1);
         z-index: auto;

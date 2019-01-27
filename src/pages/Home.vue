@@ -48,7 +48,9 @@
 
                 fetch(myRequest)
                     .then(response => response.json())
-                    .then((data) => {this.posts = data})
+                    .then((data) => {
+                        this.posts = data
+                    })
                     .catch(error => console.log(error))
             },
             getHeaderMatch: function () {
@@ -61,15 +63,31 @@
 
                 fetch(myRequest)
                     .then(response => response.json())
-                    .then((data) => {this.liveMatch = data})
+                    .then((data) => {
+                        this.liveMatch = data
+                    })
                     .catch(error => console.log(error))
             },
-        }
+            logged() {
+                const apiURL = APIService.USER;
+                const myInit = {
+                    mode: 'cors',
+                };
+                const myRequest = new Request(apiURL, myInit);
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => APIService.loggedIn = data)
+                    .catch(error => console.log(error))
+
+            }
+        },
+
+
     }
 </script>
 
 <style scoped>
-.m-auto {
-    margin: 0 auto;
-}
+    .m-auto {
+        margin: 0 auto;
+    }
 </style>
