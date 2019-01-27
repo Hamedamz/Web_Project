@@ -92,57 +92,18 @@
                     comp: 'match-table'
                 }],
                 currentTab: {name: 'News', comp: 'latest-news'},
-                people:
-                    {
-                        players: [{
-                            name: 'Michael Jordan',
-                            age: 27,
-                            joinedYear: 2013,
-                            post: 'HalfBack',
-                            image:'static/michael-avatar.png',
-                            link:'http://localhost:8080/player'
-                        },{
-                            name: 'Daniel Alba',
-                            age: 32,
-                            joinedYear: 2018,
-                            post: 'Left Defender',
-                            image:'static/michael-avatar.png',
-                            link:'http://localhost:8080/player'
-                        },{
-                            name: 'Dani',
-                            age: 22,
-                            joinedYear: 2010,
-                            post: 'Right Attacker',
-                            image:'static/michael-avatar.png',
-                            link:'http://localhost:8080/player'
-                        },],
-                        faculty:[{
-                            name: 'Carlos KeiRosh',
-                            age: 51,
-                            joinedYear: 2012,
-                            post: 'Sar Morrabi',
-                            image:'static/michael-avatar.png',
-                            link:'/#'
-                        },{
-                            name: 'Ahmad Peirovani',
-                            age: 65,
-                            joinedYear: 1960,
-                            post: 'komak Morrabi',
-                            image:'static/michael-avatar.png',
-                            link:'/#'
-                        }]
-                    }
+                people: null,
             }
         },
         mounted() {
             this.getTeam();
+            this.getPlayers();
             // this.getPlayerStat();
         },
         watch: {
             '$route'(to, from) {
                 this.getTeam();
-                // this.getPlayerStat();
-                this.getRelatedNews();
+                this.getPlayers();
             },
             filter: function() {
                 this.getRelatedNews();
@@ -191,6 +152,21 @@
                     })
                     .catch(error => console.log(error))
             },
+            getPlayers: function() {
+                const apiURL = APIService.PLAYER + "team/" + this.$route.params.id;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.people = data
+                    })
+                    .catch(error => console.log(error))
+            }
         },
         computed: {
             icon: function () {

@@ -93,22 +93,17 @@
             return {
                 reply_body: {
                     text: '',
-                    news: this.$route.params.id,
+                    news: '',
                 },
                 reply_loading: false,
             }
         },
         methods: {
             sendReply: function() {
-                this.reply_loading = true;
-                this.$http.post('http://127.0.0.1:8000/news/comment/send/', this.reply_body)
-            .then((response) => {
-                    this.reply_loading = false;
-                    // this.getArticles();
-                })
-                    .catch((err) => {
-                        this.reply_loading = false;
-                        console.log(err);
+                this.reply_body.news = this.$route.params.id;
+                this.$http.post(APIService.COMMENTS, this.reply_body)
+                    .then(function(data) {
+                        console.log(data)
                     })
             },
         }
