@@ -5,6 +5,7 @@ export const APIService = {
     PLAYER: 'http://127.0.0.1:8000/player/',
     MATCH: 'http://127.0.0.1:8000/match/',
     USER:'http://127.0.0.1:8000/user/',
+    AUTH:'http://127.0.0.1:8000/rest-auth/login/',
     loggedIn: {
         logged: false
     },

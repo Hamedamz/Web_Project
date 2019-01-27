@@ -69,7 +69,7 @@
                     .catch(error => console.log(error))
             },
             logged() {
-                const apiURL = APIService.USER;
+                const apiURL = APIService.USER+'logged/';
                 const myInit = {
                     mode: 'cors',
                 };

@@ -26,6 +26,7 @@
 
 <script>
     import {APIService} from "@/APIService";
+    import Vue from "vue";
 
     export default {
         name: "Login",
@@ -38,23 +39,20 @@
                 }
             }
         },
+        props: {},
         methods: {
-            login:function () {
-                this.$http.post(APIService.USER, this.input)
-                    .then(function(data) {
-                        console.log(data)
-                    })
+            login: function () {
+                this.$http.post(APIService.AUTH, this.input, {emulateJSON: true})
+                    .then(response => response.json())
+                    .then((data) => Vue.http.headers.common['Authorization'] ='Token '+ data.key)
+                    .then(this.logged())
+                    .catch(error => console.log(error))
             },
             forgot() {
 
             },
             logged() {
-                const apiURL = APIService.USER;
-                const myInit = {
-                    mode: 'cors',
-                };
-                const myRequest = new Request(apiURL, myInit);
-                fetch(myRequest)
+                this.$http.post(APIService.USER + 'logged/', {}, {emulateJSON: true})
                     .then(response => response.json())
                     .then((data) => APIService.loggedIn = data)
                     .catch(error => console.log(error))
