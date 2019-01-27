@@ -169,12 +169,7 @@
         },
         methods: {
 
-            filterAPI: function () {
-                if (this.filter === 'Title') return 1;
-                if (this.filter === 'Tags') return 0;
-                return 2;
 
-            },
             getPlayer: function () {
                 const apiURL = APIService.PLAYER + this.$route.params.id;
                 const myInit = {
@@ -205,6 +200,12 @@
                         this.player.leagues = data
                     })
                     .catch(error => console.log(error))
+            },
+            filterAPI: function () {
+                if (this.filter === 'Title') return 1;
+                if (this.filter === 'Tags') return 0;
+                return 2;
+
             },
             getRelatedNews: function () {
                 const apiURL = APIService.LATEST_NEWS + 'filter/'+this.filterAPI()+'/'+this.player.first_name;

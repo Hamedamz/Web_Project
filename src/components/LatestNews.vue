@@ -36,7 +36,7 @@
         </sui-grid>
         <transition-group name="cell" class="ui grid container-fluid stackable padded">
             <news-card
-                    v-for="post in filteredPosts"
+                    v-for="post in filteredPosts()"
                     :key="post.id"
                     :post="post"
                     class="cell"
@@ -95,14 +95,12 @@
             filterBySport(post) {
                 return this.filter === 'All' || post.sport === this.filter.toLowerCase();
             },
-        },
-        computed: {
             filteredPosts: function () {
-                return this.posts
-                // let posts = this.posts.filter(this.filterBySport);
-                // if (!this.subscriptions)
-                //     return posts.slice(0, this.post_counts);
-                // else return posts
+                // return this.posts
+                let posts = this.posts.filter(this.filterBySport);
+                if (!this.subscriptions)
+                    posts = posts.slice(0, this.post_counts);
+                return posts
             }
         }
     }

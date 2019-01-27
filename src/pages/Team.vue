@@ -1,12 +1,12 @@
 <template>
-    <full-page-image-container :image="team.camp" small="true" color="#1ba8a5">
+    <full-page-image-container :image="team.stadium_image" small="true" color="#1ba8a5">
         <template slot="header">
             <div class="flex">
                 <sui-item-group>
                     <sui-item>
-                        <sui-item-image size="tiny" class="circular" :src="team.icon"/>
+                        <sui-item-image size="tiny" class="circular" :src="team.logo"/>
                         <sui-item-content vertical-align="middle">
-                            <sui-item-header class="team-name">{{team.name}}</sui-item-header>
+                            <sui-item-header class="team-name">{{team.full_name}}</sui-item-header>
                         </sui-item-content>
                     </sui-item>
                 </sui-item-group>
@@ -58,6 +58,7 @@
     import TeamPlayers from "@/components/TeamPlayers"
     import LatestNews from "@/components/LatestNews"
     import MatchTable from "@/components/MatchTable"
+    import {APIService} from "@/APIService";
 
     export default {
         name: "Team",
@@ -83,61 +84,8 @@
                     },
 
                 ],
-                team: {
-                    name: 'PARIS SAINT-GERMAIN',
-                    camp: 'static/psg-stadium.jpg',
-                    icon: 'static/psg.png'
-                },
-                posts: [
-                    {
-                        id: 1,
-                        title: 'A home for the pride key to roaring Lions',
-                        image: 'http://a2.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F1128%2Fr470200_1296x729_16%2D9.png&w=544&h=306&scale=crop&cquality=80&location=origin',
-                        type: 'small',
-                        category: 'premiere league',
-                        sport: 'football',
-                    },
-                    {
-                        id: 3,
-                        title: 'Wright Thompson: Italian football gets in your blood',
-                        image: 'http://a2.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F0929%2Fr438829_1296x729_16%2D9.jpg&w=544&h=306&scale=crop&cquality=80&location=origin',
-                        type: 'small',
-                        category: 'premiere league',
-                        sport: 'football',
-                    },
-                    {
-                        id: 4,
-                        title: 'By the numbers: Ronaldo equals 51-year-old record',
-                        image: 'http://a3.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F0816%2Fr415461_2_608x342_16%2D9.jpg&w=544&h=306&scale=crop&cquality=80&location=origin',
-                        type: 'small',
-                        category: 'serie A',
-                        sport: 'football',
-                    },
-                    {
-                        id: 5,
-                        title: 'Why Liverpool should sell Salah',
-                        image: 'http://a4.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F0816%2Fr415458_608x342_16%2D9.jpg&w=544&h=306&scale=crop&cquality=80&location=origin',
-                        type: 'small',
-                        category: 'premiere league',
-                        sport: 'football',
-                    },
-                    {
-                        id: 6,
-                        title: 'Who\'s more important to Man United: Pogba or Mourinho?',
-                        image: 'http://a3.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F0816%2Fr415457_608x342_16%2D9.jpg&w=544&h=306&scale=crop&cquality=80&location=origin',
-                        type: 'big',
-                        category: 'premiere league',
-                        sport: 'football',
-                    },
-                    {
-                        id: 7,
-                        title: 'Kylian Mbappe and the curse of winning a World Cup',
-                        image: 'http://a2.espncdn.com/combiner/i?img=%2Fphoto%2F2018%2F0925%2Fr436811_1296x729_16%2D9.jpg&w=544&h=306&scale=crop&cquality=80&location=origin',
-                        type: 'small',
-                        category: 'World Cup',
-                        sport: 'football',
-                    },
-                ],
+                team: null,
+                posts: null,
                 subscribed: false,
                 tabs: [{name: 'News', comp: 'latest-news'}, {name: 'Squads', comp: 'team-players'}, {
                     name: 'Matches',
@@ -186,10 +134,63 @@
                     }
             }
         },
+        mounted() {
+            this.getTeam();
+            // this.getPlayerStat();
+        },
+        watch: {
+            '$route'(to, from) {
+                this.getTeam();
+                // this.getPlayerStat();
+                this.getRelatedNews();
+            },
+            filter: function() {
+                this.getRelatedNews();
+            }
+        },
         methods: {
             subscribe: function () {
                 this.subscribed = !this.subscribed
-            }
+            },
+
+            getTeam: function () {
+                const apiURL = APIService.TEAM + this.$route.params.id;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.team = data
+                        this.getRelatedNews();
+                    })
+                    .catch(error => console.log(error))
+            },
+            filterAPI: function () {
+                if (this.filter === 'Title') return 1;
+                if (this.filter === 'Tags') return 0;
+                return 2;
+
+            },
+            getRelatedNews: function () {
+                const apiURL = APIService.LATEST_NEWS + 'filter/'+this.filterAPI()+'/'+this.team.full_name;
+                // const apiURL = APIService.LATEST_NEWS + 'filter/' + this.filterAPI() + '/' + this.player.first_name + "%20" + this.player.last_name;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.posts = data
+                    })
+                    .catch(error => console.log(error))
+            },
         },
         computed: {
             icon: function () {

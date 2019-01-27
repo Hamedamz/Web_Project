@@ -4,9 +4,9 @@
             {{league.year}}
         </sui-table-cell>
         <sui-table-cell>
-            <sui-image :src="league.icon" avatar />
+            <sui-image :src="league.team.logo" avatar />
             <span>
-            {{league.team}}</span>
+            {{league.team.abbreviation}}</span>
         </sui-table-cell>
         <sui-table-cell>
             {{league.time}}
