@@ -1,7 +1,7 @@
 <template>
     <div id="match-table">
         <sui-grid>
-            <div class="controls">
+            <div class="controls" v-if="!hideFilter">
                 <sui-input placeholder="Rival..."  icon="search" basic inverted circular/>
                 <sui-dropdown
                         text="Filter Posts"
@@ -27,9 +27,11 @@
 
 <script>
     import MatchCell from "@/components/MatchCell";
+    import {APIService} from "@/APIService";
     export default {
         name: "MatchTable",
         components: {MatchCell},
+        props: ['hideFilter'],
         data () {
             return {
                 filter: 'All',
@@ -101,6 +103,25 @@
                     },
                 ],
             }
+        },
+        mounted(){
+            this.getMatches()
+        },
+        methods: {
+            getMatches: function () {
+                const apiURL = APIService.MATCH + "league/" + this.$route.params.id;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.matches = data
+                    })
+            },
         }
     }
 </script>

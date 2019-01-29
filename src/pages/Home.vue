@@ -81,7 +81,7 @@
                     .catch(error => console.log(error))
             },
             getHeaderMatch: function () {
-                const apiURL = APIService.MATCH + "1";
+                const apiURL = APIService.MATCH + "latest";
                 const myInit = {
                     mode: 'cors',
                 };
@@ -91,7 +91,7 @@
                 fetch(myRequest)
                     .then(response => response.json())
                     .then((data) => {
-                        this.liveMatch = data
+                        this.liveMatch = data[0]
                     })
                     .catch(error => console.log(error))
             },

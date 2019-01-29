@@ -77,8 +77,22 @@
                     .then(response => response.json())
                     .then((data) => {
                         this.league = data;
+                        this.getRelatedNews()
                     })
-                    .catch(error => console.log(error))
+            },
+            getRelatedNews: function () {
+                const apiURL = APIService.LATEST_NEWS + 'filter/0/'+this.league.name;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.posts = data
+                    })
             },
             getTable: function () {
                 const apiURL = APIService.LEAGUE + 'club/' + this.$route.params.id;
@@ -106,6 +120,8 @@
                     return {posts: this.posts};
                 if (this.currentTabComponent === 'standings-table')
                     return {table: this.table};
+                if (this.currentTabComponent === 'match-table')
+                    return {hideFilter: true};
                 return {};
             }
         },

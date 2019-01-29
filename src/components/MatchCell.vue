@@ -2,13 +2,13 @@
     <router-link to="/match/id" is="sui-grid-column" :width="8" href="#">
         <sui-segment class="match-cell" inverted>
         <div class="teams"><div>
-            <sui-image :src="match.homeBadge" avatar></sui-image>
-            <span>{{match.homeName}}</span>
+            <sui-image :src="match.host_team.logo" avatar></sui-image>
+            <span>{{match.host_team.abbreviation}}</span>
             <span class="res"><sui-icon size="small" name="play" v-if="winHome"></sui-icon>{{homePt}}</span>
         </div>
         <div>
-            <sui-image :src="match.awayBadge" avatar></sui-image>
-            <span>{{match.awayName}}</span>
+            <sui-image :src="match.guest_team.logo" avatar></sui-image>
+            <span>{{match.guest_team.abbreviation}}</span>
             <span class="res"><sui-icon size="small" name="play" v-if="winAway"></sui-icon>{{awayPt}}</span>
         </div></div>
         <div class="time">{{match.time}}</div>
@@ -22,10 +22,10 @@
         props: ['match'],
         computed: {
             homePt: function () {
-                return this.match.result.split(":")[0].trim();
+                return this.match.host_score !== null ? this.match.host_score: " "
             },
             awayPt: function () {
-                return this.match.result.split(":")[1].trim();
+                return this.match.guest_score !== null? this.match.guest_score: " "
             },
             winHome: function () {
                 return this.homePt > this.awayPt;
