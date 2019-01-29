@@ -1,12 +1,12 @@
 <template>
     <div id="Home">
         <full-header :post="mainNews" :match="liveMatch"></full-header>
-        <latest-news :posts="posts" with-header="Latest News" with-buttons="true"></latest-news>
+        <latest-news v-on:change-count="onChangeCount" :posts="posts" with-header="Latest News" with-buttons="true"></latest-news>
         <sui-grid class="container-fluid stackable padded">
 
-            <sui-grid-row>
-                <sui-button basic inverted color="red" circular class="m-auto" icon="ellipsis horizontal"></sui-button>
-            </sui-grid-row>
+            <!--<sui-grid-row>-->
+                <!--<sui-button @click="loadMoreNews" basic inverted color="red" circular class="m-auto" icon="ellipsis horizontal"></sui-button>-->
+            <!--</sui-grid-row>-->
         </sui-grid>
         <latest-games></latest-games>
     </div>
@@ -29,17 +29,27 @@
                     image: 'static/i2.jpg',
                     category: 'premiere league'
                 },
-                posts: null,
+                posts_count: 5,
+                number_of_posts: 0,
+                posts: [],
                 liveMatch: null,
             }
         },
         mounted() {
-            this.getLatestNews();
+            this.getLatestNews(this.posts_count);
             this.getHeaderMatch();
         },
         methods: {
-            getLatestNews: function () {
-                const apiURL = APIService.LATEST_NEWS;
+            loadMoreNews: function() {
+                this.getLatestNews(this.posts_count);
+            },
+            onChangeCount: function(val) {
+                this.posts_count = val;
+                if (this.posts_count > this.number_of_posts)
+                    this.getLatestNews(this.posts_count - this.number_of_posts)
+            },
+            getLatestNews: function (count) {
+                const apiURL = APIService.LATEST_NEWS + this.number_of_posts + '/' + count;
                 const myInit = {
                     mode: 'cors',
                 };
@@ -49,7 +59,8 @@
                 fetch(myRequest)
                     .then(response => response.json())
                     .then((data) => {
-                        this.posts = data
+                        this.posts = this.posts.concat(data);
+                        this.number_of_posts += data.length;
                     })
                     .catch(error => console.log(error))
             },

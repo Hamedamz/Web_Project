@@ -58,7 +58,7 @@
         data() {
             return {
                 filter: 'All',
-                post_counts: 10,
+                post_counts: 5,
                 subscriptions: false,
                 post_count_options: [{
                     text: '5',
@@ -89,6 +89,11 @@
                         label: {color: 'orange', empty: true, circular: true},
                     },
                 ]
+            }
+        },
+        watch: {
+            post_counts: function(val) {
+                this.$emit('change-count', val)
             }
         },
         methods: {
