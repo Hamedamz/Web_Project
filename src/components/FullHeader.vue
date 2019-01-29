@@ -6,9 +6,9 @@
         </sui-container>
         <sui-container>
             <div class="main-news">
-                <div class="main-news-cat">{{post.category.toUpperCase()}}</div>
-                <router-link to="/news/id"> <h1 is="sui-header" class="main-news-title" inverted>{{post.title}}</h1></router-link>
-                <router-link to="/news/id"><sui-button circular inverted>Full Story</sui-button></router-link>
+                <div class="main-news-cat">{{post.source.toUpperCase()}}</div>
+                <router-link :to="'/news/' + post.id"> <h1 is="sui-header" class="main-news-title" inverted>{{post.title}}</h1></router-link>
+                <router-link :to="'/news/' + post.id"><sui-button circular inverted>Full Story</sui-button></router-link>
             </div>
         </sui-container>
     </div>
@@ -22,7 +22,7 @@
         props: ['post', 'match'],
         computed: {
             background: function() {
-                return "background: linear-gradient(to left, #fff, #444), url(" + this.post.image + ")"
+                return "background: linear-gradient(to left, #fff, #444), url(" + this.post.news_pic + ")"
             }
         },
     }

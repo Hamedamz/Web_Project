@@ -36,10 +36,26 @@
             }
         },
         mounted() {
+            this.getHeaderNews();
+            this.number_of_posts = 1;
             this.getLatestNews(this.posts_count);
             this.getHeaderMatch();
         },
         methods: {
+            getHeaderNews: function() {
+                const apiURL = APIService.LATEST_NEWS + this.number_of_posts + '/' + 1;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.mainNews = data[0];
+                    })
+            },
             loadMoreNews: function() {
                 this.getLatestNews(this.posts_count);
             },
