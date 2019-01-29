@@ -26,7 +26,6 @@
 
 <script>
     import {APIService} from "@/APIService";
-    import Vue from "vue";
 
     export default {
         name: "Login",
@@ -39,12 +38,12 @@
                 }
             }
         },
-        props: {},
+        props: ['nav'],
         methods: {
             login: function () {
-                this.$http.post(APIService.AUTH, this.input, {emulateJSON: true})
+                this.$http.post(APIService.AUTH+'login/', this.input, {emulateJSON: true})
                     .then(response => response.json())
-                    .then((data) => Vue.http.headers.common['Authorization'] ='Token '+ data.key)
+                    .then((data) =>APIService.KEY =data.key)
                     .then(this.logged())
                     .catch(error => console.log(error))
             },
@@ -52,10 +51,13 @@
 
             },
             logged() {
-                this.$http.post(APIService.USER + 'logged/', {}, {emulateJSON: true})
+                this.$http.post(APIService.USER + 'logged/', {key:APIService.KEY}, {emulateJSON: true})
                     .then(response => response.json())
                     .then((data) => APIService.loggedIn = data)
                     .catch(error => console.log(error))
+                if(APIService.loggedIn.logged){
+                    this.toggle()
+                }
 
             }
         },

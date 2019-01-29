@@ -69,12 +69,7 @@
                     .catch(error => console.log(error))
             },
             logged() {
-                const apiURL = APIService.USER+'logged/';
-                const myInit = {
-                    mode: 'cors',
-                };
-                const myRequest = new Request(apiURL, myInit);
-                fetch(myRequest)
+                this.$http.post(APIService.USER + 'logged/', {key:APIService.KEY}, {emulateJSON: true})
                     .then(response => response.json())
                     .then((data) => APIService.loggedIn = data)
                     .catch(error => console.log(error))

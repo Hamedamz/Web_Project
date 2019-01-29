@@ -4,9 +4,10 @@ export const APIService = {
     COMMENTS: 'http://127.0.0.1:8000/news/comment/send/',
     PLAYER: 'http://127.0.0.1:8000/player/',
     MATCH: 'http://127.0.0.1:8000/match/',
-    USER:'http://127.0.0.1:8000/user/',
-    AUTH:'http://127.0.0.1:8000/rest-auth/login/',
+    USER: 'http://127.0.0.1:8000/user/',
+    AUTH: 'http://127.0.0.1:8000/rest-auth/',
     loggedIn: {
         logged: false
     },
+    KEY: 'unknown',
 };

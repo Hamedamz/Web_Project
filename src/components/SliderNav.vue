@@ -38,7 +38,7 @@
         </div>
 
         <div>
-            <sui-modal v-model="showP">
+            <sui-modal v-model="open" v-if="isLoggedIn">
                 <sui-modal-header>
                     <sui-button-group size="large" :widths="2">
                         <sui-button @click.native="changeFormType('login')" content="Login"
@@ -48,7 +48,7 @@
                                     :active="form_type === 'signup'"/>
                     </sui-button-group>
                 </sui-modal-header>
-                <login v-if="form_type === 'login'"></login>
+                <login v-if="form_type === 'login'" nav="this"></login>
                 <signup v-if="form_type === 'signup'"></signup>
             </sui-modal>
         </div>
@@ -117,7 +117,13 @@
                 this.form_type = value;
             },
             signOut() {
-                //todo
+                this.$http.post(APIService.AUTH+'logout/', {
+                    token:APIService.KEY
+                }, {emulateJSON: true})
+                    .then(response => response.json())
+                    .then((data) =>APIService.KEY =data.key)
+                    .then(this.logged())
+                    .catch(error => console.log(error))
                 APIService.loggedIn.logged = false;
             },
             isLoggedIn: function () {
@@ -126,12 +132,7 @@
             },
 
             logged() {
-                const apiURL = APIService.USER + 'logged/';
-                const myInit = {
-                    mode: 'cors',
-                };
-                const myRequest = new Request(apiURL, myInit);
-                fetch(myRequest)
+                this.$http.post(APIService.USER + 'logged/', {key: APIService.KEY}, {emulateJSON: true})
                     .then(response => response.json())
                     .then((data) => APIService.loggedIn = data)
                     .catch(error => console.log(error))
@@ -142,8 +143,9 @@
             opacity: function () {
                 return "background: rgba(0,0,0," + this.alpha + ");"
             },
-            showP:function () {
-                return this.open&&!APIService.loggedIn.logged
+            showP: function () {
+
+                return this.open && !this.isLoggedIn()
             }
 
         },
