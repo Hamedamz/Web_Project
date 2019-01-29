@@ -15,21 +15,26 @@
             <sui-table-header>
                 <sui-table-row>
                     <sui-table-header-cell></sui-table-header-cell>
+                    <sui-table-header-cell></sui-table-header-cell>
                     <sui-table-header-cell
                             v-for="column in table.columns"
                             :key="column">
                         {{column}}
                     </sui-table-header-cell>
+                    <sui-table-header-cell></sui-table-header-cell>
                 </sui-table-row>
             </sui-table-header>
             <sui-table-body>
                 <sui-table-row
                         v-for="(row, index) in sortedList">
+
                     <sui-table-cell>{{index + 1}}</sui-table-cell>
                     <sui-table-cell v-for="(cell, key) in row">
                         <div v-if="key === 'team'">
-                            <sui-image :src="cell.logo" avatar/>
-                            <span>{{cell.abbreviation}}</span>
+                            <router-link :to="'/team/' + row.team.id">
+                                <sui-image :src="cell.logo" avatar/>
+                                <span>{{cell.abbreviation}}</span>
+                            </router-link>
                         </div>
                         <div v-else-if="key !== 'id' && key !== 'league'">{{cell}}</div>
                     </sui-table-cell>
@@ -95,21 +100,37 @@
             sortedList: function () {
                 let res = this.table.rows;
                 if (this.sorting === 'MP')
-                    return res.sort((a, b) => { return b.MP - a.MP;})
+                    return res.sort((a, b) => {
+                        return b.MP - a.MP;
+                    })
                 if (this.sorting === 'W')
-                    return res.sort((a, b) => { return b.W - a.W;})
+                    return res.sort((a, b) => {
+                        return b.W - a.W;
+                    })
                 if (this.sorting === 'D')
-                    return res.sort((a, b) => { return b.D - a.D;})
+                    return res.sort((a, b) => {
+                        return b.D - a.D;
+                    })
                 if (this.sorting === 'L')
-                    return res.sort((a, b) => { return b.L - a.L;})
+                    return res.sort((a, b) => {
+                        return b.L - a.L;
+                    })
                 if (this.sorting === 'GA')
-                    return res.sort((a, b) => { return b.GA - a.GA;})
+                    return res.sort((a, b) => {
+                        return b.GA - a.GA;
+                    })
                 if (this.sorting === 'GD')
-                    return res.sort((a, b) => { return b.GD - a.GD;})
+                    return res.sort((a, b) => {
+                        return b.GD - a.GD;
+                    })
                 if (this.sorting === 'Pts')
-                    return res.sort((a, b) => { return b.Pts - a.Pts;})
+                    return res.sort((a, b) => {
+                        return b.Pts - a.Pts;
+                    })
                 if (this.sorting === 'Club')
-                    return res.sort((a, b) => { return b.Club.name < a.Club.name? 1 : -1;})
+                    return res.sort((a, b) => {
+                        return b.Club.name < a.Club.name ? 1 : -1;
+                    })
                 return res
             }
         }

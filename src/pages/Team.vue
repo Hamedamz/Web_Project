@@ -28,6 +28,7 @@
                             :content="tab.name"
                     ></sui-button>
                 </sui-button-group>
+                <sui-grid>
                     <div v-if="this.currentTab.name === 'News'">
                         <p class="ui inverted header">Show related news based on: </p>
                         <sui-dropdown
@@ -41,13 +42,26 @@
                                 :options="options"
                         ></sui-dropdown>
                     </div>
-                <keep-alive>
-                    <component
-                            v-bind:is="currentTabComponent"
-                            v-bind="currentTabProperties"
-                            class="tab"
-                    ></component>
-                </keep-alive>
+                    <div class="controls" v-if="this.currentTab.name === 'Matches'">
+                        <sui-input placeholder="Rival..." icon="search" basic inverted circular/>
+                        <sui-dropdown
+                                text="Filter Posts"
+                                icon="filter"
+                                floating
+                                labeled
+                                button
+                                class="icon grey basic small circular left floated"
+                                v-model="match_filter"
+                                :options="match_options"
+                        ></sui-dropdown>
+                    </div>
+                </sui-grid>
+                <component
+                        v-bind:is="currentTabComponent"
+                        v-bind="currentTabProperties"
+                        class="tab"
+                ></component>
+
             </div>
         </template>
     </full-page-image-container>
@@ -84,6 +98,33 @@
                     },
 
                 ],
+                match_filter: 'All',
+                match_options: [
+                    {
+                        key: 'All',
+                        text: 'All',
+                        value: 'All',
+                    },
+                    {
+                        key: 'Win',
+                        text: 'Win',
+                        value: 'Win',
+                        label: {color: 'green', empty: true, circular: true},
+                    },
+                    {
+                        key: 'Draw',
+                        text: 'Draw',
+                        value: 'Draw',
+                        label: {color: 'yellow', empty: true, circular: true},
+                    },
+                    {
+                        key: 'Lost',
+                        text: 'Lost',
+                        value: 'Lost',
+                        label: {color: 'red', empty: true, circular: true},
+                    },
+                ],
+                matches: [],
                 team: null,
                 posts: null,
                 subscribed: false,
@@ -98,15 +139,19 @@
         mounted() {
             this.getTeam();
             this.getPlayers();
-            // this.getPlayerStat();
+            this.getMatches();
         },
         watch: {
-            '$route'(to, from) {
+            '$route'() {
                 this.getTeam();
                 this.getPlayers();
+                this.getMatches();
             },
-            filter: function() {
+            filter: function () {
                 this.getRelatedNews();
+            },
+            match_filter: function () {
+                this.getMatches();
             }
         },
         methods: {
@@ -136,8 +181,9 @@
                 return 2;
 
             },
+
             getRelatedNews: function () {
-                const apiURL = APIService.LATEST_NEWS + 'filter/'+this.filterAPI()+'/'+this.team.full_name;
+                const apiURL = APIService.LATEST_NEWS + 'filter/' + this.filterAPI() + '/' + this.team.full_name;
                 // const apiURL = APIService.LATEST_NEWS + 'filter/' + this.filterAPI() + '/' + this.player.first_name + "%20" + this.player.last_name;
                 const myInit = {
                     mode: 'cors',
@@ -152,7 +198,7 @@
                     })
                     .catch(error => console.log(error))
             },
-            getPlayers: function() {
+            getPlayers: function () {
                 const apiURL = APIService.PLAYER + "team/" + this.$route.params.id;
                 const myInit = {
                     mode: 'cors',
@@ -166,7 +212,28 @@
                         this.people = data
                     })
                     .catch(error => console.log(error))
-            }
+            },
+            matchFilterAPI: function () {
+                if (this.match_filter === 'All') return "";
+                if (this.match_filter === 'Win') return "1/";
+                if (this.match_filter === 'Draw') return "0/";
+                return "2/";
+
+            },
+            getMatches: function () {
+                const apiURL = APIService.MATCH + "team/" + this.matchFilterAPI() + this.$route.params.id;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.matches = data
+                    })
+            },
         },
         computed: {
             icon: function () {
@@ -180,6 +247,8 @@
                     return {posts: this.posts};
                 if (this.currentTabComponent === 'team-players')
                     return {people: this.people};
+                if (this.currentTabComponent === 'match-table')
+                    return {matches: this.matches};
                 return {};
             },
         },
@@ -205,5 +274,9 @@
 
     .padded {
         padding-bottom: 1rem;
+    }
+
+    .controls {
+        padding: 1rem 1rem;
     }
 </style>

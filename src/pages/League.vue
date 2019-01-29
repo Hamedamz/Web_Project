@@ -54,6 +54,7 @@
                 }, {name: 'News', comp: 'latest-news'}],
                 currentTab: {name: 'Standings', comp: 'standings-table'},
                 posts: [],
+                matches: [],
                 table: {
                     columns: ['Club', 'MP', 'W', 'D', 'L', 'GA', 'GD', 'Pts'],
                     rows: [],
@@ -63,6 +64,7 @@
         mounted() {
             this.getLeague();
             this.getTable();
+            this.getMatches();
         },
         methods: {
             getLeague: function () {
@@ -77,7 +79,7 @@
                     .then(response => response.json())
                     .then((data) => {
                         this.league = data;
-                        this.getRelatedNews()
+                        this.getRelatedNews();
                     })
             },
             getRelatedNews: function () {
@@ -109,6 +111,20 @@
                     })
                     .catch(error => console.log(error))
             },
+            getMatches: function () {
+                const apiURL = APIService.MATCH + "league/" + this.$route.params.id;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.matches = data
+                    })
+            },
         },
 
         computed: {
@@ -121,7 +137,7 @@
                 if (this.currentTabComponent === 'standings-table')
                     return {table: this.table};
                 if (this.currentTabComponent === 'match-table')
-                    return {hideFilter: true};
+                    return {matches: this.matches};
                 return {};
             }
         },

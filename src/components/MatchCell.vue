@@ -1,5 +1,5 @@
 <template>
-    <router-link to="/match/id" is="sui-grid-column" :width="8" href="#">
+    <router-link :to="'/match/'+ match.id" is="sui-grid-column" :width="8">
         <sui-segment class="match-cell" inverted>
         <div class="teams"><div>
             <sui-image :src="match.host_team.logo" avatar></sui-image>
