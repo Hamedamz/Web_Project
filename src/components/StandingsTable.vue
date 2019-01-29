@@ -27,11 +27,11 @@
                         v-for="(row, index) in sortedList">
                     <sui-table-cell>{{index + 1}}</sui-table-cell>
                     <sui-table-cell v-for="(cell, key) in row">
-                        <div v-if="key === 'Club'">
-                            <sui-image :src="cell.badge" avatar/>
-                            <span>{{cell.name}}</span>
+                        <div v-if="key === 'team'">
+                            <sui-image :src="cell.logo" avatar/>
+                            <span>{{cell.abbreviation}}</span>
                         </div>
-                        <div v-else>{{cell}}</div>
+                        <div v-else-if="key !== 'id' && key !== 'league'">{{cell}}</div>
                     </sui-table-cell>
                 </sui-table-row>
             </sui-table-body>
@@ -79,11 +79,6 @@
                             value: 'L',
                         },
                         {
-                            key: 'GF',
-                            text: 'GF',
-                            value: 'GF',
-                        },
-                        {
                             key: 'GA',
                             text: 'GA',
                             value: 'GA',
@@ -107,8 +102,6 @@
                     return res.sort((a, b) => { return b.D - a.D;})
                 if (this.sorting === 'L')
                     return res.sort((a, b) => { return b.L - a.L;})
-                if (this.sorting === 'GF')
-                    return res.sort((a, b) => { return b.GF - a.GF;})
                 if (this.sorting === 'GA')
                     return res.sort((a, b) => { return b.GA - a.GA;})
                 if (this.sorting === 'GD')

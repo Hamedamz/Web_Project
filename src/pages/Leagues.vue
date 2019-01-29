@@ -29,7 +29,7 @@
                                      v-bind:key="item.name"
                                      v-bind:data-index="index"
                                      class="league-avatar">
-                                    <router-link to="/league/id">
+                                    <router-link :to="'league/'+item.id">
                                     <sui-image :src="item.badge" avatar></sui-image>
                                     <span>{{item.name}}</span>
                                     </router-link>
@@ -37,7 +37,7 @@
                             </transition-group>
                         </sui-grid-column>
                         <sui-grid-column :width="8">
-                            <div v-for="league in basketballLeagues" class="league-avatar">
+                            <div v-for="league in basketballLeagues" class="league-avatar" :key="league.id">
                                 <sui-image :src="league.badge" avatar></sui-image>
                                 <span>{{league.name}}</span>
                             </div>
@@ -52,6 +52,7 @@
 
 <script>
     import FullPageImageContainer from "@/layouts/FullPageImageContainer";
+    import {APIService} from "@/APIService";
 
     export default {
         name: "Leagues",
@@ -59,21 +60,8 @@
         data() {
             return {
                 footballQuery: '',
-                footballLeagues: [
-                    {name: 'UEFA Champions League', badge: '/static/eng1.png'},
-                    {name: 'UEFA Europa League', badge: '/static/eng1.png'},
-                    {name: 'English Premier League', badge: '/static/eng1.png'},
-                    {name: 'English Championship', badge: '/static/eng1.png'},
-                    {name: 'English FA Cup', badge: '/static/eng1.png'},
-                    {name: 'English Carabao Cup', badge: '/static/eng1.png'},
-                    {name: 'Spanish La Liga', badge: '/static/eng1.png'},
-                    {name: 'German Bundesliga', badge: '/static/eng1.png'},
-                    {name: 'Italian Serie A', badge: '/static/eng1.png'},
-                ],
-                basketballLeagues: [
-                    {name: 'NBA', badge: '/static/eng1.png'},
-                    {name: 'MLB', badge: '/static/eng1.png'},
-                ],
+                footballLeagues: [],
+                basketballLeagues: [],
             }
         },
         computed: {
@@ -82,9 +70,29 @@
                 return this.footballLeagues.filter(function (item) {
                     return item.name.toLowerCase().indexOf(vm.footballQuery.toLowerCase()) !== -1
                 })
-            }
+            },
+
+        },
+        mounted() {
+            this.getLeagues();
         },
         methods: {
+            getLeagues: function() {
+                const apiURL = APIService.LEAGUE;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.footballLeagues = data.filter(league => league.sport === 'football');
+                        this.basketballLeagues = data.filter(league => league.sport === 'basketball');
+                    })
+                    .catch(error => console.log(error))
+            },
             beforeEnter: function (el) {
                 el.style.opacity = 0
                 el.style.height = 0
