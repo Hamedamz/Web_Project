@@ -48,7 +48,7 @@
                                     :active="form_type === 'signup'"/>
                     </sui-button-group>
                 </sui-modal-header>
-                <login v-if="form_type === 'login'" nav="this"></login>
+                <login v-on:toggle-modal="toggle" v-if="form_type === 'login'" nav="this"></login>
                 <signup v-if="form_type === 'signup'"></signup>
             </sui-modal>
         </div>

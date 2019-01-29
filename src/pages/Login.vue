@@ -46,6 +46,7 @@
                     .then((data) =>APIService.KEY =data.key)
                     .then(this.logged())
                     .catch(error => console.log(error))
+                this.$emit('toggle-modal')
             },
             forgot() {
 
