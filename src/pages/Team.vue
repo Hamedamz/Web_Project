@@ -28,6 +28,7 @@
                             :content="tab.name"
                     ></sui-button>
                 </sui-button-group>
+                <sui-grid>
                     <div v-if="this.currentTab.name === 'News'">
                         <p class="ui inverted header">Show related news based on: </p>
                         <sui-dropdown
@@ -41,13 +42,26 @@
                                 :options="options"
                         ></sui-dropdown>
                     </div>
-                <keep-alive>
-                    <component
-                            v-bind:is="currentTabComponent"
-                            v-bind="currentTabProperties"
-                            class="tab"
-                    ></component>
-                </keep-alive>
+                    <div class="controls" v-if="this.currentTab.name === 'Matches'">
+                        <sui-input placeholder="Rival..." icon="search" basic inverted circular/>
+                        <sui-dropdown
+                                text="Filter Posts"
+                                icon="filter"
+                                floating
+                                labeled
+                                button
+                                class="icon grey basic small circular left floated"
+                                v-model="match_filter"
+                                :options="match_options"
+                        ></sui-dropdown>
+                    </div>
+                </sui-grid>
+                <component
+                        v-bind:is="currentTabComponent"
+                        v-bind="currentTabProperties"
+                        class="tab"
+                ></component>
+
             </div>
         </template>
     </full-page-image-container>
@@ -84,6 +98,33 @@
                     },
 
                 ],
+                match_filter: 'All',
+                match_options: [
+                    {
+                        key: 'All',
+                        text: 'All',
+                        value: 'All',
+                    },
+                    {
+                        key: 'Win',
+                        text: 'Win',
+                        value: 'Win',
+                        label: {color: 'green', empty: true, circular: true},
+                    },
+                    {
+                        key: 'Draw',
+                        text: 'Draw',
+                        value: 'Draw',
+                        label: {color: 'yellow', empty: true, circular: true},
+                    },
+                    {
+                        key: 'Lost',
+                        text: 'Lost',
+                        value: 'Lost',
+                        label: {color: 'red', empty: true, circular: true},
+                    },
+                ],
+                matches: [],
                 team: null,
                 posts: null,
                 subscribed: false,
@@ -92,60 +133,25 @@
                     comp: 'match-table'
                 }],
                 currentTab: {name: 'News', comp: 'latest-news'},
-                people:
-                    {
-                        players: [{
-                            name: 'Michael Jordan',
-                            age: 27,
-                            joinedYear: 2013,
-                            post: 'HalfBack',
-                            image:'static/michael-avatar.png',
-                            link:'http://localhost:8080/player'
-                        },{
-                            name: 'Daniel Alba',
-                            age: 32,
-                            joinedYear: 2018,
-                            post: 'Left Defender',
-                            image:'static/michael-avatar.png',
-                            link:'http://localhost:8080/player'
-                        },{
-                            name: 'Dani',
-                            age: 22,
-                            joinedYear: 2010,
-                            post: 'Right Attacker',
-                            image:'static/michael-avatar.png',
-                            link:'http://localhost:8080/player'
-                        },],
-                        faculty:[{
-                            name: 'Carlos KeiRosh',
-                            age: 51,
-                            joinedYear: 2012,
-                            post: 'Sar Morrabi',
-                            image:'static/michael-avatar.png',
-                            link:'/#'
-                        },{
-                            name: 'Ahmad Peirovani',
-                            age: 65,
-                            joinedYear: 1960,
-                            post: 'komak Morrabi',
-                            image:'static/michael-avatar.png',
-                            link:'/#'
-                        }]
-                    }
+                people: null,
             }
         },
         mounted() {
             this.getTeam();
-            // this.getPlayerStat();
+            this.getPlayers();
+            this.getMatches();
         },
         watch: {
-            '$route'(to, from) {
+            '$route'() {
                 this.getTeam();
-                // this.getPlayerStat();
+                this.getPlayers();
+                this.getMatches();
+            },
+            filter: function () {
                 this.getRelatedNews();
             },
-            filter: function() {
-                this.getRelatedNews();
+            match_filter: function () {
+                this.getMatches();
             }
         },
         methods: {
@@ -175,8 +181,9 @@
                 return 2;
 
             },
+
             getRelatedNews: function () {
-                const apiURL = APIService.LATEST_NEWS + 'filter/'+this.filterAPI()+'/'+this.team.full_name;
+                const apiURL = APIService.LATEST_NEWS + 'filter/' + this.filterAPI() + '/' + this.team.full_name;
                 // const apiURL = APIService.LATEST_NEWS + 'filter/' + this.filterAPI() + '/' + this.player.first_name + "%20" + this.player.last_name;
                 const myInit = {
                     mode: 'cors',
@@ -191,6 +198,42 @@
                     })
                     .catch(error => console.log(error))
             },
+            getPlayers: function () {
+                const apiURL = APIService.PLAYER + "team/" + this.$route.params.id;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.people = data
+                    })
+                    .catch(error => console.log(error))
+            },
+            matchFilterAPI: function () {
+                if (this.match_filter === 'All') return "";
+                if (this.match_filter === 'Win') return "1/";
+                if (this.match_filter === 'Draw') return "0/";
+                return "2/";
+
+            },
+            getMatches: function () {
+                const apiURL = APIService.MATCH + "team/" + this.matchFilterAPI() + this.$route.params.id;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.matches = data
+                    })
+            },
         },
         computed: {
             icon: function () {
@@ -204,6 +247,8 @@
                     return {posts: this.posts};
                 if (this.currentTabComponent === 'team-players')
                     return {people: this.people};
+                if (this.currentTabComponent === 'match-table')
+                    return {matches: this.matches};
                 return {};
             },
         },
@@ -229,5 +274,9 @@
 
     .padded {
         padding-bottom: 1rem;
+    }
+
+    .controls {
+        padding: 1rem 1rem;
     }
 </style>

@@ -12,7 +12,7 @@
             </sui-table-header>
             <sui-table-body>
                 <sui-table-row>
-                    <player-over-all v-for="peo in people.faculty" :person="peo" :key="peo.joinedYear"></player-over-all>
+                    <player-over-all v-for="peo in filteredFaculty" :person="peo" :key="peo.id"></player-over-all>
                 </sui-table-row>
             </sui-table-body>
         </sui-table>
@@ -41,7 +41,7 @@
             </sui-table-header>
             <sui-table-body>
                 <sui-table-row>
-                    <player-over-all v-for="peo in filteredPosts" :person="peo" :key="peo.joinedYear"></player-over-all>
+                    <player-over-all v-for="peo in filteredPosts" :person="peo" :key="peo.id"></player-over-all>
                 </sui-table-row>
             </sui-table-body>
         </sui-table>
@@ -65,9 +65,9 @@
                         value: 'All',
                     },
                     {
-                        key: 'Right Attacker',
-                        text: 'Right Attacker',
-                        value: 'Right Attacker',
+                        key: 'Attack',
+                        text: 'Attack',
+                        value: 'Attack',
                         label: {color: 'green', empty: true, circular: true},
                     },
                     {
@@ -77,9 +77,9 @@
                         label: {color: 'orange', empty: true, circular: true},
                     },
                     {
-                        key: 'Left Defender',
-                        text: 'Left Defender',
-                        value: 'Left Defender',
+                        key: 'Defense',
+                        text: 'Defense',
+                        value: 'Defense',
                         label: {color: 'red', empty: true, circular: true},
                     },
                 ]
@@ -87,12 +87,18 @@
         },
         methods: {
             filterBySport(person) {
-                return this.filter === 'All' || person.post === this.filter;
+                return (this.filter === 'All' || person.role === this.filter) && person.role !== 'Faculty';
             },
+            filterByRole(person) {
+                return person.role === 'Faculty'
+            }
         },
         computed: {
             filteredPosts: function () {
-                return this.people.players.filter(this.filterBySport)
+                return this.people.filter(this.filterBySport)
+            },
+            filteredFaculty: function () {
+                return this.people.filter(this.filterByRole)
             }
         }
     }
