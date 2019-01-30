@@ -8,6 +8,7 @@ export const APIService = {
     AUTH: 'http://127.0.0.1:8000/rest-auth/',
     TEAM: 'http://127.0.0.1:8000/team/',
     LEAGUE:'http://127.0.0.1:8000/league/',
+    SUBS:'http://127.0.0.1:8000/subs/',
     loggedIn: {
         logged: false
     },

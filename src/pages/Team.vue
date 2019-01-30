@@ -80,6 +80,10 @@
         data() {
             return {
                 filter: 'Title',
+                sub_data: {
+                    team: '',
+                    key: '',
+                },
                 options: [
                     {
                         key: 'Title',
@@ -156,7 +160,14 @@
         },
         methods: {
             subscribe: function () {
-                this.subscribed = !this.subscribed
+                this.subscribed = !this.subscribed;
+                this.sub_data.key = APIService.KEY;
+                this.sub_data.team = this.$route.params.id;
+                this.$http.post(APIService.SUBS+'team/', this.sub_data, {emulateJSON: true})
+                    .then(response => response.json())
+                    .then((data) => console.log(data))
+                    .catch(error => console.log(error))
+
             },
 
             getTeam: function () {
