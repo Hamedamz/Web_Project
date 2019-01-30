@@ -101,10 +101,10 @@
         methods: {
             sendReply: function() {
                 this.reply_body.news = this.$route.params.id;
-                this.$http.post(APIService.COMMENTS, this.reply_body)
-                    .then(function(data) {
-                        console.log(data)
-                    })
+                this.$http.post(APIService.COMMENTS, this.reply_body, {emulateJSON: true})
+                    .then(response => response.json())
+                    .then(data => console.log(data))
+
             },
         }
     }

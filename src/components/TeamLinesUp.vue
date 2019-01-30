@@ -56,6 +56,7 @@
     }
     .field{
         margin: auto;
+        padding: 30%;
     }
 
 </style>

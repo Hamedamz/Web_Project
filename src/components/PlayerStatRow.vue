@@ -1,7 +1,7 @@
 <template>
     <sui-table-row>
         <sui-table-cell>{{player.id}}</sui-table-cell>
-        <sui-table-cell>{{player.name}}
+        <sui-table-cell>{{player.player.first_name + ' ' + player.player.last_name}}
             <div v-show="subs">
 
                 <span v-html="player.sIcon" class="font-icon"></span>

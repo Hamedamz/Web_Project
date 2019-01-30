@@ -38,8 +38,10 @@
                         </sui-grid-column>
                         <sui-grid-column :width="8">
                             <div v-for="league in basketballLeagues" class="league-avatar" :key="league.id">
+                                <router-link :to="'league/'+league.id">
                                 <sui-image :src="league.badge" avatar></sui-image>
                                 <span>{{league.name}}</span>
+                                </router-link>
                             </div>
                         </sui-grid-column>
                     </sui-grid-row>

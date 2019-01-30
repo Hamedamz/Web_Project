@@ -2,10 +2,10 @@
 
     <!--<sui-image src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/215059/bm-dante.jpg" size="tiny" circular/>-->
     <span :style="flex">
-        <img :src="player.pic" class="circular--square"/>
+        <img :src="player.player.avatar" class="circular--square"/>
         <div class="name">
             <p class="pp">
-            {{player.name}}
+            {{player.player.last_name}}
             </p>
         </div>
     </span>

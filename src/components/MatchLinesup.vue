@@ -1,7 +1,7 @@
 <template>
     <div class="main">
-        <team-lines-up :players="players"></team-lines-up>
-        <team-lines-up :players="players"></team-lines-up>
+        <team-lines-up :players="host_players"></team-lines-up>
+        <team-lines-up :players="guest_players"></team-lines-up>
         <div class="flex">
 
 
@@ -22,38 +22,15 @@
                             </sui-table-row>
                         </sui-table-header>
                         <sui-table-body>
-                            <sui-table-row>
+                            <sui-table-row v-for="player in host_subs">
                                 <sui-table-cell>
-                                    18
+                                    {{player.player.id}}
                                 </sui-table-cell>
                                 <sui-table-cell>
-                                    Ahmad Mohamadi
-                                </sui-table-cell>
-                            </sui-table-row>
-                            <sui-table-row>
-                                <sui-table-cell>
-                                    18
-                                </sui-table-cell>
-                                <sui-table-cell>
-                                    Ahmad Mohamadi
+                                    {{player.player.first_name + player.player.last_name}}
                                 </sui-table-cell>
                             </sui-table-row>
-                            <sui-table-row>
-                                <sui-table-cell>
-                                    18
-                                </sui-table-cell>
-                                <sui-table-cell>
-                                    Ahmad Mohamadi
-                                </sui-table-cell>
-                            </sui-table-row>
-                            <sui-table-row>
-                                <sui-table-cell>
-                                    18
-                                </sui-table-cell>
-                                <sui-table-cell>
-                                    Ahmad Mohamadi
-                                </sui-table-cell>
-                            </sui-table-row>
+
                         </sui-table-body>
                     </sui-table>
                 </sui-grid-column>
@@ -70,36 +47,12 @@
                             </sui-table-row>
                         </sui-table-header>
                         <sui-table-body>
-                            <sui-table-row>
+                            <sui-table-row v-for="player in guest_subs">
                                 <sui-table-cell>
-                                    18
+                                    {{player.player.id}}
                                 </sui-table-cell>
                                 <sui-table-cell>
-                                    Ahmad Mohamadi
-                                </sui-table-cell>
-                            </sui-table-row>
-                            <sui-table-row>
-                                <sui-table-cell>
-                                    18
-                                </sui-table-cell>
-                                <sui-table-cell>
-                                    Ahmad Mohamadi
-                                </sui-table-cell>
-                            </sui-table-row>
-                            <sui-table-row>
-                                <sui-table-cell>
-                                    18
-                                </sui-table-cell>
-                                <sui-table-cell>
-                                    Ahmad Mohamadi
-                                </sui-table-cell>
-                            </sui-table-row>
-                            <sui-table-row>
-                                <sui-table-cell>
-                                    18
-                                </sui-table-cell>
-                                <sui-table-cell>
-                                    Ahmad Mohamadi
+                                    {{player.player.first_name + player.player.last_name}}
                                 </sui-table-cell>
                             </sui-table-row>
                         </sui-table-body>
@@ -113,13 +66,19 @@
 <script>
 
     import TeamLinesUp from "./TeamLinesUp";
+    import {APIService} from "@/APIService";
 
     export default {
         name: "MatchLinesup",
         components: {TeamLinesUp},
         data() {
             return {
-                players: [{
+                host_players: [],
+                guest_players: [],
+                host_subs: [],
+                guest_subs: [],
+                players: [
+                    {
                     name: 'Neuer',
                     pic: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/215059/bm-rilbery.jpg',
                     left: 44,
@@ -191,6 +150,60 @@
                     id: 11
                 }]
             }
+        },
+        mounted() {
+            this.getLinesUp();
+        },
+        methods: {
+            getLinesUp: function () {
+                    const apiURL = APIService.MATCH + 'linesup/' + this.$route.params.id;
+                    const myInit = {
+                        mode: 'cors',
+                    };
+
+                    const myRequest = new Request(apiURL, myInit);
+
+                    fetch(myRequest)
+                        .then(response => response.json())
+                        .then((data) => {
+                            let htid = data[0].host_team;
+                            let gtid = data[0].guest_team;
+                            this.getHostPlayers(htid);
+                            this.getGuestPlayers(gtid);
+                        })
+            },
+            getHostPlayers: function (id) {
+                const apiURL = APIService.MATCH + 'player/' + id;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.host_players = data.filter(player => player.inField)
+                        this.host_subs = data.filter(player => !player.inField)
+                    })
+
+            },
+            getGuestPlayers: function (id) {
+                const apiURL = APIService.MATCH + 'player/' + id;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.guest_players = data.filter(player => player.inField)
+                        this.guest_subs = data.filter(player => !player.inField)
+                    })
+
+            },
         }
 
     }

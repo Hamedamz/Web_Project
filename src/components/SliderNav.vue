@@ -150,7 +150,7 @@
 
         },
         mounted() {
-            this.logged()
+            // this.logged()
         },
     }
 </script>
