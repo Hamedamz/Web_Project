@@ -12,11 +12,11 @@
                 </sui-form-field>
                 <sui-form-field>
                     <label>Password</label>
-                    <input type="password" name="password" v-model="input.password" placeholder="Password"/>
+                    <input type="password" name="password" v-model="input.password1" placeholder="Password"/>
                 </sui-form-field>
                 <sui-form-field>
                     <label>Confirm Password</label>
-                    <input type="password" name="confirm-password" v-model="input.confirm_password"
+                    <input type="password" name="confirm-password" v-model="input.password2"
                            placeholder="Password"/>
                 </sui-form-field>
                 <sui-button secondary type="button" v-on:click="signup()">Sign Up</sui-button>
@@ -37,6 +37,8 @@
 </template>
 
 <script>
+    import {APIService} from "../APIService";
+
     export default {
         name: "Signup",
         data() {
@@ -44,8 +46,8 @@
                 input: {
                     username: "",
                     email: "",
-                    password: "",
-                    confirm_password: "",
+                    password1: "",
+                    password2: "",
                 },
                 activate_input: {
                     key: null,
@@ -57,6 +59,11 @@
         },
         methods: {
             signup() {
+                this.$http.post(APIService.AUTH+'registration/', this.input, {emulateJSON: true})
+                    .then(response => response.json())
+                    .then((data) =>APIService.KEY =data.key)
+                    .then(this.logged())
+                    .catch(error => console.log(error))
 
                 this.mode = 'activate'
             },

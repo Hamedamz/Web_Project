@@ -3,11 +3,13 @@
         <div class="login-form">
 
             <sui-form>
-                <sui-form-field>
-                    <label>Username</label>
-                    <input type="text" name="username" v-model="input.username" placeholder="Username"/>
+                <sui-form-field v-if="mode === 'forgot'">
+                    <label>Email</label>
+                    <input type="text" name="email" v-model="email.email" placeholder="Email"/>
                 </sui-form-field>
                 <sui-form-field v-if="mode === 'login'">
+                    <label>Username</label>
+                    <input type="text" name="username" v-model="input.username" placeholder="Username"/>
                     <label>Password</label>
                     <input type="password" name="password" v-model="input.password" placeholder="Password"/>
                 </sui-form-field>
@@ -35,6 +37,9 @@
                 input: {
                     username: "",
                     password: ""
+                },
+                email:{
+                    email:"",
                 }
             }
         },
@@ -49,7 +54,9 @@
                 this.$emit('toggle-modal')
             },
             forgot() {
-
+                this.$http.post(APIService.AUTH+'password/reset/', this.email, {emulateJSON: true})
+                    .then(response => response.json())
+                    .catch(error => console.log(error))
             },
             logged() {
                 this.$http.post(APIService.USER + 'logged/', {key:APIService.KEY}, {emulateJSON: true})
