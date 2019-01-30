@@ -34,6 +34,7 @@
                 </sui-button>
             </div>
         </sui-grid>
+            <sui-header inverted class="center aligned" v-if="subscriptions && favs.length === 0">You are not following any news yet!</sui-header>
         <transition-group name="cell" class="ui grid container-fluid stackable padded">
             <news-card
                     v-for="post in filteredPosts()"
@@ -50,11 +51,12 @@
 <script>
     import NewsCard from "@/components/NewsCard";
     import SuiDropdown from "semantic-ui-vue/dist/commonjs/modules/Dropdown/Dropdown";
+    import SuiHeader from "semantic-ui-vue/dist/commonjs/elements/Header/Header";
 
     export default {
         name: "latest-news",
-        components: {SuiDropdown, NewsCard},
-        props: ['posts', 'withHeader', 'withButtons'],
+        components: {SuiHeader, SuiDropdown, NewsCard},
+        props: ['posts', 'favs', 'withHeader', 'withButtons'],
         data() {
             return {
                 filter: 'All',
@@ -94,6 +96,10 @@
         watch: {
             post_counts: function(val) {
                 this.$emit('change-count', val)
+            },
+            subscriptions: function (val) {
+                if (val)
+                    this.$emit('get-fav')
             }
         },
         methods: {
@@ -102,6 +108,8 @@
             },
             filteredPosts: function () {
                 // return this.posts
+                if (this.subscriptions)
+                    return this.favs;
                 let posts = this.posts.filter(this.filterBySport);
                 if (!this.subscriptions)
                     posts = posts.slice(0, this.post_counts);

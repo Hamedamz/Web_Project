@@ -1,7 +1,7 @@
 <template>
     <div id="Home">
         <full-header :post="mainNews" :match="liveMatch"></full-header>
-        <latest-news v-on:change-count="onChangeCount" :posts="posts" with-header="Latest News" with-buttons="true"></latest-news>
+        <latest-news v-on:change-count="onChangeCount" v-on:get-fav="getFavNews" :posts="posts" :favs="fav_posts" with-header="Latest News" with-buttons="true"></latest-news>
         <sui-grid class="container-fluid stackable padded">
 
             <!--<sui-grid-row>-->
@@ -32,6 +32,7 @@
                 posts_count: 5,
                 number_of_posts: 0,
                 posts: [],
+                fav_posts: [],
                 liveMatch: null,
             }
         },
@@ -39,9 +40,24 @@
             this.getHeaderNews();
             this.number_of_posts = 1;
             this.getLatestNews(this.posts_count);
+            this.getFavNews();
             this.getHeaderMatch();
         },
         methods: {
+            getFavNews: function() {
+                const apiURL = APIService.LATEST_NEWS + 'fav_news/' + APIService.KEY;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.fav_posts = data;
+                    })
+            },
             getHeaderNews: function() {
                 const apiURL = APIService.LATEST_NEWS + this.number_of_posts + '/' + 1;
                 const myInit = {

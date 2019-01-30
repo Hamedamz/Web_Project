@@ -10,7 +10,7 @@
                         </sui-item-content>
                     </sui-item>
                 </sui-item-group>
-                <div class="button">
+                <div class="sub-btn">
                     <sui-button circular color="red" @click="subscribe" :icon="icon" :basic="!subscribed"><span
                             v-if="!subscribed">subscirbe</span></sui-button>
                 </div>
@@ -144,12 +144,14 @@
             this.getTeam();
             this.getPlayers();
             this.getMatches();
+            this.checkSub();
         },
         watch: {
             '$route'() {
                 this.getTeam();
                 this.getPlayers();
                 this.getMatches();
+                this.checkSub();
             },
             filter: function () {
                 this.getRelatedNews();
@@ -159,11 +161,27 @@
             }
         },
         methods: {
+            checkSub: function () {
+                this.sub_data.key = APIService.KEY;
+                this.sub_data.team = this.$route.params.id;
+                let subAPI = 'check/team/';
+
+                this.$http.post(APIService.SUBS + subAPI, this.sub_data, {emulateJSON: true})
+                    .then(response => response.json())
+                    .then((data) => console.log(data))
+                    .catch(error => console.log(error))
+
+            },
+
             subscribe: function () {
                 this.subscribed = !this.subscribed;
                 this.sub_data.key = APIService.KEY;
                 this.sub_data.team = this.$route.params.id;
-                this.$http.post(APIService.SUBS+'team/', this.sub_data, {emulateJSON: true})
+                let subAPI = 'unsubs/team/'
+                if (this.subscribed)
+                    subAPI = 'subs/team/'
+
+                this.$http.post(APIService.SUBS + subAPI, this.sub_data, {emulateJSON: true})
                     .then(response => response.json())
                     .then((data) => console.log(data))
                     .catch(error => console.log(error))
@@ -277,12 +295,13 @@
         justify-content: space-between;
     }
 
-    .button {
+    .sub-btn {
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
+        margin: 1rem;
     }
-
+    .header { padding-top: 1rem}
     .padded {
         padding-bottom: 1rem;
     }

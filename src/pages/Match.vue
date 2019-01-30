@@ -2,6 +2,10 @@
     <full-page-image-container :image="match.image">
         <template slot="header">
             <match-time-line :time-line="timeLine" :match="match"></match-time-line>
+            <div class="sub-btn">
+                <sui-button circular color="red" @click="subscribe" :icon="icon" :basic="!subscribed"><span
+                        v-if="!subscribed">subscirbe</span></sui-button>
+            </div>
         </template>
         <template slot="main">
             <match-card :match="match"></match-card>
@@ -117,7 +121,7 @@
             // this.getLinesUp();
         },
         watch: {
-            '$route'(to, from) {
+            '$route'() {
                 this.getMatch();
                 this.getTimeLine();
             },
@@ -158,20 +162,22 @@
 
             },
             getRelatedNews: function () {
-                const apiURL = APIService.LATEST_NEWS + 'filter/0/'+this.match.host_team.full_name;
+                const apiURLh = APIService.LATEST_NEWS + 'filter/0/'+this.match.host_team.full_name;
+                // const apiURLg = APIService.LATEST_NEWS + 'filter/0/'+this.match.guest_team.full_name;
                 // const apiURL = APIService.LATEST_NEWS + 'filter/' + this.filterAPI() + '/' + this.player.first_name + "%20" + this.player.last_name;
                 const myInit = {
                     mode: 'cors',
                 };
 
-                const myRequest = new Request(apiURL, myInit);
+                const myRequestH = new Request(apiURLh, myInit);
+                // const myRequestG = new Request(apiURLg, myInit);
 
-                fetch(myRequest)
+                fetch(myRequestH)
                     .then(response => response.json())
                     .then((data) => {
                         this.posts = data
                     })
-                    .catch(error => console.log(error))
+
             },
 
         }
@@ -180,5 +186,7 @@
 </script>
 
 <style scoped>
-
+    .sub-btn {
+        margin: 1rem;
+    }
 </style>

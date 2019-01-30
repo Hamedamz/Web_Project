@@ -94,6 +94,7 @@
                 reply_body: {
                     text: '',
                     news: '',
+                    key: '',
                 },
                 reply_loading: false,
             }
@@ -101,7 +102,8 @@
         methods: {
             sendReply: function() {
                 this.reply_body.news = this.$route.params.id;
-                this.$http.post(APIService.COMMENTS, this.reply_body, {emulateJSON: true})
+                this.reply_body.key = APIService.KEY;
+                this.$http.post(APIService.COMMENTS, this.reply_body, {emulateJSON: true, mode: 'cors'})
                     .then(response => response.json())
                     .then(data => console.log(data))
 
