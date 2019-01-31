@@ -1,7 +1,9 @@
 <template>
     <router-link :to="link()" class="match-card  ui inverted" id="matchCard" :class="{small: isSmall}">
         <div class="team-badge">
-            <img :src="match.host_team.logo" :alt="match.guest_team.full_name">
+            <router-link :to="'/team/'+ match.host_team.id">
+                <img :src="match.host_team.logo" :alt="match.guest_team.full_name">
+            </router-link>
         </div>
         <div class="match-info">
             <div class="match-result">
@@ -12,7 +14,9 @@
             <div class="match-time">{{match.time}}</div>
         </div>
         <div class="team-badge">
-            <img :src="match.guest_team.logo" :alt="match.guest_team.full_name">
+            <router-link :to="'/team/'+ match.guest_team.id">
+                <img :src="match.guest_team.logo" :alt="match.guest_team.full_name">
+            </router-link>
         </div>
     </router-link>
 </template>
@@ -20,9 +24,9 @@
 <script>
     export default {
         name: "MatchCard",
-        props: ['match', 'isSmall'],
+        props: ['match', 'isSmall', 'teamLinks'],
         computed: {
-            result: function() {
+            result: function () {
                 if (this.match.host_score !== null) {
                     return this.match.host_score + " - " + this.match.guest_score;
                 }
@@ -30,9 +34,9 @@
             },
         },
         methods: {
-        link : function() {
-            return '/match/' + this.match.id
-        }
+            link: function () {
+                return '/match/' + this.match.id
+            }
         }
     }
 </script>
@@ -131,6 +135,7 @@
     .name:nth-child(1) {
         padding-left: 9%;
     }
+
     .name:nth-child(3) {
         padding-right: 9% !important;
     }

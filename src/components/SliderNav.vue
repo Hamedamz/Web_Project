@@ -6,6 +6,8 @@
                 <sui-header class="logo large" inverted>LOGO</sui-header>
                 <sui-button @click="isOpen = !isOpen" icon="bars" floated="left" color="red" basic inverted
                             circular></sui-button>
+                <sui-button @click="goBack" icon="arrow left" floated="left" color="red" basic inverted
+                            circular></sui-button>
                 <sui-button @click="toggle" icon="user" floated="right" basic inverted circular><span
                         v-if="isLoggedIn()">sing out</span></sui-button>
                 <sui-button icon="search" floated="right" basic inverted circular @click="toggleSearch">
@@ -98,6 +100,11 @@
             }
         },
         methods: {
+            goBack () {
+                window.history.length > 1
+                    ? this.$router.go(-1)
+                    : this.$router.push('/')
+            },
             scrolling: function () {
                 this.alpha = window.scrollY / 500;
                 if (this.alpha > 1) this.alpha = 1;

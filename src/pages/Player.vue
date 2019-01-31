@@ -1,6 +1,10 @@
 <template>
     <full-page-image-container :image="player.back_pic" small="true" color="red">
         <template slot="header">
+            <div class="sub-btn">
+                <sui-button circular color="red" @click="subscribe" :icon="icon" :basic="!subscribed"><span
+                        v-if="!subscribed">subscirbe</span></sui-button>
+            </div>
             <sui-item-group>
                 <sui-item>
                     <sui-item-image size="medium" class="circular" :src="player.avatar"/>
@@ -10,6 +14,7 @@
                     </sui-item-content>
                 </sui-item>
             </sui-item-group>
+
         </template>
         <template slot="main">
             <div class="summary">
@@ -129,6 +134,11 @@
         components: {LatestNews, PLayerLeagueRow, PlayerSpec, FullPageImageContainer},
         data() {
             return {
+                subscribed: false,
+                sub_data: {
+                    team: '',
+                    key: '',
+                },
                 filter: 'Title',
                 options: [
                     {
@@ -152,23 +162,60 @@
                 posts: null,
             }
         },
-
+        computed: {
+            icon: function () {
+                return this.subscribed ? 'like' : '';
+            },
+        },
         mounted() {
             this.getPlayer();
             this.getPlayerStat();
+            this.checkSub();
         },
         watch: {
-            '$route'(to, from) {
+            '$route'() {
                 this.getPlayer();
                 this.getPlayerStat();
                 this.getRelatedNews();
+                this.checkSub();
             },
             filter: function() {
                 this.getRelatedNews();
             }
         },
         methods: {
+            checkSub: function () {
+                this.sub_data.key = APIService.KEY;
+                this.sub_data.team = this.$route.params.id;
+                let subAPI = 'check/player/';
 
+                this.$http.post(APIService.SUBS + subAPI, this.sub_data, {emulateJSON: true})
+                    .then(response => response.json())
+                    .then((data) => {
+                        if (data.detail === 'ok')
+                            this.subscribed = true;
+                        else {
+                            this.subscribed = false;
+                        }
+                    })
+                    .catch(error => console.log(error))
+
+            },
+
+            subscribe: function () {
+                this.subscribed = !this.subscribed;
+                this.sub_data.key = APIService.KEY;
+                this.sub_data.team = this.$route.params.id;
+                let subAPI = 'unsubs/player/'
+                if (this.subscribed)
+                    subAPI = 'subs/player/'
+
+                this.$http.post(APIService.SUBS + subAPI, this.sub_data, {emulateJSON: true})
+                    .then(response => response.json())
+                    .then((data) => console.log(data))
+                    .catch(error => console.log(error))
+
+            },
 
             getPlayer: function () {
                 const apiURL = APIService.PLAYER + this.$route.params.id;

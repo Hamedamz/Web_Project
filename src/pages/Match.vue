@@ -1,14 +1,14 @@
 <template>
     <full-page-image-container :image="match.image">
         <template slot="header">
-            <match-time-line :time-line="timeLine" :match="match"></match-time-line>
             <div class="sub-btn">
                 <sui-button circular color="red" @click="subscribe" :icon="icon" :basic="!subscribed"><span
                         v-if="!subscribed">subscirbe</span></sui-button>
             </div>
+            <match-time-line :time-line="timeLine" :match="match"></match-time-line>
         </template>
         <template slot="main">
-            <match-card :match="match"></match-card>
+            <match-card :match="match" team-links="true"></match-card>
             <div class="match-menu">
                 <sui-button-group :widths="5">
                     <sui-button
@@ -56,6 +56,11 @@
         data() {
             return {
                 currentTab: 'Report',
+                subscribed: false,
+                sub_data: {
+                    team: '',
+                    key: '',
+                },
                 tabs: ['Report', 'Statistics', 'LinesUp', 'News', 'Media'],
                 posts: null,
                 media: [
@@ -112,21 +117,56 @@
                 if (this.currentTabComponent === 'latest-news')
                     return {posts: this.posts};
                 return {};
-            }
+            },
+            icon: function () {
+                return this.subscribed ? 'like' : '';
+            },
         },
         mounted() {
             this.getMatch();
             this.getTimeLine();
-
-            // this.getLinesUp();
+            this.checkSub();
         },
         watch: {
             '$route'() {
                 this.getMatch();
                 this.getTimeLine();
+                this.checkSub();
             },
         },
         methods: {
+            checkSub: function () {
+                this.sub_data.key = APIService.KEY;
+                this.sub_data.team = this.$route.params.id;
+                let subAPI = 'check/match/';
+
+                this.$http.post(APIService.SUBS + subAPI, this.sub_data, {emulateJSON: true})
+                    .then(response => response.json())
+                    .then((data) => {
+                        if (data.detail === 'ok')
+                            this.subscribed = true;
+                        else {
+                            this.subscribed = false;
+                        }
+                    })
+                    .catch(error => console.log(error))
+
+            },
+
+            subscribe: function () {
+                this.subscribed = !this.subscribed;
+                this.sub_data.key = APIService.KEY;
+                this.sub_data.team = this.$route.params.id;
+                let subAPI = 'unsubs/match/'
+                if (this.subscribed)
+                    subAPI = 'subs/match/'
+
+                this.$http.post(APIService.SUBS + subAPI, this.sub_data, {emulateJSON: true})
+                    .then(response => response.json())
+                    .then((data) => console.log(data))
+                    .catch(error => console.log(error))
+
+            },
             getMatch: function () {
                 const apiURL = APIService.MATCH + this.$route.params.id;
                 const myInit = {

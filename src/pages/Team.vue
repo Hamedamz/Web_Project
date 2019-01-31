@@ -168,7 +168,13 @@
 
                 this.$http.post(APIService.SUBS + subAPI, this.sub_data, {emulateJSON: true})
                     .then(response => response.json())
-                    .then((data) => console.log(data))
+                    .then((data) => {
+                        if (data.detail === 'ok')
+                            this.subscribed = true;
+                        else {
+                            this.subscribed = false;
+                        }
+                    })
                     .catch(error => console.log(error))
 
             },

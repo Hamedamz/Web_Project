@@ -4,7 +4,7 @@
             <sui-grid-column>
                 <h2 is="sui-header" class="left floated" inverted>Latest Games</h2>
                 <sui-button
-                        @click="subscriptions = ! subscriptions"
+                        @click="toggle_fav"
                         :basic="!subscriptions"
                         size="small"
                         color="red"
@@ -19,13 +19,23 @@
             <match-box
                 :matches="footballMatches"
                 :image="footballImage"
-                :subscriptions="subscriptions"
+                v-if="!subscriptions"
                 ></match-box>
             <match-box
                 :matches="basketballMatches"
                 :image="basketballImage"
-                :subscriptions="subscriptions"
+                v-if="!subscriptions"
                 ></match-box>
+            <match-box
+                    :matches="fav_footballMatches"
+                    :image="footballImage"
+                    v-if="subscriptions"
+            ></match-box>
+            <match-box
+                    :matches="fav_basketballMatches"
+                    :image="basketballImage"
+                    v-if="subscriptions"
+            ></match-box>
         </sui-grid>
     </div>
 </template>
@@ -39,85 +49,13 @@
         data() {
             return {
                 matches: null,
+                fav_matches: null,
                 footballMatches: null,
+                fav_footballMatches: null,
                 basketballMatches: null,
-                // footballMatches: [
-                //     {
-                //         homeName: 'LIV',
-                //         homeBadge: 'static/liv.png',
-                //         awayName: 'MAN',
-                //         awayBadge: 'static/man.png',
-                //         result: '3 : 1',
-                //         time: "68'",
-                //     },
-                //     {
-                //         homeName: 'ARS',
-                //         homeBadge: 'static/ars.png',
-                //         awayName: 'TOT',
-                //         awayBadge: 'static/tot.png',
-                //         result: '2 : 1',
-                //         time: "45'",
-                //     },
-                //     {
-                //         homeName: 'JUV',
-                //         homeBadge: 'static/juv.png',
-                //         awayName: 'MIL',
-                //         awayBadge: 'static/mil.png',
-                //         result: '0 : 0',
-                //         time: "15'",
-                //     },
-                //     {
-                //         homeName: 'PSG',
-                //         homeBadge: 'static/psg.png',
-                //         awayName: 'RSB',
-                //         awayBadge: 'static/rsb.png',
-                //         result: '11/12',
-                //         time: "11:30 PM",
-                //     },
-                //     {
-                //         homeName: 'BAR',
-                //         homeBadge: 'static/bar.png',
-                //         awayName: 'ATM',
-                //         awayBadge: 'static/atm.png',
-                //         result: '2 : 0',
-                //         time: "FT",
-                //     },
-                // ],
+                fav_basketballMatches: null,
+
                 footballImage: 'static/i4.jpg',
-                // basketballMatches: [
-                //     {
-                //         homeName: 'Celtics',
-                //         homeBadge: 'static/celtics.png',
-                //         awayName: 'Jazz',
-                //         awayBadge: 'static/jazz.png',
-                //         result: '120 : 101',
-                //         time: "3",
-                //     },
-                //     {
-                //         homeName: 'Knicks',
-                //         homeBadge: 'static/knicks.png',
-                //         awayName: 'Lakers',
-                //         awayBadge: 'static/lakers.png',
-                //         result: '60 : 78',
-                //         time: "2",
-                //     },
-                //     {
-                //         homeName: 'Rockets',
-                //         homeBadge: 'static/rockets.png',
-                //         awayName: 'Spurs',
-                //         awayBadge: 'static/spurs.png',
-                //         result: '120 : 101',
-                //         time: "3",
-                //     },
-                //     {
-                //         homeName: 'Suns',
-                //         homeBadge: 'static/suns.png',
-                //         awayName: 'Raptors',
-                //         awayBadge: 'static/raptors.png',
-                //         result: '102 : 113',
-                //         time: "3",
-                //     },
-                // ],
                 basketballImage: 'static/i3.jpg',
 
                 subscriptions: false,
@@ -130,6 +68,11 @@
 
         },
         methods: {
+            toggle_fav() {
+                this.subscriptions = ! this.subscriptions;
+                if(this.subscriptions)
+                    this.getFavGames()
+            },
             getMatches() {
                 const apiURL = APIService.MATCH + 'latest';
                 const myInit = {
@@ -146,6 +89,22 @@
                         this.footballMatches = this.matches.filter(post => post.sport === 'football');
                     })
                     .catch(error => console.log(error))
+            },
+            getFavGames: function() {
+                const apiURL = APIService.MATCH + 'fav_matches/' + APIService.KEY;
+                const myInit = {
+                    mode: 'cors',
+                };
+
+                const myRequest = new Request(apiURL, myInit);
+
+                fetch(myRequest)
+                    .then(response => response.json())
+                    .then((data) => {
+                        this.fav_matches = data;
+                        this.fav_basketballMatches = this.fav_matches.filter(post => post.sport === 'basketball');
+                        this.fav_footballMatches = this.fav_matches.filter(post => post.sport === 'football');
+                    })
             },
 
         }
