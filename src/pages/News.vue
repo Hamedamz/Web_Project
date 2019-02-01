@@ -1,4 +1,4 @@
-<template>
+ <template>
     <full-page-image-container :image="post.news_pic">
         <template slot="header">
             <h1 is="sui-header" inverted class="post-title">
