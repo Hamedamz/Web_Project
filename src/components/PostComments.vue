@@ -15,10 +15,10 @@
                 </sui-comment-content>
             </sui-comment>
 
-            <p v-if="!logged" class="text">Log in to send comments.</p>
-            <form class="ui reply form" v-if="logged">
-                <div class="field">
-                    <textarea v-model="reply_body.text"></textarea>
+            <p v-if="!reply_av" class="text">Log in to send comments.</p>
+            <form class="ui reply form">
+                <div class="field" v-on:click="logged()">
+                    <textarea v-model="reply_body.text" v-on:focus="logged()"  :disabled="!reply_av"></textarea>
                 </div>
                 <div class="field"></div>
                 <sui-button
@@ -27,6 +27,7 @@
                         label-position="left"
                         icon="edit"
                         primary
+                        :disabled="!reply_av"
                 ></sui-button>
             </form>
         </sui-comment-group>
@@ -45,24 +46,29 @@
                     news: '',
                     key: '',
                 },
-                reply_loading: false,
+                reply_av: false,
                 comments: [],
             }
         },
         mounted() {
               this.getComments();
+              this.logged();
         },
         computed: {
-            logged: function () {
-                return APIService.loggedIn.logged
-            }
+
         },
         watch: {
             '$route'() {
-                this.getComments()
+                this.getComments();
+                this.logged();
+
             },
         },
         methods: {
+            logged: function () {
+                console.log("ok");
+                this.reply_av = APIService.loggedIn.logged? true: false;
+            },
             sendReply: function() {
                 this.reply_body.news = this.$route.params.id;
                 this.reply_body.key = APIService.KEY;
