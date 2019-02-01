@@ -43,7 +43,7 @@
                         ></sui-dropdown>
                     </div>
                     <div class="controls" v-if="this.currentTab.name === 'Matches'">
-                        <sui-input placeholder="Rival..." icon="search" basic inverted circular/>
+                        <!--<sui-input placeholder="Rival..." icon="search" basic inverted circular/>-->
                         <sui-dropdown
                                 text="Filter Posts"
                                 icon="filter"
