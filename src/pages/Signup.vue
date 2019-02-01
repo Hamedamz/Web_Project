@@ -1,7 +1,7 @@
 <template>
     <div id="signup">
         <div class="signup-form">
-            <sui-form v-if="mode === 'signup'">
+            <sui-form>
                 <sui-form-field>
                     <label>Username</label>
                     <input type="text" name="username" v-model="input.username" placeholder="Username"/>
@@ -21,7 +21,7 @@
                 </sui-form-field>
                 <sui-button secondary type="button" v-on:click="signup()">Sign Up</sui-button>
             </sui-form>
-            <sui-form v-if="mode === 'activate'">
+            <sui-form>
                 <sui-form-field>
                     <label>Verification Code</label>
                     <input type="text" name="key" v-model="activate_input.key" placeholder="check your mail..."/>
@@ -64,7 +64,6 @@
                     .then((data) =>APIService.KEY =data.key)
                     .then(this.logged())
                     .finally(() => this.mode = 'activate');
-                this.mode = 'activate'
             },
             activate() {
                 this.$http.post(APIService.AUTH+'registration/account-confirm-email/' + this.activate_input.key, {emulateJSON: true})
