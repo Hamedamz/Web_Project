@@ -66,7 +66,7 @@
                     .finally(() => this.mode = 'activate');
             },
             activate() {
-                this.$http.post(APIService.AUTH+'registration/account-confirm-email/' + this.activate_input.key, {emulateJSON: true})
+                this.$http.post(APIService.AUTH+'registration/verify-email/' , this.activate_input)
                     .then(response => response.json())
                     .catch(error => console.log(error))
             }
