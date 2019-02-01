@@ -6,6 +6,7 @@
                 <sui-form-field v-if="mode === 'forgot'">
                     <label>Email</label>
                     <input type="text" name="email" v-model="email.email" placeholder="Email"/>
+                    <p>{{forgotMsg}}</p>
                 </sui-form-field>
                 <sui-form-field v-if="mode === 'login'">
                     <label>Username</label>
@@ -26,11 +27,11 @@
             <sui-form v-if="mode === 'forgot'">
                 <sui-form-field>
                     <label>uid</label>
-                    <input type="text" name="uid" v-model="reset.uid" placeholder="Username"/>
+                    <input type="text" name="uid" v-model="reset.uid" placeholder="uid"/>
                 </sui-form-field>
                 <sui-form-field>
                     <label>token</label>
-                    <input type="password" name="token" v-model="reset.token" placeholder="Password"/>
+                    <input type="text" name="token" v-model="reset.token" placeholder="token"/>
                 </sui-form-field>
                 <sui-form-field>
                     <label>new password</label>
@@ -40,6 +41,7 @@
                     <label>new password confirm</label>
                     <input type="password" name="new_password2" v-model="reset.new_password2" placeholder="Password Confirm"/>
                 </sui-form-field>
+                <p>{{resetMsg}}</p>
                 <sui-button positive type="button" v-on:click.prevent="resetPass()">Reset</sui-button>
             </sui-form>
 
@@ -68,7 +70,10 @@
                     token: '',
                     new_password1: '',
                     new_password2: '',
-                }
+                },
+                forgotMsg: '',
+                resetMsg: '',
+
             }
         },
         props: ['nav'],
@@ -84,12 +89,15 @@
             forgot() {
                 this.$http.post(APIService.AUTH+'password/reset/', this.email, {emulateJSON: true})
                     .then(response => response.json())
+                    .then(data => this.forgotMsg = data.detail)
                     .catch(error => console.log(error))
             },
             resetPass() {
                 this.$http.post(APIService.AUTH+'password/reset/confirm/', this.reset, {emulateJSON: true})
                     .then(response => response.json())
-                    .catch(error => console.log(error))
+                    .then(data => {this.resetMsg = data.detail;
+                    })
+                    .catch(error => this.resetMsg = error.body.new_password2[0])
             },
             logged() {
                 this.$http.post(APIService.USER + 'logged/', {key:APIService.KEY}, {emulateJSON: true})

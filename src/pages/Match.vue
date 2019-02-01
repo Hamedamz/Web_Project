@@ -57,7 +57,7 @@
                 currentTab: 'Report',
                 subscribed: false,
                 sub_data: {
-                    team: '',
+                    match: '',
                     key: '',
                 },
                 tabs: ['Report', 'Statistics', 'LinesUp', 'News', 'Media'],
@@ -97,7 +97,7 @@
         methods: {
             checkSub: function () {
                 this.sub_data.key = APIService.KEY;
-                this.sub_data.team = this.$route.params.id;
+                this.sub_data.match = this.$route.params.id;
                 let subAPI = 'check/match/';
 
                 this.$http.post(APIService.SUBS + subAPI, this.sub_data, {emulateJSON: true})
@@ -116,7 +116,7 @@
             subscribe: function () {
                 this.subscribed = !this.subscribed;
                 this.sub_data.key = APIService.KEY;
-                this.sub_data.team = this.$route.params.id;
+                this.sub_data.match = this.$route.params.id;
                 let subAPI = 'unsubs/match/'
                 if (this.subscribed)
                     subAPI = 'subs/match/'

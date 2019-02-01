@@ -136,7 +136,7 @@
             return {
                 subscribed: false,
                 sub_data: {
-                    team: '',
+                    player: '',
                     key: '',
                 },
                 filter: 'Title',
@@ -186,7 +186,7 @@
         methods: {
             checkSub: function () {
                 this.sub_data.key = APIService.KEY;
-                this.sub_data.team = this.$route.params.id;
+                this.sub_data.player = this.$route.params.id;
                 let subAPI = 'check/player/';
 
                 this.$http.post(APIService.SUBS + subAPI, this.sub_data, {emulateJSON: true})
@@ -205,7 +205,7 @@
             subscribe: function () {
                 this.subscribed = !this.subscribed;
                 this.sub_data.key = APIService.KEY;
-                this.sub_data.team = this.$route.params.id;
+                this.sub_data.player = this.$route.params.id;
                 let subAPI = 'unsubs/player/'
                 if (this.subscribed)
                     subAPI = 'subs/player/'

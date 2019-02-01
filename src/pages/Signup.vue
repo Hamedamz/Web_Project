@@ -29,6 +29,7 @@
                 <sui-form-field>
                     <a class="hand" v-if="mode === 'activate'" @click="mode = 'signup'"> back to form... </a>
                 </sui-form-field>
+                <p>{{activateMsg}}</p>
                 <sui-button type="button" positive v-on:click="activate()">activate</sui-button>
             </sui-form>
         </div>
@@ -52,6 +53,7 @@
                 activate_input: {
                     key: null,
                 },
+                activateMsg: '',
                 mode: 'signup',
             }
         },
@@ -66,8 +68,9 @@
                     .finally(() => this.mode = 'activate');
             },
             activate() {
-                this.$http.post(APIService.AUTH+'registration/account-confirm-email/' + this.activate_input.key, {emulateJSON: true})
+                this.$http.post(APIService.AUTH+'registration/verify-email/' , this.activate_input, {emulateJSON: true})
                     .then(response => response.json())
+                    .then(data => this.activateMsg = (data.detail === 'ok') ? 'email verified!': 'error :(')
                     .catch(error => console.log(error))
             }
         }

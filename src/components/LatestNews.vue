@@ -35,7 +35,7 @@
             </div>
         </sui-grid>
             <sui-header inverted class="center aligned" v-if="subscriptions && favs.length === 0">You are not following any news yet!</sui-header>
-        <transition-group name="cell" class="ui grid container-fluid stackable padded">
+        <transition-group name="cell" class="ui grid container-fluid stackable padded" v-if="!subscriptions">
             <news-card
                     v-for="post in filteredPosts()"
                     :key="post.id"
@@ -44,6 +44,15 @@
                     class="cell"
             ></news-card>
         </transition-group>
+        <div name="cell" class="ui grid container-fluid stackable padded" v-if="subscriptions">
+            <news-card
+                    v-for="post in favs"
+                    :key="post.id"
+                    :post="post"
+                    :mediaOnly="mediaOnly"
+                    class="cell"
+            ></news-card>
+        </div>
 
     </div>
 </template>
@@ -116,6 +125,9 @@
                     posts = posts.slice(0, this.post_counts);
                 return posts
             }
+        },
+        computed: {
+
         }
     }
 </script>
