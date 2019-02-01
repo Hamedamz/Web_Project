@@ -1,10 +1,10 @@
 <template>
     <!--<sui-grid-column :width="post.type === 'small' ? 4 : 8" class="news-card" :class="{big: post.type === 'big'}">-->
-    <sui-grid-column :width="1 ? 4 : 8" class="news-card" :class="{big: 0}">
+    <sui-grid-column :width="!isMedia ? 4 : 8" class="news-card" :class="{big: isMedia}"  v-if="mediaShow">
     <!--<sui-grid-column width='4' class="news-card">-->
         <router-link :to='"/news/" + post.id' ><img :src="post.news_pic" :alt="post.title"></router-link>
         <div class="post">
-            <div class="post-cat" v-if="!isMedia">
+            <div class="post-cat">
                 <sui-label
                         circular
                         :color="color"
@@ -13,8 +13,8 @@
                 {{post.source.toUpperCase()}}
                 <sui-icon name="calendar" class="inverted"></sui-icon>{{post.pub_date | formatDate}}
             </div>
-            <!--<router-link to="/news/id"><h3 class="post-title" v-if="post.media !== 'photo'"><sui-icon name="play" v-if="post.media === 'video'"></sui-icon>{{post.title}}</h3></router-link>-->
-            <router-link :to='"/news/" + post.id'><h3 class="post-title" ><sui-icon name="play" v-if="post.media === 'video'"></sui-icon>{{post.title}}</h3></router-link>
+            <router-link :to='"/news/" + post.id'><h3 class="post-title" v-if="post.media !== 'photo'"><sui-icon name="play" v-if="post.media === 'video'"></sui-icon>{{post.title}}</h3></router-link>
+            <!--<router-link :to='"/news/" + post.id'><h3 class="post-title" ><sui-icon name="play" v-if="post.media === 'video'"></sui-icon>{{post.title}}</h3></router-link>-->
             <router-link :to='"/news/" + post.id'><sui-button circular size="mini" color="grey" basic v-if="!isMedia">Full Story</sui-button></router-link>
         </div>
     </sui-grid-column>
@@ -23,8 +23,11 @@
 <script>
     export default {
         name: "NewsCard",
-        props: ['post'],
+        props: ['post', 'mediaOnly'],
         computed: {
+            mediaShow: function() {
+                return (this.mediaOnly && this.isMedia) || (!this.mediaOnly && !this.isMedia)
+            },
             color: function () {
                 return this.post.sport ===  'football' ? 'green' : 'orange';
             },

@@ -63,12 +63,13 @@
                     .then(response => response.json())
                     .then((data) =>APIService.KEY =data.key)
                     .then(this.logged())
-                    .catch(error => console.log(error))
-
+                    .finally(() => this.mode = 'activate');
                 this.mode = 'activate'
             },
             activate() {
-
+                this.$http.post(APIService.AUTH+'registration/account-confirm-email/' + this.activate_input.key, {emulateJSON: true})
+                    .then(response => response.json())
+                    .catch(error => console.log(error))
             }
         }
     }

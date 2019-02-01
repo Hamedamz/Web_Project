@@ -40,6 +40,7 @@
                     v-for="post in filteredPosts()"
                     :key="post.id"
                     :post="post"
+                    :mediaOnly="mediaOnly"
                     class="cell"
             ></news-card>
         </transition-group>
@@ -56,7 +57,7 @@
     export default {
         name: "latest-news",
         components: {SuiHeader, SuiDropdown, NewsCard},
-        props: ['posts', 'favs', 'withHeader', 'withButtons'],
+        props: ['posts', 'favs', 'withHeader', 'withButtons', 'mediaOnly'],
         data() {
             return {
                 filter: 'All',
@@ -100,7 +101,7 @@
             subscriptions: function (val) {
                 if (val)
                     this.$emit('get-fav')
-            }
+            },
         },
         methods: {
             filterBySport(post) {
